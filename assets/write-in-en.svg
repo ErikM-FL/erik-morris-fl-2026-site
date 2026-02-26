@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" style="background:#0b132b;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect x="0" y="0" width="1600" height="120" fill="#1c2541"/>
+  <text x="800" y="70" fill="#f1f5f9" font-size="48" font-weight="700" text-anchor="middle">WRITE-IN INSTRUCTIONS</text>
+  <text x="800" y="110" fill="#9aa7b2" font-size="28" text-anchor="middle">Governor of Florida — 2026</text>
+  <rect x="80" y="180" width="1440" height="520" fill="#111827" stroke="#273043" stroke-width="2" rx="8"/>
+  <text x="112" y="230" fill="#f1f5f9" font-size="32">1) On your ballot, find the Governor race.</text>
+  <text x="112" y="294" fill="#f1f5f9" font-size="32">2) Locate the write-in line at the end of the list.</text>
+  <text x="112" y="358" fill="#f1f5f9" font-size="32">3) Neatly print: ERIK MORRIS.</text>
+  <text x="112" y="422" fill="#f1f5f9" font-size="32">4) Complete your ballot and return per instructions.</text>
+  <rect x="80" y="730" width="1440" height="120" fill="#3a506b" rx="8"/>
+  <text x="800" y="805" fill="#ffffff" font-size="56" font-weight="700" text-anchor="middle">WRITE IN: ERIK MORRIS</text>
+  <text x="80" y="860" fill="#9aa7b2" font-size="22">Share this image. Tell 3 friends how to write in.</text>
+</svg>

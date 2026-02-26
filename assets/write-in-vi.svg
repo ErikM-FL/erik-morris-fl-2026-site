@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" style="background:#0b132b;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect x="0" y="0" width="1600" height="120" fill="#1c2541"/>
+  <text x="800" y="70" fill="#f1f5f9" font-size="48" font-weight="700" text-anchor="middle">HƯỚNG DẪN GHI TÊN ỨNG VIÊN</text>
+  <text x="800" y="110" fill="#9aa7b2" font-size="28" text-anchor="middle">Thống đốc Florida — 2026</text>
+  <rect x="80" y="180" width="1440" height="520" fill="#111827" stroke="#273043" stroke-width="2" rx="8"/>
+  <text x="112" y="230" fill="#f1f5f9" font-size="32">1) Trên phiếu bầu, tìm cuộc đua Thống đốc.</text>
+  <text x="112" y="294" fill="#f1f5f9" font-size="32">2) Tìm dòng “viết tay” ở cuối danh sách ứng viên.</text>
+  <text x="112" y="358" fill="#f1f5f9" font-size="32">3) Viết rõ ràng: ERIK MORRIS.</text>
+  <text x="112" y="422" fill="#f1f5f9" font-size="32">4) Hoàn tất và nộp phiếu theo hướng dẫn.</text>
+  <rect x="80" y="730" width="1440" height="120" fill="#3a506b" rx="8"/>
+  <text x="800" y="805" fill="#ffffff" font-size="56" font-weight="700" text-anchor="middle">GHI TÊN: ERIK MORRIS</text>
+  <text x="80" y="860" fill="#9aa7b2" font-size="22">Share this image. Tell 3 friends how to write in.</text>
+</svg>
