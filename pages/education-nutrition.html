@@ -1,1 +1,90 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../styles.css"><header><div class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a> <a href="platform.html">Platform</a> <a href="how-to-write-in.html">Write‑In</a> <a href="donate.html">Donate</a></div></div></header><div class="page"><h1>Education Nutrition</h1><div class="content"><ul><li>Teacher min tied to inflation (~$45–$47k).</li><li>Universal lunch; targeted breakfast; staff meals.</li><li>Funded by large corps/luxury sectors/cannabis; ~$100M surplus.</li></ul><p><a class="btn back" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026).</div></footer>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Education & Nutrition Funding (ENUF) — 2026</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a><div class="dropdown" aria-expanded="false">
+  <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
+  <div class="dd-menu" role="menu" aria-label="Language options">
+    <div class="dd-group">
+      <div class="dd-label">Visit localized landing</div>
+      <a role="menuitem" href="../index-es.html">Español</a>
+      <a role="menuitem" href="../index-ht.html">Kreyòl Ayisyen</a>
+      <a role="menuitem" href="../index-zh.html">中文（简体）</a>
+      <a role="menuitem" href="../index-vi.html">Tiếng Việt</a>
+      <a role="menuitem" href="../index-ko.html">한국어</a>
+      <a role="menuitem" href="../index-pt.html">Português</a>
+    </div>
+    <div class="dd-group">
+      <div class="dd-label">Translate this page</div>
+      <div id="google_translate_element"></div>
+    </div>
+  </div>
+</div></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Education &amp; Nutrition Funding (ENUF) — 2026</p><h2>Better schools, better outcomes.</h2></div><div id="ballotBanner" aria-label="Write-in demo banner">
+  <div class="card">
+    <canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas>
+    <img id="ballotFallback" src="../assets/write-in-ballot.gif" alt="Write-in ballot animation">
+  </div>
+</div></div></section><div class="page"><div class="content"><ul><li>Teacher minimum tied to inflation (~$45–$47k).</li><li>Universal lunch; targeted breakfast; staff meals.</li><li>Funding mix; targeted surplus for STEAM/equity.</li></ul><!-- TODO: Add full policy description below. Use semantic headings (h3/h4) and paragraphs. --><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+<script>
+(function(){
+  const el=document.getElementById('ballotCanvas'); const fb=document.getElementById('ballotFallback');
+  if(!el||!el.getContext) return; const ctx=el.getContext('2d'); if(!ctx) return; if(fb) fb.style.display='none';
+  const W=el.width,H=el.height; const BG='#ffffff',FG='#000000'; const namePx=40;
+  const labelFont=`700 ${namePx}px Noto Sans SC,Noto Sans KR,Noto Sans,system-ui,Arial`;
+  const namePrint=`700 ${namePx}px Noto Sans,system-ui,Arial`;
+  const nameCursive=`700 ${namePx}px Patrick Hand,Noto Sans,system-ui,Arial`;
+  const languages=[{label:'Write-In'},{label:'Voto por escrito'},{label:'Ekri non'},{label:'手写填写'},{label:'Ghi tên'},{label:'한국어'},{label:'Português'}];
+  const nameFull=['E','R','I','K',' ','M','O','R','R','I','S'];
+  const modes=['print','cursive'];
+  const margin=14,bubbleR=12,bubbleC={x:margin+22,y:margin+64}; const labelX=bubbleC.x+30,baseline=bubbleC.y+6,gap=18; const nameString=nameFull.join('');
+  function draw(st){
+    ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle=FG;ctx.lineWidth=2;ctx.strokeRect(1,1,W-2,H-2);
+    ctx.beginPath();ctx.arc(bubbleC.x,bubbleC.y,bubbleR,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle=FG;ctx.textBaseline='alphabetic';ctx.font=labelFont; const label=languages[st.li].label; ctx.fillText(label,labelX,baseline);
+    const lw=ctx.measureText(label).width; ctx.font=(st.mode==='print'?namePrint:nameCursive); const nameX=labelX+lw+gap; const fullW=ctx.measureText(nameString).width;
+    ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(nameX,baseline+6); ctx.lineTo(nameX+fullW,baseline+6); ctx.stroke();
+    const typed=nameFull.slice(0,Math.floor(st.letters)).join(''); ctx.fillText(typed,nameX,baseline);
+    if(st.filled){ ctx.fillStyle=FG; ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR-4,0,Math.PI*2); ctx.fill(); }
+  }
+  let modeIndex=0,li=0,letters=0,filled=false,phase='typing',holdUntil=0,last=0;
+  function reset(){ letters=0; filled=false; phase='typing'; }
+  function tick(ts){ if(!last) last=ts; const dt=ts-last; last=ts; draw({mode:modes[modeIndex],li,letters,filled});
+    if(phase==='typing'){ if(letters<nameFull.length){ letters+=dt/110; if(letters>nameFull.length) letters=nameFull.length; } else { filled=true; phase='hold'; holdUntil=ts+8000; } }
+    else if(phase==='hold'){ if(ts>=holdUntil){ li++; if(li>=languages.length){ li=0; modeIndex=(modeIndex+1)%modes.length;} reset(); } }
+    requestAnimationFrame(tick); }
+  reset(); requestAnimationFrame(tick);
+})();
+</script>
+
+<script>
+(function(){
+  const dd=document.querySelector('.dropdown');
+  const btn=document.getElementById('langBtn');
+  if(btn && dd){
+    btn.addEventListener('click',()=>{
+      const exp = dd.getAttribute('aria-expanded')==='true';
+      dd.setAttribute('aria-expanded', String(!exp));
+      btn.setAttribute('aria-expanded', String(!exp));
+    });
+    document.addEventListener('click',(e)=>{
+      if(!dd.contains(e.target)){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+    document.addEventListener('keydown',(e)=>{
+      if(e.key==='Escape'){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+})();
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
