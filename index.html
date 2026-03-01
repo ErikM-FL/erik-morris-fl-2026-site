@@ -1,28 +1,66 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/styles.css"><title>Erik Morris for Florida Governor — 2026</title>
+<header><div class="container">
+<nav>
+  <a href="/index.html">Home</a>
+  <a href="/pages/platform.html">Platform</a>
+  <a href="/pages/how-to-write-in.html">How to Write-In</a>
+  <a href="/pages/donate.html">Donate</a>
+</nav>
+<div class="hero">
+  <h1>Erik Morris for Florida Governor — 2026</h1>
+  <p>Write-in. People-first. Fix the incentives.</p>
+</div>
+</div></header>
+<div class="container">
+<section class="notice"><strong>Why write-in?</strong> This bare-bones campaign keeps costs low so more dollars flow back into our communities.</section>
 
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Erik Morris for Florida — 2026</title>
-  <link rel="stylesheet" href="assets/styles.css">
-  <script>/* Fallback to ensure CSS loads from nested pages */</script>
-  <script src="assets/site-head.js"></script>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="hero">
-      <div class="h1">Erik Morris for Florida Governor — 2026</div>
-      <p class="p">Complete site with Platform filmstrip PNGs derived from a public‑domain Florida outline trace you provided and a modular footer visible on every page.</p>
-      <a class="badge" href="pages/platform.html">Open Platform</a>
-    </div>
-    <div class="grid">
-      <div class="card"><img class="thumb" src="assets/platform/hearth.png" alt="Hearth"></div>
-      <div class="card"><img class="thumb" src="assets/platform/education-nutrition.png" alt="Education & Nutrition"></div>
-      <div class="card"><img class="thumb" src="assets/platform/fair-pricing.png" alt="Fair Pricing"></div>
-    </div>
-  </div>
-  <div id="site-footer"></div>
-  <script src="assets/footer.js"></script>
-</body>
-</html>
+<section class="card" style="margin:24px 0;padding:12px 12px 0 12px">
+  <canvas id="writeinCanvas" style="width:100%;max-width:1100px;height:auto;display:block;margin:0 auto;border-radius:12px;border:1px solid #273043" width="1320" height="760"></canvas>
+  <p style="color:#9aa7b2;margin:8px 0 16px 0;text-align:center">This graphic cycles languages, types the name, holds for 30s, then repeats.</p>
+</section>
+<script>
+(function(){
+  const canvas=document.getElementById('writeinCanvas'); if(!canvas) return; const ctx=canvas.getContext('2d');
+  const W=canvas.width, H=canvas.height; const inner={x:40,y:160,w:W-80,h:420}; const ctaH=110;
+  const langs=[
+    {title:'WRITE-IN INSTRUCTIONS',sub:'Governor of Florida — 2026',steps:['1) On your ballot, find the Governor race.','2) Locate the write-in line at the end of the list.','3) Neatly print the name below.','4) Complete and return your ballot.'],label:'WRITE IN:'},
+    {title:'INSTRUCCIONES PARA VOTAR POR ESCRITO',sub:'Gobernador de Florida — 2026',steps:['1) Busque la contienda para Gobernador.','2) Ubique la línea para voto por escrito.','3) Escriba el nombre a continuación.','4) Devuelva la boleta.'],label:'ESCRIBA:'},
+    {title:'ENSTRIKSYON POU EKRI NON AN',sub:'Gouvènè Eta Florid — 2026',steps:['1) Jwenn seksyon pou Gouvènè.','2) Chèche liy “ekri non”.','3) Ekri non ki anba a.','4) Remèt bilten an.'],label:'EKRI NON AN:'},
+    {title:'手写填票说明',sub:'佛罗里达州州长 — 2026',steps:['1) 找到“州长”一栏。','2) 找到“手写填写”一行。','3) 按下方填写姓名。','4) 提交选票。'],label:'手写填写：'},
+    {title:'HƯỚNG DẪN GHI TÊN ỨNG VIÊN',sub:'Thống đốc Florida — 2026',steps:['1) Tìm mục Thống đốc.','2) Tìm dòng “viết tay (write-in)”.','3) Ghi tên bên dưới.','4) Nộp phiếu.'],label:'GHI TÊN:'},
+    {title:'기명투표 안내',sub:'플로리다 주지사 — 2026',steps:['1) 주지사 항목을 찾습니다.','2) “기명(Write-in)” 칸을 찾습니다.','3) 아래 이름을 적으세요.','4) 제출하세요.'],label:'기명:'},
+  ];
+  function draw(lang, typed){
+    ctx.fillStyle='#0b132b'; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#1c2541'; ctx.fillRect(0,0,W,110);
+    ctx.fillStyle='#f1f5f9'; ctx.font='700 40px system-ui,Segoe UI,Roboto,Arial'; ctx.textAlign='center'; ctx.fillText(lang.title, W/2, 65);
+    ctx.fillStyle='#9aa7b2'; ctx.font='28px system-ui,Segoe UI,Roboto,Arial'; ctx.fillText(lang.sub, W/2, 100);
+    ctx.fillStyle='#111827'; ctx.strokeStyle='#273043'; ctx.lineWidth=2; ctx.fillRect(inner.x, inner.y, inner.w, inner.h); ctx.strokeRect(inner.x, inner.y, inner.w, inner.h);
+    ctx.fillStyle='#f1f5f9'; ctx.font='26px system-ui,Segoe UI,Roboto,Arial'; ctx.textAlign='left'; let y=inner.y+36; for(const s of lang.steps){ ctx.fillText(s, inner.x+24, y); y+=52; }
+    const ctaY=inner.y+inner.h+24; ctx.fillStyle='#3a506b'; ctx.fillRect(inner.x, ctaY, inner.w, ctaH);
+    ctx.fillStyle='#fff'; ctx.font='700 48px system-ui,Segoe UI,Roboto,Arial'; ctx.textAlign='center'; ctx.fillText((lang.label+' '+typed).trim(), W/2, ctaY+70);
+  }
+  let i=0, pos=0, name='ERIK MORRIS', hold=false, last=0;
+  function tick(ts){ if(!last) last=ts; const dt=ts-last; last=ts; const lang=langs[i];
+    if(!hold){ if(pos<name.length){ pos=Math.min(name.length, pos+(dt/120)); }
+      const typed=name.slice(0, Math.floor(pos)); draw(lang, typed);
+      if(Math.floor(pos)>=name.length){ hold=true; setTimeout(()=>{hold=false; pos=0; i=(i+1)%langs.length;}, 30000); }
+    } else { draw(lang, name); }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+<div class="grid">
+  <div class="card"><h3>Housing You Can Afford</h3><p>HEARTH: Bigger homestead relief, fair rules for mega-owners.</p><a class="btn" href="/pages/hearth.html">Read</a></div>
+  <div class="card"><h3>Insurance Fairness</h3><p>Full-coverage option + inflation guardrails.</p><a class="btn" href="/pages/fifa.html">Read</a></div>
+  <div class="card"><h3>Fair Pay & Prices</h3><p>Reasonable pay ratios and benefits parity.</p><a class="btn" href="/pages/fair-pricing.html">Read</a></div>
+  <div class="card"><h3>Second Amendment Integrity</h3><p>Fund SROs, victim aid, crisis response, conservation.</p><a class="btn" href="/pages/second-amendment-integrity.html">Read</a></div>
+  <div class="card"><h3>Neutral Government</h3><p>Neutrality & Leadership Unity reforms.</p><a class="btn" href="/pages/neutrality.html">Read</a></div>
+  <div class="card"><h3>Safe Harbor Asset Protection</h3><p>Protect victims with due process.</p><a class="btn" href="/pages/safe-harbor.html">Read</a></div>
+</div>
+<p><a class="btn" href="/pages/platform.html">View the full platform</a></p>
+</div>
+<footer><div class="container">Paid for by Erik Morris, Write-In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
