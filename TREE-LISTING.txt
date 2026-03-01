@@ -1,6 +1,5 @@
 erik-morris-fl-2026-site/
   MANIFEST-SHA256.txt
-  TREE-LISTING.txt
   index-es.html
   index-ht.html
   index-ko.html
@@ -9,9 +8,6 @@ erik-morris-fl-2026-site/
   index-zh.html
   index.html
   styles.css
-  assets/
-    write-in-ballot.gif
-    platform/
   pages/
     donate.html
     education-nutrition.html
@@ -26,3 +22,15 @@ erik-morris-fl-2026-site/
     second-amendment-integrity.html
     social.html
     veterans-care.html
+  assets/
+    write-in-ballot.gif
+    platform/
+      education-nutrition.svg
+      fair-pricing.svg
+      fifa.svg
+      film-media.svg
+      hearth.svg
+      neutrality.svg
+      safe-harbor.svg
+      second-amendment-integrity.svg
+      veterans-care.svg

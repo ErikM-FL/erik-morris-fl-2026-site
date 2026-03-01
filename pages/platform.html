@@ -8,6 +8,10 @@
   <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
   <div class="dd-menu" role="menu" aria-label="Language options">
     <div class="dd-group">
+      <div class="dd-label">Translate this page</div>
+      <div id="google_translate_element"></div>
+    </div>
+    <div class="dd-group">
       <div class="dd-label">Visit localized landing</div>
       <a role="menuitem" href="../index-es.html">Español</a>
       <a role="menuitem" href="../index-ht.html">Kreyòl Ayisyen</a>
@@ -15,10 +19,6 @@
       <a role="menuitem" href="../index-vi.html">Tiếng Việt</a>
       <a role="menuitem" href="../index-ko.html">한국어</a>
       <a role="menuitem" href="../index-pt.html">Português</a>
-    </div>
-    <div class="dd-group">
-      <div class="dd-label">Translate this page</div>
-      <div id="google_translate_element"></div>
     </div>
   </div>
 </div></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Platform — Index</p><h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2><p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p></div></div></section>
@@ -42,12 +42,9 @@
 .quick-links .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .quick-links a{display:block;background:#0f1a38;border:1px solid var(--stroke);color:#e2e8f0;text-decoration:none;padding:10px 12px;border-radius:10px;text-align:center}
 .quick-links a:hover{background:#132042}
-@media (max-width: 780px){ .slide { grid-template-columns: 1fr; } .slide .img img{ max-width: 520px; } }
+@media (max-width:780px){.slide{grid-template-columns:1fr}.slide .img img{max-width:520px}}
 </style>
-<div class="platform-wrap">
-  <div class="slider" aria-roledescription="carousel">
-    <div class="track" id="track" role="group" aria-label="Platform topics">
-<article class="slide" data-href="hearth.html">
+<div class="platform-wrap"><div class="slider" aria-roledescription="carousel"><div class="track" id="track" role="group" aria-label="Platform topics"><article class="slide" data-href="hearth.html">
   <div class="txt">
     <h3>Housing You Can Afford — HEARTH</h3>
     <p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p>
@@ -118,73 +115,31 @@
     <a class="btn" href="film-media.html">Read More…</a>
   </div>
   <div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film &amp; Digital Media Excellence"></div>
-</article>    </div>
-    <button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button>
-    <button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button>
-  </div>
-  <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
-</div><div class="quick-links">
-  <p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p>
-  <div class="grid">
-    <a href="hearth.html">HEARTH</a>
-    <a href="fifa.html">FIFA</a>
-    <a href="fair-pricing.html">Fair Pricing</a>
-    <a href="second-amendment-integrity.html">2A Integrity</a>
-    <a href="neutrality.html">Neutrality</a>
-    <a href="safe-harbor.html">Safe Harbor</a>
-    <a href="education-nutrition.html">ENUF</a>
-    <a href="veterans-care.html">Veterans CARE</a>
-    <a href="film-media.html">Film & Media</a>
-  </div>
-</div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+</article></div><button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button><button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button></div><div class="dots" id="dots" role="tablist" aria-label="Slides"></div></div><div class="quick-links"><p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p><div class="grid"><a href="hearth.html">HEARTH</a><a href="fifa.html">FIFA</a><a href="fair-pricing.html">Fair Pricing</a><a href="second-amendment-integrity.html">2A Integrity</a><a href="neutrality.html">Neutrality</a><a href="safe-harbor.html">Safe Harbor</a><a href="education-nutrition.html">ENUF</a><a href="veterans-care.html">Veterans CARE</a><a href="film-media.html">Film &amp; Media</a></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 <script>
 (function(){
-  const track = document.getElementById('track');
-  const slides = Array.from(track.children);
-  const prev = document.getElementById('prev');
-  const next = document.getElementById('next');
-  const dotsWrap = document.getElementById('dots');
-  let index = 0, locked = false; const count = slides.length;
-  slides.forEach((_, i) => { const dot = document.createElement('button'); dot.className='dot'; dot.type='button'; dot.setAttribute('role','tab'); dot.setAttribute('aria-label','Go to slide '+(i+1)); dot.addEventListener('click',()=>go(i)); dotsWrap.appendChild(dot); });
-  function update(){ track.style.transform = `translateX(-${index*100}%)`; Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current', i===index?'true':'false')); }
-  function go(i){ if(locked) return; index=(i+count)%count; locked=true; update(); setTimeout(()=>locked=false, 350);} 
-  prev.addEventListener('click',()=>go(index-1)); next.addEventListener('click',()=>go(index+1));
-  window.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft') go(index-1); if(e.key==='ArrowRight') go(index+1);});
-  slides.forEach(s=>{ s.addEventListener('click',(e)=>{ if(e.target.closest('a')) return; const href=s.getAttribute('data-href'); if(href) location.href=href; });});
-  let sx=0,dx=0,touching=false; track.addEventListener('touchstart',(e)=>{touching=true;sx=e.touches[0].clientX;dx=0;},{passive:true});
-  track.addEventListener('touchmove',(e)=>{if(!touching) return; dx=e.touches[0].clientX-sx;},{passive:true});
-  track.addEventListener('touchend',()=>{touching=false; if(Math.abs(dx)>50){ if(dx<0) go(index+1); else go(index-1);} });
-  const auto=setInterval(()=>go(index+1), 7000); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(auto); });
+  const track=document.getElementById('track');
+  const slides=Array.from(track.children);
+  const prev=document.getElementById('prev');
+  const next=document.getElementById('next');
+  const dotsWrap=document.getElementById('dots');
+  let index=0,locked=false; const count=slides.length;
+  slides.forEach((_,i)=>{const d=document.createElement('button');d.className='dot';d.type='button';d.setAttribute('role','tab');d.setAttribute('aria-label','Go to slide '+(i+1));d.addEventListener('click',()=>go(i));dotsWrap.appendChild(d);});
+  function update(){track.style.transform=`translateX(-${index*100}%)`;Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current',i===index?'true':'false'));}
+  function go(i){if(locked)return;index=(i+count)%count;locked=true;update();setTimeout(()=>locked=false,350);} 
+  prev.addEventListener('click',()=>go(index-1));
+  next.addEventListener('click',()=>go(index+1));
+  window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(index-1);if(e.key==='ArrowRight')go(index+1);});
+  slides.forEach(s=>{s.addEventListener('click',e=>{if(e.target.closest('a'))return;const href=s.getAttribute('data-href');if(href)location.href=href;});});
+  let sx=0,dx=0,touching=false;track.addEventListener('touchstart',e=>{touching=true;sx=e.touches[0].clientX;dx=0;},{passive:true});
+  track.addEventListener('touchmove',e=>{if(!touching)return;dx=e.touches[0].clientX-sx;},{passive:true});
+  track.addEventListener('touchend',()=>{touching=false;if(Math.abs(dx)>50){if(dx<0)go(index+1);else go(index-1);}});
+  const auto=setInterval(()=>go(index+1),7000);document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(auto);});
   update();
 })();
 </script>
-
 <script>
-(function(){
-  const dd=document.querySelector('.dropdown');
-  const btn=document.getElementById('langBtn');
-  if(btn && dd){
-    btn.addEventListener('click',()=>{
-      const exp = dd.getAttribute('aria-expanded')==='true';
-      dd.setAttribute('aria-expanded', String(!exp));
-      btn.setAttribute('aria-expanded', String(!exp));
-    });
-    document.addEventListener('click',(e)=>{
-      if(!dd.contains(e.target)){
-        dd.setAttribute('aria-expanded','false');
-        btn.setAttribute('aria-expanded','false');
-      }
-    });
-    document.addEventListener('keydown',(e)=>{
-      if(e.key==='Escape'){
-        dd.setAttribute('aria-expanded','false');
-        btn.setAttribute('aria-expanded','false');
-      }
-    });
-  }
-})();
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-}
+(function(){const dd=document.querySelector(".dropdown"),btn=document.getElementById("langBtn");if(btn&&dd){btn.addEventListener("click",()=>{const exp=dd.getAttribute("aria-expanded")==="true";dd.setAttribute("aria-expanded",String(!exp));btn.setAttribute("aria-expanded",String(!exp));});document.addEventListener("click",(e)=>{if(!dd.contains(e.target)){dd.setAttribute("aria-expanded","false");btn.setAttribute("aria-expanded","false");}});document.addEventListener("keydown",(e)=>{if(e.key==="Escape"){dd.setAttribute("aria-expanded","false");btn.setAttribute("aria-expanded","false");}});}})();
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:"en",includedLanguages:"es,ht,zh-CN,vi,ko,pt",layout:google.translate.TranslateElement.InlineLayout.SIMPLE},"google_translate_element");}
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

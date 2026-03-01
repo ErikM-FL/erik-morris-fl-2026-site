@@ -34,7 +34,7 @@ body{min-height:100%;color:var(--text);font-family:system-ui,-apple-system,"Sego
 .footer-inner{max-width:var(--container);margin:0 auto;padding:20px 16px;color:var(--muted);font-size:.95rem}
 .page{max-width:840px;margin:0 auto;padding:26px 16px}
 .page .content{background:var(--card);border:1px solid var(--stroke);padding:16px;border-radius:12px}
-/* Dropdown responsive */
+/* Languages dropdown (Translate first) */
 .dropdown{position:relative}
 .dd-btn{background:transparent;color:var(--text);border:1px solid transparent;padding:10px 12px;border-radius:8px;cursor:pointer;line-height:1}
 .dd-btn:focus-visible{outline:2px solid #94a3b8;outline-offset:2px}
@@ -45,18 +45,13 @@ body{min-height:100%;color:var(--text);font-family:system-ui,-apple-system,"Sego
 .dd-label{color:#A9B7C7;font-size:.85rem;margin:2px 0 6px}
 .dd-menu a{display:block;color:#e2e8f0;text-decoration:none;padding:8px 10px;border-radius:6px}
 .dd-menu a:hover,.dd-menu a:focus{background:#132042}
+/* Google Translate tweaks */
 #google_translate_element *{font-size:13px !important}
 #google_translate_element .goog-te-gadget-simple{background:#132042;border:1px solid #2A3559;border-radius:6px;color:#e2e8f0;padding:4px 6px}
 #google_translate_element .goog-te-gadget-simple img{display:none}
-/* Force the "Select Language" text in the Google Translate dropdown to white */
+/* Force white text for the Google Translate widget label/value */
 #google_translate_element .goog-te-gadget-simple,
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value,
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
-  color: #fff !important;
-}
-
-/* Optional: ensure arrow/caret text is also white */
-#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
-  color: #fff !important;
-}
-@media (max-width: 820px){.dd-menu{position:fixed;right:12px;left:12px;top:64px;min-width:auto;padding:12px}}
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span,
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child{color:#fff !important}
+@media (max-width:820px){.dd-menu{position:fixed;right:12px;left:12px;top:64px;min-width:auto;padding:12px}}
