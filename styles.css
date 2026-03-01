@@ -48,4 +48,15 @@ body{min-height:100%;color:var(--text);font-family:system-ui,-apple-system,"Sego
 #google_translate_element *{font-size:13px !important}
 #google_translate_element .goog-te-gadget-simple{background:#132042;border:1px solid #2A3559;border-radius:6px;color:#e2e8f0;padding:4px 6px}
 #google_translate_element .goog-te-gadget-simple img{display:none}
+/* Force the "Select Language" text in the Google Translate dropdown to white */
+#google_translate_element .goog-te-gadget-simple,
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value,
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span {
+  color: #fff !important;
+}
+
+/* Optional: ensure arrow/caret text is also white */
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+  color: #fff !important;
+}
 @media (max-width: 820px){.dd-menu{position:fixed;right:12px;left:12px;top:64px;min-width:auto;padding:12px}}
