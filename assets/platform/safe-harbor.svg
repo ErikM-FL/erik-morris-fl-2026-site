@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" style="background:#0b132b;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#152349"/>
+      <stop offset="100%" stop-color="#0b132b"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="640" height="420" fill="url(#g)"/>
+  <g transform="translate(120,40)" stroke="#f1f5f9" stroke-width="4">
+      <line x1="60" y1="10" x2="60" y2="110"/>
+      <circle cx="60" cy="10" r="10" fill="#1c2541" stroke="#3a506b" stroke-width="3"/>
+      <path d="M10,90 Q60,140 110,90" fill="none"/>
+      <path d="M10,90 l-10,20 M110,90 l10,20"/>
+      <line x1="30" y1="60" x2="90" y2="60"/>
+    </g>
+  <text x="530" y="402" fill="#9aa7b2" font-size="18">FLORIDA</text>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" style="background:#0b132b;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#152349"/>
+      <stop offset="100%" stop-color="#0b132b"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="640" height="420" fill="url(#g)"/>
+  <g transform="translate(110,40)">
+      <circle cx="50" cy="50" r="40" fill="#3a506b" stroke="#f1f5f9" stroke-width="3"/>
+      <polygon points="50,90 30,130 50,120 70,130" fill="#1c2541"/>
+      <text x="50" y="56" fill="#f1f5f9" font-size="28" text-anchor="middle" font-weight="700">V</text>
+    </g>
+  <text x="530" y="402" fill="#9aa7b2" font-size="18">FLORIDA</text>
+</svg>
