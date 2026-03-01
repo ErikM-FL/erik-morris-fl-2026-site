@@ -19,7 +19,7 @@ erik-morris-fl-2026-site/
     fifa.html
     film-media.html
     hearth.html
-      /HEARTH-details.html
+    HEARTH-details.html
     how-to-write-in.html
     neutrality.html
     platform.html
