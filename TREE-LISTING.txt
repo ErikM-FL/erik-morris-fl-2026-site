@@ -1,31 +1,36 @@
-index-es.html
-index-ht.html
-index-ko.html
-index-pt.html
-index-vi.html
-index-zh.html
-index.html
-styles.css
-assets/write-in-ballot.gif
-assets/platform/education-nutrition.svg
-assets/platform/fair-pricing.svg
-assets/platform/fifa.svg
-assets/platform/film-media.svg
-assets/platform/hearth.svg
-assets/platform/neutrality.svg
-assets/platform/safe-harbor.svg
-assets/platform/second-amendment-integrity.svg
-assets/platform/veterans-care.svg
-pages/donate.html
-pages/education-nutrition.html
-pages/fair-pricing.html
-pages/fifa.html
-pages/film-media.html
-pages/hearth.html
-pages/how-to-write-in.html
-pages/neutrality.html
-pages/platform.html
-pages/safe-harbor.html
-pages/second-amendment-integrity.html
-pages/social.html
-pages/veterans-care.html
+erik-morris-fl-2026-site/
+  MANIFEST-SHA256.txt
+  README.md
+  index-es.html
+  index-ht.html
+  index-ko.html
+  index-vi.html
+  index-zh.html
+  index.html
+  styles.css
+  pages/
+    donate.html
+    education-nutrition.html
+    fair-pricing.html
+    fifa.html
+    film-media.html
+    hearth.html
+    how-to-write-in-es.html
+    how-to-write-in-ht.html
+    how-to-write-in-ko.html
+    how-to-write-in-vi.html
+    how-to-write-in-zh.html
+    how-to-write-in.html
+    neutrality.html
+    platform.html
+    safe-harbor.html
+    second-amendment-integrity.html
+    veterans-care.html
+  assets/
+    write-in-en.svg
+    write-in-es.svg
+    write-in-ht.svg
+    write-in-instructions.png
+    write-in-ko.svg
+    write-in-vi.svg
+    write-in-zh.svg
