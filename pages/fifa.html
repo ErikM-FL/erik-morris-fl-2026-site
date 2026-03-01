@@ -4,12 +4,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Write‑In</a><a href="donate.html">Donate</a></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">FIFA — Florida Insurance Fairness Act</p><h2>Insurance fairness.</h2></div><div id="ballotBanner" aria-label="Write-in demo banner">
+<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">FIFA — Florida Insurance Fairness Act</p><h2>Insurance fairness.</h2></div><div id="ballotBanner" aria-label="Write-in demo banner">
   <div class="card">
-    <canvas id="ballotCanvas" width="700" height="260" aria-hidden="true"></canvas>
-    <img id="ballotFallback" src="../assets/write-in-ballot.gif" alt="Write-in ballot animation" style="width:100%;height:auto;display:block">
+    <canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas>
+    <img id="ballotFallback" src="../assets/write-in-ballot.gif" alt="Write-in ballot animation">
   </div>
-</div></div></section><div class="page"><div class="content"><ul><li>Full‑coverage option in each line.</li><li>Rate hikes tied to CPI‑U unless extraordinary losses proven.</li><li>Transparent advertising summary.</li></ul><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer><script>
+</div></div></section><div class="page"><div class="content"><ul><li>Full‑coverage option in each line.</li><li>Rate hikes tied to CPI‑U unless extraordinary losses proven.</li><li>Transparent advertising summary.</li></ul><!-- TODO: Add full policy description below. Use semantic headings (h3/h4) and paragraphs. --><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer><script>
 (function(){
   const el=document.getElementById("ballotCanvas"); const fb=document.getElementById("ballotFallback");
   if(!el||!el.getContext) return; const ctx=el.getContext("2d"); if(!ctx) return; if(fb) fb.style.display="none";
@@ -27,17 +27,11 @@
   function drawFrame(st){
     ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
     ctx.strokeStyle=FG; ctx.lineWidth=2; ctx.strokeRect(border.x,border.y,border.w,border.h);
-    // bubble outline
     ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR,0,Math.PI*2); ctx.stroke();
-    // label (same size as name)
     ctx.fillStyle=FG; ctx.textBaseline="alphabetic"; ctx.font=labelFont; const label=languages[st.li].label; ctx.fillText(label,labelX,baseline);
-    // name position and underline (fixed under where full name will go)
     const lw = ctx.measureText(label).width; const nameX = labelX + lw + gap; ctx.font = (st.mode==="print"? namePrint : nameCursive); const fullW = ctx.measureText(nameString).width;
-    // underline under name area (always shown)
     ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(nameX, baseline+6); ctx.lineTo(nameX+fullW, baseline+6); ctx.stroke();
-    // typed name first
     const typed = nameFull.slice(0, Math.floor(st.letters)).join(""); ctx.fillText(typed, nameX, baseline);
-    // filled bubble AFTER name completes
     if(st.filled){ ctx.fillStyle=FG; ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR-4,0,Math.PI*2); ctx.fill(); }
   }
   let modeIndex=0, li=0, letters=0, filled=false, phase="typing", holdUntil=0; let last=0;

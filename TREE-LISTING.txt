@@ -1,6 +1,5 @@
 erik-morris-fl-2026-site/
   MANIFEST-SHA256.txt
-  README.md
   index-es.html
   index-ht.html
   index-ko.html
@@ -8,6 +7,18 @@ erik-morris-fl-2026-site/
   index-zh.html
   index.html
   styles.css
+  assets/
+    write-in-ballot.gif
+    platform/
+      education-nutrition.svg
+      fair-pricing.svg
+      fifa.svg
+      film-media.svg
+      hearth.svg
+      neutrality.svg
+      safe-harbor.svg
+      second-amendment-integrity.svg
+      veterans-care.svg
   pages/
     donate.html
     education-nutrition.html
@@ -15,22 +26,10 @@ erik-morris-fl-2026-site/
     fifa.html
     film-media.html
     hearth.html
-    how-to-write-in-es.html
-    how-to-write-in-ht.html
-    how-to-write-in-ko.html
-    how-to-write-in-vi.html
-    how-to-write-in-zh.html
     how-to-write-in.html
     neutrality.html
     platform.html
     safe-harbor.html
     second-amendment-integrity.html
+    social.html
     veterans-care.html
-  assets/
-    write-in-en.svg
-    write-in-es.svg
-    write-in-ht.svg
-    write-in-instructions.png
-    write-in-ko.svg
-    write-in-vi.svg
-    write-in-zh.svg

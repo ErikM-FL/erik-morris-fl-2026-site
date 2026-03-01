@@ -4,13 +4,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Write‑In</a><a href="donate.html">Donate</a></div></nav></header>
-<section class="hero"><div class="hero-inner"><div class="hero-content">
-<p class="kicker">Platform — Index</p>
-<h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2>
-<p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p>
-</div></div></section>
-
+<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Platform — Index</p><h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2><p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p></div></div></section>
 <style>
 .platform-wrap { max-width: var(--container); margin: 20px auto; padding: 0 16px; }
 .slider { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--stroke); background: var(--card); }
@@ -27,9 +21,13 @@
 .dots { display: flex; gap: 6px; justify-content: center; padding: 12px; }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: #52607c; border: 1px solid #8391ae; opacity: .6; }
 .dot[aria-current="true"] { background: #dbeafe; border-color: #ffffff; opacity: 1; }
+/* Quick links under carousel */
+.quick-links{max-width:var(--container);margin:8px auto 0;padding:0 16px}
+.quick-links .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.quick-links a{display:block;background:#0f1a38;border:1px solid var(--stroke);color:#e2e8f0;text-decoration:none;padding:10px 12px;border-radius:10px;text-align:center}
+.quick-links a:hover{background:#132042}
 @media (max-width: 780px){ .slide { grid-template-columns: 1fr; } .slide .img img{ max-width: 520px; } }
 </style>
-
 <div class="platform-wrap">
   <div class="slider" aria-roledescription="carousel">
     <div class="track" id="track" role="group" aria-label="Platform topics">
@@ -109,9 +107,20 @@
     <button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button>
   </div>
   <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
-</div>
-<footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
-
+</div><div class="quick-links">
+  <p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p>
+  <div class="grid">
+    <a href="hearth.html">HEARTH</a>
+    <a href="fifa.html">FIFA</a>
+    <a href="fair-pricing.html">Fair Pricing</a>
+    <a href="second-amendment-integrity.html">2A Integrity</a>
+    <a href="neutrality.html">Neutrality</a>
+    <a href="safe-harbor.html">Safe Harbor</a>
+    <a href="education-nutrition.html">ENUF</a>
+    <a href="veterans-care.html">Veterans CARE</a>
+    <a href="film-media.html">Film & Media</a>
+  </div>
+</div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 <script>
 (function(){
   const track = document.getElementById('track');
@@ -120,15 +129,8 @@
   const next = document.getElementById('next');
   const dotsWrap = document.getElementById('dots');
   let index = 0, locked = false; const count = slides.length;
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'dot'; dot.type = 'button'; dot.setAttribute('role','tab');
-    dot.setAttribute('aria-label','Go to slide '+(i+1)); dot.addEventListener('click',()=>go(i));
-    dotsWrap.appendChild(dot);
-  });
-  function update(){ track.style.transform = `translateX(-${index*100}%)`;
-    Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current', i===index?'true':'false'));
-  }
+  slides.forEach((_, i) => { const dot = document.createElement('button'); dot.className='dot'; dot.type='button'; dot.setAttribute('role','tab'); dot.setAttribute('aria-label','Go to slide '+(i+1)); dot.addEventListener('click',()=>go(i)); dotsWrap.appendChild(dot); });
+  function update(){ track.style.transform = `translateX(-${index*100}%)`; Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current', i===index?'true':'false')); }
   function go(i){ if(locked) return; index=(i+count)%count; locked=true; update(); setTimeout(()=>locked=false, 350);} 
   prev.addEventListener('click',()=>go(index-1)); next.addEventListener('click',()=>go(index+1));
   window.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft') go(index-1); if(e.key==='ArrowRight') go(index+1);});
@@ -140,4 +142,3 @@
   update();
 })();
 </script>
-
