@@ -1,37 +1,33 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fair Pricing</title>
-<link rel="stylesheet" href="../styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fair Pricing</title><link rel="stylesheet" href="../styles.css"><link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Write‑In</a><a href="donate.html">Donate</a></div></nav></header>
-<div id="ballotBanner" aria-label="Write-in demo banner">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet"><header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Write‑In</a><a href="donate.html">Donate</a></div></nav></header><div id="ballotBanner" aria-label="Write-in demo banner">
   <div class="card">
-    <canvas id="ballotCanvas" width="700" height="260"></canvas>
+    <canvas id="ballotCanvas" width="620" height="220" aria-hidden="true"></canvas>
+    <img id="ballotFallback" src="../assets/write-in-ballot.gif" alt="Write-in ballot animation" style="width:100%;height:auto;display:block">
   </div>
-</div>
-<div class="page"><h1>Fair Pricing</h1><div class="content"><ul><li>Executive pay ≤500% of lowest‑paid (≤600% for sole‑owner FL corps).</li><li>Benefits parity at 15+ hrs/week.</li><li>No price hikes > inflation unless standards met.</li></ul><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div>
-<footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
-<script>
+</div><div class="page"><h1>Fair Pricing</h1><div class="content"><p>Fair Pricing content.</p><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026).</div></footer><script>
 (function(){
-  const el=document.getElementById("ballotCanvas"); if(!el) return; const ctx=el.getContext("2d");
+  const el=document.getElementById("ballotCanvas"); const fb=document.getElementById("ballotFallback");
+  if(!el||!el.getContext){ return; }
+  const ctx=el.getContext("2d"); if(!ctx){ return; }
+  if(fb) fb.style.display="none";
   const W=el.width, H=el.height; const BG="#ffffff", FG="#000000";
-  const labelFont = "700 22px "Noto Sans SC","Noto Sans KR","Noto Sans",system-ui,Arial";
-  const namePrint = "700 44px "Noto Sans",system-ui,Arial";
-  const nameCursive = "700 44px "Patrick Hand","Noto Sans",system-ui,Arial";
+  const labelFont = "700 18px Noto Sans SC,Noto Sans KR,Noto Sans,system-ui,Arial";
+  const namePrint = "700 36px Noto Sans,system-ui,Arial";
+  const nameCursive = "700 36px Patrick Hand,Noto Sans,system-ui,Arial";
   const languages=[{label:"Write-In"},{label:"Voto por escrito"},{label:"Ekri non"},{label:"手写填写"},{label:"Ghi tên"},{label:"기명"}];
   const nameLetters=["E","R","I","K"," ","M","O","R","R","I","S"];
   const modes=["print","cursive"];
-  const margin=12; const border={x:1,y:1,w:W-2,h:H-2};
-  const bubbleR=12; const bubbleC={x:margin+20,y:margin+60};
-  const labelX=bubbleC.x+28; const baseline=bubbleC.y+4; const gap=18;
+  const margin=8; const border={x:1,y:1,w:W-2,h:H-2};
+  const bubbleR=10; const bubbleC={x:margin+18,y:margin+46};
+  const labelX=bubbleC.x+24; const baseline=bubbleC.y+3; const gap=14;
   function drawFrame(state){
     ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
     ctx.strokeStyle=FG; ctx.lineWidth=2; ctx.strokeRect(border.x,border.y,border.w,border.h);
     ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR,0,Math.PI*2); ctx.stroke();
-    if(state.filled){ ctx.fillStyle=FG; ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR-4,0,Math.PI*2); ctx.fill(); }
+    if(state.filled){ ctx.fillStyle=FG; ctx.beginPath(); ctx.arc(bubbleC.x,bubbleC.y,bubbleR-3,0,Math.PI*2); ctx.fill(); }
     ctx.fillStyle=FG; ctx.font=labelFont; ctx.textBaseline="alphabetic"; const label=languages[state.li].label; ctx.fillText(label,labelX,baseline);
-    const lw=ctx.measureText(label).width; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(labelX,baseline+6); ctx.lineTo(labelX+lw,baseline+6); ctx.stroke();
+    const lw=ctx.measureText(label).width; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(labelX,baseline+5); ctx.lineTo(labelX+lw,baseline+5); ctx.stroke();
     ctx.font=(state.mode==="print"?namePrint:nameCursive); const nameX=labelX+lw+gap; const typed=nameLetters.slice(0,state.letters).join(""); ctx.fillText(typed,nameX,baseline);
   }
   let modeIndex=0, li=0, letters=0, filled=false, phase="typing", holdUntil=0; let last=0;
