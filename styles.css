@@ -54,4 +54,24 @@ body{min-height:100%;color:var(--text);font-family:system-ui,-apple-system,"Sego
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value,
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span,
 #google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child{color:#fff !important}
+/* --- Force white text for Google Translate gadget trigger ("Select Language") --- */
+/* Container + link + visible label spans  */
+#google_translate_element .goog-te-gadget-simple {
+  color: #fff !important;              /* text color on container */
+}
+
+#google_translate_element .goog-te-gadget-simple a {
+  color: #fff !important;              /* anchor text */
+}
+
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value,
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span,
+#google_translate_element .goog-te-gadget-simple .goog-te-menu-value span:last-child {
+  color: #fff !important;              /* the “Select Language” + caret text */
+}
+
+/* Some deployments render an extra class wrapper; cover that too */
+#google_translate_element .goog-te-gadget-simple .VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  color: #fff !important;
+}
 @media (max-width:820px){.dd-menu{position:fixed;right:12px;left:12px;top:64px;min-width:auto;padding:12px}}
