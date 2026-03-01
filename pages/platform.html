@@ -23,99 +23,36 @@
   </div>
 </div></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Platform — Index</p><h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2><p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p></div></div></section>
 <style>
-.platform-wrap { max-width: var(--container); margin: 20px auto; padding: 0 16px; }
-.slider { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--stroke); background: var(--card); }
-.track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .4s ease; will-change: transform; }
-.slide { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; padding: 18px; min-height: 280px; }
-.slide .txt h3 { margin: 0 0 8px; font-size: 1.4rem; }
-.slide .txt p { margin: 0; color: var(--muted); }
-.slide .txt .btn { margin-top: 10px; }
-.slide .img { display: grid; place-items: center; }
-.slide .img img { width: 100%; max-width: 380px; height: auto; border-radius: 10px; border: 1px solid var(--stroke); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-.ctrl { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.35); color: #fff; border: 1px solid rgba(255,255,255,.25); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
-.ctrl:hover { background: rgba(0,0,0,.55); }
-.prev { left: 10px; } .next { right: 10px; }
-.dots { display: flex; gap: 6px; justify-content: center; padding: 12px; }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: #52607c; border: 1px solid #8391ae; opacity: .6; }
-.dot[aria-current="true"] { background: #dbeafe; border-color: #ffffff; opacity: 1; }
+.platform-wrap{max-width:var(--container);margin:20px auto;padding:0 16px}
+.slider{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--stroke);background:var(--card)}
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:100%;transition:transform .4s ease;will-change:transform}
+.slide{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center;padding:18px;min-height:280px}
+.slide .txt h3{margin:0 0 8px;font-size:1.4rem}
+.slide .txt p{margin:0;color:var(--muted)}
+.slide .txt .btn{margin-top:10px}
+.slide .img{display:grid;place-items:center}
+.slide .img img{width:100%;max-width:380px;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.ctrl{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);color:#fff;border:1px solid rgba(255,255,255,.25);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
+.ctrl:hover{background:rgba(0,0,0,.55)}
+.prev{left:10px}.next{right:10px}
+.dots{display:flex;gap:6px;justify-content:center;padding:12px}
+.dot{width:9px;height:9px;border-radius:50%;background:#52607c;border:1px solid #8391ae;opacity:.6}
+.dot[aria-current="true"]{background:#dbeafe;border-color:#fff;opacity:1}
 .quick-links{max-width:var(--container);margin:8px auto 0;padding:0 16px}
 .quick-links .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
 .quick-links a{display:block;background:#0f1a38;border:1px solid var(--stroke);color:#e2e8f0;text-decoration:none;padding:10px 12px;border-radius:10px;text-align:center}
 .quick-links a:hover{background:#132042}
 @media (max-width:780px){.slide{grid-template-columns:1fr}.slide .img img{max-width:520px}}
 </style>
-<div class="platform-wrap"><div class="slider" aria-roledescription="carousel"><div class="track" id="track" role="group" aria-label="Platform topics"><article class="slide" data-href="hearth.html">
-  <div class="txt">
-    <h3>Housing You Can Afford — HEARTH</h3>
-    <p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p>
-    <a class="btn" href="hearth.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/hearth.svg" alt="Housing You Can Afford — HEARTH"></div>
-</article>
-<article class="slide" data-href="fifa.html">
-  <div class="txt">
-    <h3>Insurance Fairness — FIFA</h3>
-    <p>Full‑coverage option in every line; annual increases tied to inflation unless catastrophe is proven.</p>
-    <a class="btn" href="fifa.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/fifa.svg" alt="Insurance Fairness — FIFA"></div>
-</article>
-<article class="slide" data-href="fair-pricing.html">
-  <div class="txt">
-    <h3>Fair Pricing &amp; Equitable Compensation</h3>
-    <p>Reasonable executive pay ratios; benefits parity; CPI guardrails for price hikes.</p>
-    <a class="btn" href="fair-pricing.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/fair-pricing.svg" alt="Fair Pricing &amp; Equitable Compensation"></div>
-</article>
-<article class="slide" data-href="second-amendment-integrity.html">
-  <div class="txt">
-    <h3>Second Amendment Integrity &amp; Public Safety</h3>
-    <p>Fund SROs, victim aid, crisis teams, conservation; rights respected with real safeguards.</p>
-    <a class="btn" href="second-amendment-integrity.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/second-amendment-integrity.svg" alt="Second Amendment Integrity &amp; Public Safety"></div>
-</article>
-<article class="slide" data-href="neutrality.html">
-  <div class="txt">
-    <h3>Neutrality &amp; Leadership Unity</h3>
-    <p>Neutral, functional government: transparency, open ballot access, on‑time budgets.</p>
-    <a class="btn" href="neutrality.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/neutrality.svg" alt="Neutrality &amp; Leadership Unity"></div>
-</article>
-<article class="slide" data-href="safe-harbor.html">
-  <div class="txt">
-    <h3>Safe Harbor Asset Protection</h3>
-    <p>Protect victims, preserve due process, and keep businesses stable through trials.</p>
-    <a class="btn" href="safe-harbor.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/safe-harbor.svg" alt="Safe Harbor Asset Protection"></div>
-</article>
-<article class="slide" data-href="education-nutrition.html">
-  <div class="txt">
-    <h3>Education &amp; Nutrition Funding (ENUF)</h3>
-    <p>Teacher floor tied to inflation; universal lunch; realistic funding mix.</p>
-    <a class="btn" href="education-nutrition.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education &amp; Nutrition Funding (ENUF)"></div>
-</article>
-<article class="slide" data-href="veterans-care.html">
-  <div class="txt">
-    <h3>Veterans — Florida Veterans CARE Act</h3>
-    <p>Access to care &amp; housing stability, with state gap coverage where federal support ends.</p>
-    <a class="btn" href="veterans-care.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/veterans-care.svg" alt="Veterans — Florida Veterans CARE Act"></div>
-</article>
-<article class="slide" data-href="film-media.html">
-  <div class="txt">
-    <h3>Florida Film &amp; Digital Media Excellence</h3>
-    <p>Performance‑based incentives; strong audits; workforce pipeline for Florida talent.</p>
-    <a class="btn" href="film-media.html">Read More…</a>
-  </div>
-  <div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film &amp; Digital Media Excellence"></div>
-</article></div><button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button><button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button></div><div class="dots" id="dots" role="tablist" aria-label="Slides"></div></div><div class="quick-links"><p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p><div class="grid"><a href="hearth.html">HEARTH</a><a href="fifa.html">FIFA</a><a href="fair-pricing.html">Fair Pricing</a><a href="second-amendment-integrity.html">2A Integrity</a><a href="neutrality.html">Neutrality</a><a href="safe-harbor.html">Safe Harbor</a><a href="education-nutrition.html">ENUF</a><a href="veterans-care.html">Veterans CARE</a><a href="film-media.html">Film &amp; Media</a></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+<div class="platform-wrap"><div class="slider" aria-roledescription="carousel"><div class="track" id="track" role="group" aria-label="Platform topics"><article class="slide" data-href="hearth.html"><div class="txt"><h3>Housing You Can Afford — HEARTH</h3><p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p><a class="btn" href="hearth.html">Read More…</a></div><div class="img"><img src="../assets/platform/hearth.svg" alt="Housing You Can Afford — HEARTH"></div></article>
+<article class="slide" data-href="fifa.html"><div class="txt"><h3>Insurance Fairness — FIFA</h3><p>Full‑coverage option in every line; annual increases tied to inflation unless catastrophe is proven.</p><a class="btn" href="fifa.html">Read More…</a></div><div class="img"><img src="../assets/platform/fifa.svg" alt="Insurance Fairness — FIFA"></div></article>
+<article class="slide" data-href="fair-pricing.html"><div class="txt"><h3>Fair Pricing &amp; Equitable Compensation</h3><p>Reasonable executive pay ratios; benefits parity; CPI guardrails for price hikes.</p><a class="btn" href="fair-pricing.html">Read More…</a></div><div class="img"><img src="../assets/platform/fair-pricing.svg" alt="Fair Pricing &amp; Equitable Compensation"></div></article>
+<article class="slide" data-href="second-amendment-integrity.html"><div class="txt"><h3>Second Amendment Integrity &amp; Public Safety</h3><p>Fund SROs, victim aid, crisis teams, conservation; rights respected with real safeguards.</p><a class="btn" href="second-amendment-integrity.html">Read More…</a></div><div class="img"><img src="../assets/platform/second-amendment-integrity.svg" alt="Second Amendment Integrity &amp; Public Safety"></div></article>
+<article class="slide" data-href="neutrality.html"><div class="txt"><h3>Neutrality &amp; Leadership Unity</h3><p>Neutral, functional government: transparency, open ballot access, on‑time budgets.</p><a class="btn" href="neutrality.html">Read More…</a></div><div class="img"><img src="../assets/platform/neutrality.svg" alt="Neutrality &amp; Leadership Unity"></div></article>
+<article class="slide" data-href="safe-harbor.html"><div class="txt"><h3>Safe Harbor Asset Protection</h3><p>Protect victims, preserve due process, and keep businesses stable through trials.</p><a class="btn" href="safe-harbor.html">Read More…</a></div><div class="img"><img src="../assets/platform/safe-harbor.svg" alt="Safe Harbor Asset Protection"></div></article>
+<article class="slide" data-href="education-nutrition.html"><div class="txt"><h3>Education &amp; Nutrition Funding (ENUF)</h3><p>Teacher floor tied to inflation; universal lunch; realistic funding mix.</p><a class="btn" href="education-nutrition.html">Read More…</a></div><div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education &amp; Nutrition Funding (ENUF)"></div></article>
+<article class="slide" data-href="veterans-care.html"><div class="txt"><h3>Veterans — Florida Veterans CARE Act</h3><p>Access to care &amp; housing stability, with state gap coverage where federal support ends.</p><a class="btn" href="veterans-care.html">Read More…</a></div><div class="img"><img src="../assets/platform/veterans-care.svg" alt="Veterans — Florida Veterans CARE Act"></div></article>
+<article class="slide" data-href="film-media.html"><div class="txt"><h3>Florida Film &amp; Digital Media Excellence</h3><p>Performance‑based incentives; strong audits; workforce pipeline for Florida talent.</p><a class="btn" href="film-media.html">Read More…</a></div><div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film &amp; Digital Media Excellence"></div></article></div><button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button><button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button></div><div class="dots" id="dots" role="tablist" aria-label="Slides"></div></div><div class="quick-links"><p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p><div class="grid"><a href="hearth.html">HEARTH</a><a href="fifa.html">FIFA</a><a href="fair-pricing.html">Fair Pricing</a><a href="second-amendment-integrity.html">2A Integrity</a><a href="neutrality.html">Neutrality</a><a href="safe-harbor.html">Safe Harbor</a><a href="education-nutrition.html">ENUF</a><a href="veterans-care.html">Veterans CARE</a><a href="film-media.html">Film & Media</a></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 <script>
 (function(){
   const track=document.getElementById('track');
@@ -143,3 +80,4 @@
 function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:"en",includedLanguages:"es,ht,zh-CN,vi,ko,pt",layout:google.translate.TranslateElement.InlineLayout.SIMPLE},"google_translate_element");}
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>(function(){function forceGTWhite(){var root=document.querySelector("#google_translate_element .goog-te-gadget-simple");if(!root)return;root.style.setProperty("color","#fff","important");root.querySelectorAll("a, span, *").forEach(function(n){n.style.setProperty("color","#fff","important")});}var host=document.getElementById("google_translate_element");if(host){try{new MutationObserver(forceGTWhite).observe(host,{childList:true,subtree:true});}catch(e){}}forceGTWhite();window.addEventListener("load",forceGTWhite);})();</script>
