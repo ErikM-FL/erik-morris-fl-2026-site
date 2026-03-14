@@ -12,3 +12,50 @@ img.thumb{width:100%;height:auto;object-fit:contain;background:var(--panel)}
 .footer{color:var(--muted);font-size:13px;margin-top:24px}
 .footer-inner{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid var(--border)}
 .footer-inner a{color:#dbeafe;text-decoration:none}.footer-inner a:hover{text-decoration:underline}
+
+
+/* --- Site Upgrade 1 Additions --- */
+
+/* Campaign header banner */
+.campaign-top-banner{
+    width:100%;
+    background:#0b3d91;
+    color:#ffffff;
+    text-align:center;
+    font-weight:600;
+    padding:8px 12px;
+    font-size:14px;
+}
+
+/* Sticky table of contents for desktop */
+.toc-sticky{
+    position:sticky;
+    top:120px;
+}
+
+/* Mobile optimization */
+img{
+    max-width:100%;
+    height:auto;
+}
+
+table{
+    display:block;
+    overflow-x:auto;
+}
+
+.container{
+    padding-left:16px;
+    padding-right:16px;
+}
+
+/* Mobile adjustments */
+@media (max-width:768px){
+    .toc-sticky{
+        position:static;
+    }
+    body{
+        font-size:16px;
+        line-height:1.5;
+    }
+}
