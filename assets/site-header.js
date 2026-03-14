@@ -19,7 +19,8 @@
   const NAV_LINKS = [
     { label: "Home", href: "/index.html" },
     { label: "Platform", href: "/pages/platform.html" }
-    // Add more links here (e.g., { label: "Contact", href: "/pages/contact.html" })
+    { label: "Voting a Write-In Candidate", href: "pages/how-to-write-in.html" }  
+     // Add more links here (e.g., { label: "Contact", href: "/pages/contact.html" })
   ];
 
   // Languages dropdown -> to localized write-in pages (per your README pattern):
