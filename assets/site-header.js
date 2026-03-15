@@ -1,9 +1,9 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v6)
-  // Adds global animated gradient; About Erik in nav; Languages popup w/ Google Translate loader;
-  // and on /pages/platform.html: injects layout+button CSS and initializes the carousel.
+  // Centralized Header Controller (v7)
+  // Changes: solid color background cycle (no visible gradient) — blue→purple→red→purple→blue, 125s.
+  // Keeps: Languages (Google Translate), About Erik in nav, and platform carousel + buttons on /pages/platform.html.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -26,7 +26,6 @@
     if(gtLoaded){ cb&&cb(); return; }
     if(gtLoading){ return; }
     gtLoading=true;
-    // Define the global init callback required by Google
     window.googleTranslateElementInit=function(){
       try{
         new window.google.translate.TranslateElement({
@@ -34,32 +33,31 @@
           includedLanguages:'es,ht,zh-CN,vi,ko,pt',
           layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
         }, 'google_translate_element');
-        gtLoaded=true;
-        cb&&cb();
-      }catch(e){ /* swallow; widget may be blocked by extensions */ }
+        gtLoaded=true; cb&&cb();
+      }catch(e){}
     };
-    // Inject the script (https to avoid mixed content)
     const s=el('script',{src:'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',async:'',defer:''});
     s.onerror=function(){ gtLoading=false; };
     (document.head||document.body).appendChild(s);
   }
 
-  // ---------- Global, uniform animated gradient (125s) ----------
-  const GRADIENT_CSS = `
+  // ---------- SOLID color animation (no gradient visible) ----------
+  // Colors: blue (#0b2a6f) → purple (#3a1d6e) → red (#7a0b0b) → purple → blue
+  const SOLID_BG_CSS = `
     html, body{min-height:100%;}
-    body{
-      background-image: linear-gradient(135deg,
-        #0b2a6f 0%, #3a1d6e 35%, #7a0b0b 50%, #3a1d6e 65%, #0b2a6f 100%
-      );
-      background-size: 400% 400%;
-      background-attachment: fixed;
-      animation: bg-pan-cycle 125s ease-in-out infinite;
-    }
+    body{ background-color:#0b2a6f; animation: solid-bg-cycle 125s linear infinite; }
+    /* ensure sections don't paint over the solid color */
     .hero{ background-color:transparent !important; background-image:none !important; }
-    @keyframes bg-pan-cycle{ 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    @keyframes solid-bg-cycle{
+      0%   { background-color:#0b2a6f; }
+      25%  { background-color:#3a1d6e; }
+      50%  { background-color:#7a0b0b; }
+      75%  { background-color:#3a1d6e; }
+      100% { background-color:#0b2a6f; }
+    }
   `;
 
-  // ---------- Platform page CSS: layout & controls (matches GH Pages behavior) ----------
+  // ---------- Platform page CSS: layout & controls ----------
   const PLATFORM_LAYOUT_CSS = `
     .platform-wrap{max-width:var(--container);margin:20px auto;padding:0 16px}
     .slider{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--stroke);background:var(--card)}
@@ -108,8 +106,8 @@
   }
 
   function buildHeader(){
-    // Global gradient
-    ensureStyle('animated-gradient-css', GRADIENT_CSS);
+    // Solid background color cycle
+    ensureStyle('solid-bg-css', SOLID_BG_CSS);
 
     // Header mount
     let anchor=document.getElementById('site-header'); if(!anchor){anchor=el('div',{id:'site-header'});document.body.insertBefore(anchor,document.body.firstChild);} 
@@ -130,9 +128,8 @@
       .forEach(([label,href])=> list.appendChild(el('li',{},`<a href="${href}">${label}</a>`)) );
     grp.append(list); menu.append(grp); lang.append(btn,menu);
 
-    // Toggle: load Google widget on open
+    // Toggle: load Google widget on open; also pre-load after first paint
     btn.addEventListener('click',()=>{ const open=btn.getAttribute('aria-expanded')==='true'; btn.setAttribute('aria-expanded', String(!open)); menu.setAttribute('aria-hidden', String(open)); if(!open){ loadGoogleTranslate(); } });
-    // Also pre-load on idle (after first paint) for faster open
     setTimeout(()=>loadGoogleTranslate(),1200);
 
     document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
