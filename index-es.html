@@ -11,7 +11,7 @@
 <div id="site-header"></div>
 <!-- Placeholder hero so layout doesn't jump while fetching -->
 <section class="hero"><div class="hero-inner"><div class="hero-content">
-  <figure style="margin:16px 0"><img src="/assets/write-in-ballot.gif" alt="mulit-language write-in animation" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
+  <figure style="margin:16px 0"><img src="/assets/write-in-es.svg" alt="write-in es" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
 </div></div></section>
 <script>
 (function(){
@@ -37,7 +37,6 @@
 
   async function syncFromReference(){
     try{
-      // Ensure header has been injected before we touch the body
       await waitForHeader();
 
       const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
@@ -46,38 +45,52 @@
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
-      // Build a clean fragment that starts at the first hero section to avoid any header/nav above it
+      // Build a clean fragment starting at the first hero section
       const frag = document.createDocumentFragment();
       const refHero = q('section.hero', refDoc);
       if(refHero){
-        // append from hero to end of ref body
         let node = refHero;
         while(node){
-          // skip scripts to avoid re-executing
           if(!(node.nodeType===1 && node.tagName==='SCRIPT')){
             frag.appendChild(node.cloneNode(true));
           }
           node = node.nextSibling;
         }
       } else {
-        // fallback: use entire ref body without scripts
         qa('script', refDoc.body).forEach(s=>s.remove());
         frag.appendChild(refDoc.body.cloneNode(true));
       }
 
-      // Remove everything after the preserved header area
+      // Clear everything after header
       const injectedHeader = q('header.site-header');
       const headerAnchor = q('#site-header');
       const startNode = injectedHeader || headerAnchor || document.body.firstChild;
       let n = startNode ? startNode.nextSibling : document.body.firstChild;
       while(n){ const next = n.nextSibling; n.remove(); n = next; }
 
-      // Inject the cleaned reference content under the header
+      // Inject reference content under the header
       document.body.appendChild(frag);
 
-      // Normalize ONLY the hero figure image (header logo remains untouched)
+      // Normalize hero figure image to local improved SVG (header logo untouched)
       const heroImg = q('section.hero figure img');
       if(heroImg){ heroImg.src = '/assets/write-in-'+LANG+'.svg'; heroImg.alt = 'write-in '+LANG; }
+
+      // --- NEW: Ensure write-in-ballot.gif exists like on reference ---
+      // If ref has it, mirror it; if not present in our DOM, insert after hero
+      const refBallotImg = q('img[src*="write-in-ballot.gif"]', refDoc);
+      const curBallotImg = q('img[src*="write-in-ballot.gif"]');
+      if(refBallotImg && !curBallotImg){
+        // Prefer cloning the parent figure/section if available for styling parity
+        let insertNode = refBallotImg.closest('figure, section, div') || refBallotImg;
+        let clone = insertNode.cloneNode(true);
+        // Force src to local asset path
+        clone.querySelectorAll('img').forEach(img=>{
+          if(img.src.includes('write-in-ballot.gif')){ img.src = '/assets/write-in-ballot.gif'; img.alt = img.alt || 'write-in ballot'; }
+        });
+        const hero = q('section.hero');
+        if(hero && hero.parentNode){ hero.parentNode.insertBefore(clone, hero.nextSibling); }
+        else { document.body.appendChild(clone); }
+      }
 
       // Fix root-relative links
       qa('a[href^="pages/\"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
