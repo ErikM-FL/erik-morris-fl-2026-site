@@ -17,49 +17,72 @@
 (function(){
   const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-pt.html';
   const LANG = 'pt';
+  const MAX_WAIT = 2000; // ms to wait for header injection
+
   function q(sel, root=document){ return root.querySelector(sel); }
+  function qa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+  function waitForHeader(){
+    return new Promise(resolve=>{
+      const t0 = performance.now();
+      (function tick(){
+        const hasInjected = !!q('header.site-header');
+        const hasAnchor = !!q('#site-header');
+        if(hasInjected || hasAnchor) return resolve();
+        if(performance.now()-t0 > MAX_WAIT) return resolve();
+        requestAnimationFrame(tick);
+      })();
+    });
+  }
 
   async function syncFromReference(){
     try{
+      // Ensure header has been injected before we touch the body
+      await waitForHeader();
+
       const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
       if(!res.ok){ console.warn('Sync: fetch failed', res.status); return; }
       const text = await res.text();
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
-      // --- Clean the reference: drop any header/placeholder/scripts so we don't re-inject header or JS ---
-      refDoc.querySelectorAll('header, #site-header, script').forEach(n=>n.remove());
+      // Build a clean fragment that starts at the first hero section to avoid any header/nav above it
+      const frag = document.createDocumentFragment();
+      const refHero = q('section.hero', refDoc);
+      if(refHero){
+        // append from hero to end of ref body
+        let node = refHero;
+        while(node){
+          // skip scripts to avoid re-executing
+          if(!(node.nodeType===1 && node.tagName==='SCRIPT')){
+            frag.appendChild(node.cloneNode(true));
+          }
+          node = node.nextSibling;
+        }
+      } else {
+        // fallback: use entire ref body without scripts
+        qa('script', refDoc.body).forEach(s=>s.remove());
+        frag.appendChild(refDoc.body.cloneNode(true));
+      }
 
-      // --- Preserve current header EXACTLY as-is ---
-      const headerAnchor = q('#site-header');
+      // Remove everything after the preserved header area
       const injectedHeader = q('header.site-header');
-
-      // Identify the node after which page content starts (keep everything before it untouched)
+      const headerAnchor = q('#site-header');
       const startNode = injectedHeader || headerAnchor || document.body.firstChild;
-
-      // Remove everything after startNode (clear old content)
       let n = startNode ? startNode.nextSibling : document.body.firstChild;
       while(n){ const next = n.nextSibling; n.remove(); n = next; }
 
-      // Append reference content 1:1 beneath the preserved header
-      Array.from(refDoc.body.childNodes).forEach(node=>{
-        if(node.nodeType===1 && node.tagName==='SCRIPT') return; // extra safety
-        document.body.appendChild(node.cloneNode(true));
-      });
+      // Inject the cleaned reference content under the header
+      document.body.appendChild(frag);
 
-      // Normalize only the HERO figure image to your local improved SVG
+      // Normalize ONLY the hero figure image (header logo remains untouched)
       const heroImg = q('section.hero figure img');
-      if(heroImg){
-        heroImg.src = '/assets/write-in-'+LANG+'.svg';
-        heroImg.alt = 'write-in '+LANG;
-      }
+      if(heroImg){ heroImg.src = '/assets/write-in-'+LANG+'.svg'; heroImg.alt = 'write-in '+LANG; }
 
-      // Fix relative links like "pages/..." → "/pages/..."
-      document.querySelectorAll('a[href^="pages/"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
+      // Fix root-relative links
+      qa('a[href^="pages/\"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
 
-      // Title → reference
-      const refTitle = refDoc.querySelector('title');
-      if(refTitle) document.title = refTitle.textContent;
+      const refTitle = q('title', refDoc); if(refTitle) document.title = refTitle.textContent;
 
       // Optional bake
       if(new URL(location.href).searchParams.get('bake')==='1'){
