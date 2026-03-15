@@ -1,9 +1,9 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v5)
-  // Injects: global gradient, About Erik in nav, fixed Languages popup,
-  // and on /pages/platform.html: layout CSS + button CSS + carousel behavior.
+  // Centralized Header Controller (v6)
+  // Adds global animated gradient; About Erik in nav; Languages popup w/ Google Translate loader;
+  // and on /pages/platform.html: injects layout+button CSS and initializes the carousel.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -19,6 +19,30 @@
   function ensureStyle(id, css){ if(document.getElementById(id)) return; const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s); }
   function onReady(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);} else { fn(); } }
   function isPlatform(){ return /\/pages\/platform\.html(?:$|[?#])/.test(location.pathname+location.search+location.hash); }
+
+  // ---------- Google Translate lazy loader ----------
+  let gtLoading=false, gtLoaded=false;
+  function loadGoogleTranslate(cb){
+    if(gtLoaded){ cb&&cb(); return; }
+    if(gtLoading){ return; }
+    gtLoading=true;
+    // Define the global init callback required by Google
+    window.googleTranslateElementInit=function(){
+      try{
+        new window.google.translate.TranslateElement({
+          pageLanguage:'en',
+          includedLanguages:'es,ht,zh-CN,vi,ko,pt',
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+        gtLoaded=true;
+        cb&&cb();
+      }catch(e){ /* swallow; widget may be blocked by extensions */ }
+    };
+    // Inject the script (https to avoid mixed content)
+    const s=el('script',{src:'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit',async:'',defer:''});
+    s.onerror=function(){ gtLoading=false; };
+    (document.head||document.body).appendChild(s);
+  }
 
   // ---------- Global, uniform animated gradient (125s) ----------
   const GRADIENT_CSS = `
@@ -105,7 +129,12 @@
     [ ['Español',rt+'/index-es.html'], ['Kreyòl Ayisyen',rt+'/index-ht.html'], ['中文（简体）',rt+'/index-zh.html'], ['Tiếng Việt',rt+'/index-vi.html'], ['한국어',rt+'/index-ko.html'], ['Português',rt+'/index-pt.html'] ]
       .forEach(([label,href])=> list.appendChild(el('li',{},`<a href="${href}">${label}</a>`)) );
     grp.append(list); menu.append(grp); lang.append(btn,menu);
-    btn.addEventListener('click',()=>{ const open=btn.getAttribute('aria-expanded')==='true'; btn.setAttribute('aria-expanded', String(!open)); menu.setAttribute('aria-hidden', String(open)); });
+
+    // Toggle: load Google widget on open
+    btn.addEventListener('click',()=>{ const open=btn.getAttribute('aria-expanded')==='true'; btn.setAttribute('aria-expanded', String(!open)); menu.setAttribute('aria-hidden', String(open)); if(!open){ loadGoogleTranslate(); } });
+    // Also pre-load on idle (after first paint) for faster open
+    setTimeout(()=>loadGoogleTranslate(),1200);
+
     document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
     document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
 
