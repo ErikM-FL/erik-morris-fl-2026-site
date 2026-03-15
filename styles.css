@@ -1,12 +1,14 @@
-/* Basic layout defaults (preserve your original classes) */
 :root{--container:1120px;--stroke:#2b3a51;--card:#0c132b;--muted:#a9b3c3}
+*{box-sizing:border-box}
 body{margin:0;background:#0a1023;color:#d9e3ee;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 .hero{background:linear-gradient(180deg,#0a1628 0%,#0d1430 100%);border-bottom:1px solid rgba(255,255,255,.06)}
-.hero-inner{max-width:1120px;margin:0 auto;padding:28px 16px;display:grid;grid-template-columns:1fr;gap:14px}
+.hero-inner{max-width:var(--container);margin:0 auto;padding:28px 16px;display:grid;gap:14px}
 .kicker{color:#9fb3d9;letter-spacing:.2px;margin:0 0 8px}
-.section{max-width:1120px;margin:20px auto;padding:0 16px}
+.section{max-width:var(--container);margin:20px auto;padding:0 16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .card{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:14px}
 .btn{display:inline-block;background:#14345c;color:#e6f2ff;text-decoration:none;padding:8px 12px;border-radius:8px;border:1px solid #2b4772}
 .footer{border-top:1px solid rgba(255,255,255,.08);margin-top:24px}
-.footer-inner{max-width:1120px;margin:0 auto;padding:18px 16px;color:#9fb3d9}
+.footer-inner{max-width:var(--container);margin:0 auto;padding:18px 16px;color:#9fb3d9}
+.page{max-width:var(--container);margin:20px auto;padding:0 16px}
+.content{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
