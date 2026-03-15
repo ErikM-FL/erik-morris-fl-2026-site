@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="site-header"></div>
-<!-- Minimal placeholder while the reference is fetched -->
+<!-- Placeholder hero so layout doesn't jump while fetching -->
 <section class="hero"><div class="hero-inner"><div class="hero-content">
   <figure style="margin:16px 0"><img src="/assets/write-in-zh.svg" alt="write-in zh" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
 </div></div></section>
@@ -17,53 +17,51 @@
 (function(){
   const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-zh.html';
   const LANG = 'zh';
-  function $(sel, root=document){ return root.querySelector(sel); }
+  function q(sel, root=document){ return root.querySelector(sel); }
 
   async function syncFromReference(){
     try{
       const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
-      if(!res.ok){ console.warn('Sync: failed to fetch reference', res.status); return; }
+      if(!res.ok){ console.warn('Sync: fetch failed', res.status); return; }
       const text = await res.text();
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
-      // --- HEADER: preserve only our local header placeholder ---
-      // Remove any header/placeholder that may have come from the reference
-      refDoc.querySelectorAll('#site-header, header.site-header').forEach(n=>n.remove());
+      // --- Clean the reference: drop any header/placeholder/scripts so we don't re-inject header or JS ---
+      refDoc.querySelectorAll('header, #site-header, script').forEach(n=>n.remove());
 
-      // Prepare a new body fragment containing: our local header placeholder + reference content
-      const frag = document.createDocumentFragment();
-      // keep exactly one placeholder so /assets/site-header.js can inject once
-      const headerAnchor = document.getElementById('site-header') || document.createElement('div');
-      headerAnchor.id = 'site-header';
+      // --- Preserve current header EXACTLY as-is ---
+      const headerAnchor = q('#site-header');
+      const injectedHeader = q('header.site-header');
 
-      // Recreate a clean <body> content: header anchor + ref body children
-      frag.appendChild(headerAnchor);
-      Array.from(refDoc.body.childNodes).forEach(n=>{
-        // skip scripts from ref to avoid double-exec
-        if(n.nodeType===1 && n.tagName==='SCRIPT') return;
-        frag.appendChild(n.cloneNode(true));
+      // Identify the node after which page content starts (keep everything before it untouched)
+      const startNode = injectedHeader || headerAnchor || document.body.firstChild;
+
+      // Remove everything after startNode (clear old content)
+      let n = startNode ? startNode.nextSibling : document.body.firstChild;
+      while(n){ const next = n.nextSibling; n.remove(); n = next; }
+
+      // Append reference content 1:1 beneath the preserved header
+      Array.from(refDoc.body.childNodes).forEach(node=>{
+        if(node.nodeType===1 && node.tagName==='SCRIPT') return; // extra safety
+        document.body.appendChild(node.cloneNode(true));
       });
 
-      // Replace current body children with the new fragment
-      document.body.innerHTML='';
-      document.body.appendChild(frag);
-
-      // --- HERO FIGURE: normalize ONLY the hero figure image to our local SVG ---
-      const heroFigImg = document.querySelector('section.hero figure img');
-      if(heroFigImg){
-        heroFigImg.src = '/assets/write-in-'+LANG+'.svg';
-        heroFigImg.setAttribute('alt','write-in '+LANG);
+      // Normalize only the HERO figure image to your local improved SVG
+      const heroImg = q('section.hero figure img');
+      if(heroImg){
+        heroImg.src = '/assets/write-in-'+LANG+'.svg';
+        heroImg.alt = 'write-in '+LANG;
       }
 
-      // Fix relative links like "pages/..." to root-based "/pages/..."
+      // Fix relative links like "pages/..." → "/pages/..."
       document.querySelectorAll('a[href^="pages/"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
 
-      // Title — use reference
+      // Title → reference
       const refTitle = refDoc.querySelector('title');
       if(refTitle) document.title = refTitle.textContent;
 
-      // Bake support
+      // Optional bake
       if(new URL(location.href).searchParams.get('bake')==='1'){
         const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
         const a = document.createElement('a');
@@ -71,9 +69,11 @@
         a.download = document.location.pathname.split('/').pop() || ('index-'+LANG+'.html');
         document.body.appendChild(a); a.click(); a.remove();
       }
-    }catch(err){ console.warn('Sync: error', err); }
+    }catch(e){ console.warn('Sync error', e); }
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', syncFromReference); else syncFromReference();
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', syncFromReference);
+  else syncFromReference();
 })();
 </script>
 </body>
