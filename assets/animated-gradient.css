@@ -1,0 +1,27 @@
+
+/* Animated background gradient across the whole site.
+   Cycle: blue → purple → GOP-like darker red → purple → blue (50s), smooth, no hard stops. */
+html, body{
+  min-height:100%;
+}
+body{
+  /* Multi-stop diagonal gradient; we'll pan its background-position to create a smooth color cycle */
+  background: linear-gradient(135deg,
+    #0b2a6f 0%,      /* blue */
+    #3a1d6e 35%,     /* purple */
+    #7a0b0b 50%,     /* darker red */
+    #3a1d6e 65%,     /* purple */
+    #0b2a6f 100%     /* blue */
+  );
+  background-size: 400% 400%;      /* plenty of room to pan without banding */
+  animation: bg-pan-cycle 50s ease-in-out infinite;
+  background-attachment: fixed;     /* stable feel while scrolling */
+}
+/* If any section had an opaque background, allow the gradient to show through */
+.hero{ background-color: transparent !important; background-image: none !important; }
+
+@keyframes bg-pan-cycle {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
