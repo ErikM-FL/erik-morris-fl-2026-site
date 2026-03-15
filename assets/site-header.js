@@ -7,7 +7,22 @@
   function root(){return location.pathname.startsWith('/pages/')?'..':'.';}
   function loadGT(cb){ if(window.google&&window.google.translate){cb();return;} const s=el('script',{src:'//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'}); window.googleTranslateElementInit=function(){try{cb();}catch(e){}}; document.body.appendChild(s); }
   function initGT(){ try{ new window.google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'es,ht,zh-CN,vi,ko,pt',layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }catch(e){} }
-  function positionMenu(){ try{var hdr=document.querySelector('.site-header');var menu=document.querySelector('.site-header__menu');if(!hdr||!menu)return;var r=hdr.getBoundingClientRect();menu.style.top=Math.max(56,r.bottom+8)+'px';}catch(e){} }
+  /* Fixed Pos Language button */
+  /* function positionMenu(){ try{var hdr=document.querySelector('.site-header');var menu=document.querySelector('.site-header__menu');if(!hdr||!menu)return;var r=hdr.getBoundingClientRect();menu.style.top=Math.max(56,r.bottom+8)+'px';}catch(e){} }*/
+  function positionMenu(){
+  const menu = document.querySelector('.site-header__menu');
+  if (!menu) return;
+
+  // Only compute a viewport-based position if the menu is fixed.
+  if (getComputedStyle(menu).position === 'fixed') {
+    const hdr = document.querySelector('.site-header');
+    const r = hdr?.getBoundingClientRect();
+    if (r) menu.style.top = Math.max(56, r.bottom + 8) + 'px';
+  } else {
+    // Absolute mode: let CSS handle it
+    menu.style.top = '';
+  }
+}
   function build(){
     if(!document.querySelector('link[href*="/assets/site-header.css"]')){ (document.head||document.body).appendChild(el('link',{rel:'stylesheet',href:'/assets/site-header.css?v=3'})); }
     let anchor=document.getElementById('site-header'); if(!anchor){anchor=el('div',{id:'site-header'});document.body.insertBefore(anchor,document.body.firstChild);} 
