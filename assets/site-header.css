@@ -224,3 +224,4 @@ header.site-header .header-right * {
   position: relative;
   z-index: 1;
 }
+header.site-header { outline: 2px dashed #00ff7f; } /* TEMP: debug */
