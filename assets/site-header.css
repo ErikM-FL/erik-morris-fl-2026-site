@@ -8,7 +8,47 @@
 .site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
 .site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative}
 .site-header__btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;padding:.3rem .55rem;border-radius:6px;font-weight:600}
-/*Original button, no arrow --*/
+
+/* -------- GLOBAL HEADER FIX (ALL PAGES) -------- */
+/* Layout baseline */
+header.site-header .header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Keep language menu reliably above other header images/labels */
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  position: relative;
+  z-index: 2;
+}
+
+/* Size + spacing for header GIF (write-in.gif) */
+header.site-header img[src*="write-in.gif"] {
+  max-height: 28px;    /* compact so it never crowds the menu */
+  width: auto;
+  margin-left: 8px;    /* small breathing room from emtest.png */
+  flex-shrink: 0;
+}
+
+/* Ensure emtest.png and write-in.gif appear in the intended left-to-right order */
+header.site-header img[src*="emtest.png"] {
+  order: 10;
+}
+header.site-header img[src*="write-in.gif"] {
+  order: 11;
+}
+
+/* Remove any global z-index that could extend the header over the page content unintentionally */
+header.site-header {
+  position: relative;  /* create local stacking context */
+  z-index: auto;
+}
+
+
+/* ----- Original button, no arrow ----- */
 /*.site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
 .site-header__menu[aria-hidden="false"]{display:block} */
 
