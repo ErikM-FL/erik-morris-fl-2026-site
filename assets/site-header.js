@@ -1,104 +1,86 @@
-/* ===== Global Two-Line Header (site-wide) ===== */
+
+/* ===== Global Two-Line Header (dropdown with embedded Google Translate) ===== */
 (function(){
-  const TAGLINE_TEXT = "Write‑in • Floridians First • For Florida Families & Future • Fix the Incentives";
+  const BRAND_TEXT = 'Erik Morris 2026';
+  const TAGLINE_TEXT = 'Write‑in • Floridians First • For Florida Families & Future • Fix the Incentives';
   const NAV_LINKS = [
-    { label: "Home", href: "/index.html" },
-    { label: "Platform", href: "/pages/platform.html" }
-    // Add more nav items as needed
-  ];
-  const LANG_ITEMS = [
-    { type:"gt", label:"Translate this page (Google Translate)…" },
-    { type:"sep" },
-    { type:"link", label:"English", path:"/pages/how-to-write-in-en.html" },
-    { type:"link", label:"Español", path:"/pages/how-to-write-in-es.html" },
-    { type:"link", label:"Kreyòl Ayisyen", path:"/pages/how-to-write-in-ht.html" },
-    { type:"link", label:"中文", path:"/pages/how-to-write-in-zh.html" },
-    { type:"link", label:"Tiếng Việt", path:"/pages/how-to-write-in-vi.html" },
-    { type:"link", label:"한국어", path:"/pages/how-to-write-in-ko.html" }
+    { label: 'Platform', href: '/pages/platform.html' },
+    { label: 'Voting a Write-In Candidate', href: '/pages/how-to-write-in.html' }
   ];
 
-  function el(tag, attrs={}, html){ const e=document.createElement(tag); for(const k in attrs){ if(k==="class") e.className=attrs[k]; else e.setAttribute(k, attrs[k]); } if(html!=null) e.innerHTML=html; return e; }
+  function el(t,a={},h){const e=document.createElement(t);for(const k in a){k==='class'?e.className=a[k]:e.setAttribute(k,a[k])}if(h!=null)e.innerHTML=h;return e;}
+  function ensureStyles(){ if(!document.querySelector('link[href$="/assets/site-header.css"]')){ (document.head||document.body).appendChild(el('link',{rel:'stylesheet',href:'/assets/site-header.css'})); } }
+  function rootPrefix(){ return location.pathname.indexOf('/pages/')===0 ? '..' : '.'; }
 
-  function ensureStyles(){
-    if(!document.querySelector('link[href$="/assets/site-header.css"]')){
-      const link = el('link',{rel:'stylesheet',href:'/assets/site-header.css'});
-      if(document.head){ document.head.appendChild(link); }
-      else { document.body.prepend(link); }
-    }
-  }
+  // Google Translate inside dropdown
+  function loadGT(cb){ if(window.google && window.google.translate){cb();return;} const s=el('script',{src:'//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'}); window.googleTranslateElementInit=function(){cb();}; document.body.appendChild(s); }
+  function buildGTContainer(){ const host=el('div',{id:'gt-mini'}); const selectShadow=el('div',{style:'position:relative'}); const selectHost=el('div',{id:'google_translate_element'}); selectShadow.appendChild(selectHost); host.appendChild(selectShadow); return host; }
+  function initGT(){ if(initGT._done) return; try{ new window.google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'es,ht,zh-CN,vi,ko,pt',layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }catch(e){} initGT._done=true; }
 
-  function buildNav(){
-    const nav = el('nav',{class:'site-header__nav', 'aria-label':'Primary'});
-    NAV_LINKS.forEach(({label,href})=>{ const a=el('a',{href},label); nav.appendChild(a); });
-    return nav;
-  }
-
-  function buildLang(){
-    const wrap = el('div',{class:'site-header__lang'});
-    const label = el('span',{class:'site-header__lang-label'},'Languages');
-    const sel = el('select',{class:'site-header__lang-select','aria-label':'Languages'});
-    const ph = el('option', {value:"", selected:true, hidden:true}, 'Languages'); // white text on control
-    sel.appendChild(ph);
-    const gt = el('option',{value:'__gt__'}, LANG_ITEMS[0].label); sel.appendChild(gt);
-    const sep = el('option',{},'──────────────'); sep.disabled=true; sel.appendChild(sep);
-    LANG_ITEMS.filter(i=>i.type==='link').forEach(i=>{ sel.appendChild(el('option',{value:i.path}, i.label)); });
-    sel.addEventListener('change', e => {
-      const v = e.target.value; if(!v) return;
-      if(v==='__gt__'){ openGT(); sel.value=''; return; }
-      location.href = v;
-    });
-    wrap.append(label, sel);
-    return wrap;
-  }
-
-  function loadGTScript(cb){
-    if(window.google && window.google.translate){ cb(); return; }
-    const s = document.createElement('script');
-    s.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    window.googleTranslateElementInit = function(){ cb(); };
-    document.body.appendChild(s);
-  }
-
-  function openGT(){
-    let modal = document.getElementById('gt-modal');
-    if(!modal){
-      modal = el('div',{id:'gt-modal'});
-      const box = el('div',{class:'gt-box'});
-      const head = el('div',{class:'gt-head'});
-      head.appendChild(el('div',{class:'gt-title'},'Translate this page'));
-      const close = el('button',{class:'gt-close','aria-label':'Close'},'×');
-      close.addEventListener('click',()=> modal.style.display='none');
-      head.appendChild(close);
-      const body = el('div',{id:'google_translate_element'});
-      box.append(head, body);
-      modal.appendChild(box);
-      document.body.appendChild(modal);
-    }
-    modal.style.display='flex';
-    loadGTScript(function(){
-      if(!modal.dataset.ready){
-        try { new window.google.translate.TranslateElement({pageLanguage:'en'}, 'google_translate_element'); } catch(e){}
-        modal.dataset.ready='1';
-      }
-    });
-  }
-
-  function buildHeader(){
+  function build(){
     ensureStyles();
-    const h = el('header',{class:'site-header'});
-    const inner = el('div',{class:'site-header__inner'});
-    const tagline = el('div',{class:'site-header__tagline'}); tagline.textContent = TAGLINE_TEXT;
-    const images = el('div',{class:'site-header__images'});
-    const img1 = el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''});
-    const img2 = el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'});
-    img1.onerror=()=>{img1.style.display='none'}; img2.onerror=()=>{img2.style.display='none'};
-    images.append(img1,img2);
-    const lang = buildLang();
-    const nav = buildNav();
-    inner.append(tagline, images, lang, nav);
-    h.appendChild(inner);
-    const b=document.body; if(b.firstChild){b.insertBefore(h,b.firstChild)} else {b.appendChild(h)}
+    let anchor=document.getElementById('site-header');
+    if(!anchor){ anchor = document.createElement('div'); anchor.id='site-header'; document.body.insertBefore(anchor, document.body.firstChild); }
+
+    const H=el('header',{class:'site-header'}); const inner=el('div',{class:'site-header__inner'});
+
+    // Top-left brandline: brand + tagline
+    const brandline=el('div',{class:'site-header__brandline'});
+    brandline.append(el('span',{class:'site-header__brand'}, BRAND_TEXT));
+    const tg=el('span',{class:'site-header__tagline'}); tg.textContent=TAGLINE_TEXT; brandline.append(tg);
+
+    // Images spanning two rows
+    const images=el('div',{class:'site-header__images'});
+    const img1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''});
+    const img2=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'});
+    img1.onerror=()=>img1.style.display='none'; img2.onerror=()=>img2.style.display='none'; images.append(img1,img2);
+
+    // Languages dropdown (top-right)
+    const lang=el('div',{class:'site-header__lang'});
+    const btn=el('button',{class:'site-header__btn',id:'langBtn','aria-expanded':'false','aria-haspopup':'true'},'Languages');
+    const menu=el('div',{class:'site-header__menu','aria-hidden':'true',role:'menu','aria-label':'Languages'});
+
+    // Group 1: Translate this page -> embedded GT select
+    menu.append(el('div',{class:'menu-label'},'Translate this page'));
+    const gtWrap=buildGTContainer();
+    gtWrap.firstChild.className='menu-select';
+    menu.append(gtWrap);
+
+    // Group 2: Visit localized landing
+    const grp=el('div',{class:'menu-group'});
+    grp.append(el('div',{class:'menu-label'},'Visit localized landing'));
+    const list=el('ul',{class:'menu-list'});
+    const root=rootPrefix();
+    [
+      {label:'Español',href:root+'/index-es.html'},
+      {label:'Kreyòl Ayisyen',href:root+'/index-ht.html'},
+      {label:'中文（简体）',href:root+'/index-zh.html'},
+      {label:'Tiếng Việt',href:root+'/index-vi.html'},
+      {label:'한국어',href:root+'/index-ko.html'},
+      {label:'Português',href:root+'/index-pt.html'}
+    ].forEach(i=>{ list.appendChild(el('li',{}, `<a href="${i.href}">${i.label}</a>`)); });
+    grp.append(list); menu.append(grp);
+
+    lang.append(btn,menu);
+
+    // Toggle menu
+    btn.addEventListener('click',()=>{
+      const open = btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded', String(!open));
+      menu.setAttribute('aria-hidden', String(open));
+      if(!open){ loadGT(initGT); }
+    });
+    document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }});
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); }});
+
+    // Bottom row nav (plus Home on left brandline already)
+    const nav=el('nav',{class:'site-header__bottom site-header__nav','aria-label':'Primary'});
+    nav.appendChild(el('a',{href:'/'},'Home'));
+    NAV_LINKS.forEach(({label,href})=> nav.appendChild(el('a',{href},label)) );
+
+    inner.append(brandline, images, lang, nav);
+    H.appendChild(inner); anchor.replaceWith(H);
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', buildHeader); else buildHeader();
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded', build);} else { build(); }
 })();
