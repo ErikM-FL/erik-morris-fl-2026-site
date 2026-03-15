@@ -1,95 +1,83 @@
 
-/* ===============================================
-   /assets/site-header.js  — SAFE ROLLBACK + ROW‑2 ADD‑ON
-   1) Loads your last known good header script from the BACKUP branch.
-   2) After it renders, creates a second row and moves the Languages control there.
-   3) Injects small, global CSS for ballot GIF sizing (body) + header row‑2.
-   ----------------------------------------------- */
+/* ======================================================
+   /assets/site-header.js — EMERGENCY RESTORE (v3)
+   Builds a stable two‑row header and integrates Google Translate.
+   No external repo fetches, no placeholders.
+   ====================================================== */
 (function(){
-  const RAW_ORIGINAL_JS = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/assets/site-header.js';
+  function el(tag, attrs){ const e=document.createElement(tag); if(attrs){ for(const k in attrs){ if(k==='class') e.className=attrs[k]; else if(k==='html') e.innerHTML=attrs[k]; else e.setAttribute(k, attrs[k]); } } return e; }
+  function txt(s){ return document.createTextNode(s); }
 
-  // --- tiny CSS injector ---
-  function injectCSS(css){
-    const style = document.createElement('style');
-    style.setAttribute('data-source','header-row2-addon');
-    style.textContent = css;
-    document.head.appendChild(style);
+  function ensureMount(){
+    let mount = document.getElementById('site-header');
+    if(!mount){ mount = el('div',{id:'site-header'}); document.body.insertBefore(mount, document.body.firstChild); }
+    return mount;
   }
 
-  // Global CSS: header row-2 + ballot size fixes (non-destructive)
-  injectCSS([
-    'header.site-header .row-2{display:flex;align-items:center;gap:12px;margin-top:6px}',
-    'header.site-header #languages-slot{display:inline-flex;align-items:center;position:relative;z-index:2}',
-    'header.site-header [data-lang-menu],header.site-header .lang{position:relative;z-index:2;color:#fff}',
-    '/* body ballot image frame (smaller like live) */',
-    '.ballot-block{max-width:740px;margin:14px auto;padding:6px;border:1px solid var(--stroke);border-radius:6px;background:var(--card,transparent);box-shadow:0 1px 8px rgba(0,0,0,.16);overflow:hidden}',
-    '.ballot-block img{display:block;max-width:100%;height:auto}',
-    '.ballot-block img[src*="write-in-ballot"]{margin-bottom:-8px}',
-    'figure img[src*="write-in-ballot"]{display:block;max-width:100%;height:auto}',
-    'figure:has(> img[src*="write-in-ballot"]) {max-width:740px;margin:14px auto;padding:6px;border:1px solid var(--stroke);border-radius:6px;background:var(--card,transparent);box-shadow:0 1px 8px rgba(0,0,0,.16);overflow:hidden}'
-  ].join('
-'));
+  function buildHeader(){
+    const header = el('header',{class:'site-header'});
 
-  // 1) Load the last working header (from BACKUP branch) and execute it
-  function loadOriginalHeader(){
-    return fetch(RAW_ORIGINAL_JS, {cache:'no-store', credentials:'omit'})
-      .then(r => { if(!r.ok) throw new Error('Failed to fetch original header: '+r.status); return r.text(); })
-      .then(code => {
-        const s = document.createElement('script');
-        s.type='text/javascript';
-        s.text = code + '
-//# sourceURL=backup-site-header.js';
-        document.head.appendChild(s);
-      });
+    // Row 1
+    const c1 = el('div',{class:'container'});
+    const row1 = el('div',{class:'row-1'});
+
+    const brand = el('div',{class:'brand-wrap'});
+    const brandLink = el('a',{class:'brand', href:'/'}); brandLink.appendChild(txt('Erik Morris 2026')); brand.appendChild(brandLink);
+
+    const nav = el('nav',{class:'main-nav','aria-label':'Primary'});
+    const aHome = el('a',{href:'/'}); aHome.appendChild(txt('Home'));
+    const aPlatform = el('a',{href:'/platform.html'}); aPlatform.appendChild(txt('Platform'));
+    const aVoting = el('a',{href:'/pages/how-to-write-in-en.html'}); aVoting.appendChild(txt('Voting & Write-In Candidate'));
+    const aAbout = el('a',{href:'/about.html'}); aAbout.appendChild(txt('About Erik'));
+    [aHome,aPlatform,aVoting,aAbout].forEach(a=>nav.appendChild(a));
+
+    const right = el('div',{class:'header-right'});
+    right.appendChild(el('img',{class:'hdr-emtest', src:'/assets/emtest.png', alt:'profile'}));
+    right.appendChild(el('img',{class:'hdr-writein', src:'/assets/write-in.gif', alt:'write-in'}));
+
+    row1.appendChild(brand); row1.appendChild(nav); row1.appendChild(right);
+    c1.appendChild(row1);
+
+    // Row 2 — Languages slot
+    const c2 = el('div',{class:'container'});
+    const row2 = el('div',{class:'row-2'});
+    const langSlot = el('div',{id:'google_translate_element', class:'lang', 'data-lang-menu':''});
+    row2.appendChild(langSlot);
+    c2.appendChild(row2);
+
+    header.appendChild(c1); header.appendChild(c2);
+    return header;
   }
 
-  // 2) After header exists, add row‑2 and move Languages
-  function ensureRow2AndMoveLanguages(){
-    const header = document.querySelector('header.site-header'); if(!header) return;
-
-    // create row‑2 once
-    let row2 = header.querySelector('.row-2');
-    if(!row2){
-      row2 = document.createElement('div');
-      row2.className = 'row-2';
-      // place after the first header row
-      const row1 = header.querySelector('.header-row') || header.firstElementChild;
-      if(row1 && row1.parentNode) row1.parentNode.insertBefore(row2, row1.nextSibling); else header.appendChild(row2);
-      // slot for Languages
-      const slot = document.createElement('div'); slot.id = 'languages-slot'; slot.setAttribute('aria-label','Language selector');
-      row2.appendChild(slot);
-    }
-
-    // find existing Languages control (keep all working selectors)
-    const languages = header.querySelector('#google_translate_element') ||
-                      header.querySelector('[data-lang-menu]') ||
-                      header.querySelector('.lang') ||
-                      document.getElementById('google_translate_element') ||
-                      document.querySelector('[data-lang-menu]') ||
-                      document.querySelector('.lang') ||
-                      document.getElementById('languages');
-    if(languages && languages.parentNode !== row2){
-      row2.appendChild(languages);
-      languages.style.position='relative';
-      languages.style.zIndex='2';
-      languages.style.color='#fff'; // keep white text
-    }
+  function mountHeader(){
+    const mount = ensureMount();
+    mount.innerHTML='';
+    mount.appendChild(buildHeader());
   }
 
-  // 3) Observe in case Languages is injected later (e.g., Google Translate)
-  function observeLanguages(){
-    const obs = new MutationObserver(()=>{ ensureRow2AndMoveLanguages(); });
-    obs.observe(document.documentElement, {childList:true, subtree:true});
-    // stop after 6s (enough for GTM/Translate to appear)
-    setTimeout(()=>obs.disconnect(), 6000);
+  // If a ballot image exists without wrapper, tag its figure for styling
+  function tagBallotFigure(){
+    const img = document.querySelector('img[src*="write-in-ballot"]');
+    if(img){ const fig = img.closest('figure'); if(fig) fig.classList.add('ballot-figure'); }
   }
 
-  function ready(fn){ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', fn); } else fn(); }
+  // Google Translate bootstrap (keeps text white via CSS) — works if allowed by CSP
+  function loadGoogleTranslate(){
+    // If already present, do nothing
+    if(window.google && window.google.translate) return;
+    window.googleTranslateElementInit = function(){
+      try{ new window.google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'en,es,ht,vi,ko,zh-CN,pt', autoDisplay:false}, 'google_translate_element'); }catch(_e){}
+    };
+    var s = document.createElement('script');
+    s.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    s.async = true; document.head.appendChild(s);
+  }
 
-  // Run
+  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+
   ready(function(){
-    loadOriginalHeader()
-      .then(()=>{ ensureRow2AndMoveLanguages(); observeLanguages(); })
-      .catch(err=>{ console.warn('[header-rollback] Could not load original header from backup:', err); /* as a fallback, still try to move if header exists */ ensureRow2AndMoveLanguages(); observeLanguages(); });
+    mountHeader();
+    tagBallotFigure();
+    loadGoogleTranslate();
   });
 })();

@@ -1,65 +1,40 @@
 
-/* =============================
-   /assets/site-header.css  (FULL REPLACEMENT)
-   Two-row header layout (global) + global ballot GIF sizing
-   ============================= */
+/* =============================================
+   /assets/site-header.css — EMERGENCY RESTORE (v3)
+   Two-row header, Languages on row-2, no overlap; body ballot sizing
+   ============================================= */
 
-/* ---- CSS variables are expected to exist in your site (e.g., --stroke, --card). */
+/* Basic fallbacks if theme vars are missing */
+:root{ --stroke: rgba(255,255,255,.18); --card: rgba(255,255,255,.04); }
 
-/* ===== Header layout (two rows) ===== */
-header.site-header { position: relative; z-index: auto; width:100%; }
-header.site-header .header-row { display: grid; align-items: center; gap: 12px; }
+/* Header shell */
+header.site-header{ position:relative; z-index:10; width:100%; }
+header.site-header .container{ max-width:1200px; margin:0 auto; padding:10px 16px; }
 
-/* Row 1: brand | nav | right visuals */
-header.site-header .row-1 { grid-template-columns: auto 1fr auto; }
-header.site-header .brand-wrap { display:flex; align-items:center; min-width:0; }
-header.site-header .brand-wrap a.brand { font-weight:700; font-size:18px; text-decoration:none; color:inherit; }
+/* Row 1 — brand | nav | right icons */
+header.site-header .row-1{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px; }
+header.site-header .brand-wrap{ display:flex; align-items:center; min-width:0; }
+header.site-header .brand-wrap a.brand{ font-weight:700; font-size:18px; text-decoration:none; color:#fff; white-space:nowrap; }
 
-header.site-header .main-nav { display:flex; gap:18px; flex-wrap:nowrap; align-items:center; }
-header.site-header .main-nav a { text-decoration:none; color:inherit; opacity:.9 }
-header.site-header .main-nav a:hover { opacity:1 }
+header.site-header nav.main-nav{ display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+header.site-header nav.main-nav a{ color:#fff; text-decoration:none; opacity:.95 }
+header.site-header nav.main-nav a:hover{ opacity:1 }
 
-/* Right visuals (emtest + write-in.gif) */
-header.site-header .header-right { display:flex; align-items:center; gap:8px; }
-header.site-header img[src*="emtest.png"] { order: 10; display:block; height:32px; width:auto; border-radius:4px; }
-header.site-header img[src*="write-in.gif"] { order: 11; display:block; max-height:28px; width:auto; margin-left:8px; flex-shrink:0; }
+header.site-header .header-right{ display:flex; align-items:center; gap:8px; }
+header.site-header img.hdr-emtest{ display:block; height:32px; width:auto; border-radius:4px; }
+header.site-header img.hdr-writein{ display:block; max-height:28px; width:auto; flex-shrink:0; }
 
-/* Row 2: Languages slot sits under the nav (after About Erik in DOM order) */
-header.site-header .row-2 { grid-template-columns: auto 1fr; }
-header.site-header #languages-slot { display:inline-flex; align-items:center; }
+/* Row 2 — Languages */
+header.site-header .row-2{ display:flex; align-items:center; gap:12px; margin-top:6px; }
+header.site-header #google_translate_element, 
+header.site-header .lang, 
+header.site-header [data-lang-menu]{ display:inline-flex; align-items:center; color:#fff; }
 
-/* Keep Languages above any visuals if overlap occurs */
-header.site-header #languages-slot,
-header.site-header [data-lang-menu],
-header.site-header .lang { position:relative; z-index:2; }
+/* ---- Body ballot image (localized landings) ---- */
+.ballot-block{ max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }
+.ballot-block img{ display:block; max-width:100%; height:auto; }
+.ballot-block img[src*="write-in-ballot"]{ margin-bottom:-8px; }
 
-/* Simple spacing & container widths */
-header.site-header .container { max-width:1200px; margin:0 auto; padding:10px 16px; }
-
-/* ===== Global ballot GIF styling (applies to all localized landings) ===== */
-/* If a wrapper is present, prefer it */
-.ballot-block {
-  max-width: 740px;        /* Adjust to 740–760px to exactly mirror your live reference */
-  margin: 14px auto;
-  padding: 6px;
-  border: 1px solid var(--stroke);
-  border-radius: 6px;
-  background: var(--card, transparent);
-  box-shadow: 0 1px 8px rgba(0,0,0,.16);
-  overflow: hidden;         /* enables the visual bottom trim */
-}
-.ballot-block img { display:block; max-width:100%; height:auto; }
-.ballot-block img[src*="write-in-ballot.gif"] { margin-bottom:-8px; }
-
-/* Fallback when the GIF is directly inside a <figure> */
-figure img[src*="write-in-ballot.gif"] { display:block; max-width:100%; height:auto; }
-figure:has(> img[src*="write-in-ballot.gif"]) {
-  max-width: 740px;
-  margin: 14px auto;
-  padding: 6px;
-  border: 1px solid var(--stroke);
-  border-radius: 6px;
-  background: var(--card, transparent);
-  box-shadow: 0 1px 8px rgba(0,0,0,.16);
-  overflow: hidden;
-}
+/* Minimal figure fallback when wrapper is absent */
+figure.ballot-figure{ max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }
+figure.ballot-figure img{ display:block; max-width:100%; height:auto; }
