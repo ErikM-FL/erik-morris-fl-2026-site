@@ -8,8 +8,57 @@
 .site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
 .site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative}
 .site-header__btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;padding:.3rem .55rem;border-radius:6px;font-weight:600}
-.site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
-.site-header__menu[aria-hidden="false"]{display:block}
+/*Original button, no arrow --*/
+/*.site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
+.site-header__menu[aria-hidden="false"]{display:block} */
+
+/* Anchor the popup to the button (not the viewport) */
+.site-header__lang { position: relative; }  /* ensure an anchor */
+.site-header__menu {
+  position: absolute;              /* was: fixed */
+  top: calc(100% + 8px);           /* 8px gap below the button */
+  right: 0;                        /* align popup’s right edge to button’s right edge */
+  width: min(360px, 92vw);
+  background: #0b1b2b;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding: 12px;
+  display: none;
+  color: #fff;
+  z-index: 2147483647;             /* keep it above everything */
+}
+.site-header__menu[aria-hidden="false"] { display: block; }
+
+/* Button layout + down triangle ▾ after a small gap */
+.site-header__btn {
+  display: inline-flex;            /* align text + caret */
+  align-items: center;
+  gap: .35rem;                     /* spaces caret from “Languages” */
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  cursor: pointer;
+  padding: .3rem .55rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Down triangle on the button */
+.site-header__btn::after {
+  content: '▾';                    /* Unicode down triangle */
+  font-size: .9em;
+  line-height: 1;
+}
+
+/* (Optional) Show an up triangle when open */
+.site-header__btn[aria-expanded="true"]::after { content: '▴'; }
+
+/* Mobile: keep the popup within the viewport */
+@media (max-width: 720px) {
+  .site-header__menu { right: 0; left: auto; width: min(92vw, 360px); }
+}
+
 .menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
 .menu-label{font-size:12px;color:#e2e8f0;margin:4px 0 6px}
 .menu-list{list-style:none;margin:0;padding:0}
