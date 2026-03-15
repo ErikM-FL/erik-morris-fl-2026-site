@@ -1,16 +1,126 @@
-
- 
- 
- 
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="/assets/site-header.css" />
 <script src="/assets/site-header.js" defer></script>
 <div id="site-header"></div> 
-<title>Erik Morris — Florida Governor 2026</title> 
-<link rel="stylesheet" href="styles.css"> 
+<title>Platform — Index</title> 
+<link rel="stylesheet" href="../styles.css"> 
 <link rel="preconnect" href="https://fonts.googleapis.com"> 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet"> 
-<!----><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Florida Governor — 2026 (Write‑in)</p><h2>Competent, honest leadership that fixes incentives and delivers real results.</h2><p>Lean, people‑first, practical. Housing you can afford. Insurance fairness. Safe schools. Neutral, functional government.</p></div><div id="ballotBanner" aria-label="Write-in demo banner"><div class="card"><canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas><img id="ballotFallback" src="assets/write-in-ballot.gif" alt="Write-in ballot animation"></div></div></div></section><section class="section"><h3>Top Priorities</h3><div class="grid"><article class="card"><h4>Housing You Can Afford</h4><p>HEARTH: bigger homestead relief; fair rules for mega‑owners.</p><a class="btn" href="pages/hearth.html">Read More…</a></article><article class="card"><h4>Insurance Fairness</h4><p>Full‑coverage option; inflation guardrails.</p><a class="btn" href="pages/fifa.html">Read More…</a></article><article class="card"><h4>Fair Pricing & Equitable Compensation</h4><p>Reasonable pay ratios; benefits parity; CPI rules.</p><a class="btn" href="pages/fair-pricing.html">Read More…</a></article></div></section><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer><script>(function(){const el=document.getElementById("ballotCanvas"),fb=document.getElementById("ballotFallback");if(!el
-
-!el.getContext)return;const ctx=el.getContext("2d");if(!ctx)return;if(fb)fb.style.display="none";const W=el.width,H=el.height,BG="#ffffff",FG="#000000",namePx=40;const labelFont=`700 ${namePx}px Noto Sans SC,Noto Sans KR,Noto Sans,system-ui,Arial`,namePrint=`700 ${namePx}px Noto Sans,system-ui,Arial`,nameCursive=`700 ${namePx}px Patrick Hand,Noto Sans,system-ui,Arial`;const languages=[{label:"Write-In"},{label:"Voto por escrito"},{label:"Ekri non"},{label:"手写填写"},{label:"Ghi tên"},{label:"한국어"},{label:"Português"}],nameFull=["E","R","I","K"," ","M","O","R","R","I","S"],modes=["print","cursive"];const margin=14,bubbleR=12,bubbleC={x:margin+22,y:margin+64},labelX=bubbleC.x+30,baseline=bubbleC.y+6,gap=18,nameString=nameFull.join("");function draw(st){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.strokeStyle=FG;ctx.lineWidth=2;ctx.strokeRect(1,1,W-2,H-2);ctx.beginPath();ctx.arc(bubbleC.x,bubbleC.y,bubbleR,0,Math.PI*2);ctx.stroke();ctx.fillStyle=FG;ctx.textBaseline="alphabetic";ctx.font=labelFont;const label=languages[st.li].label;ctx.fillText(label,labelX,baseline);const lw=ctx.measureText(label).width;ctx.font=(st.mode==="print"?namePrint:nameCursive);const nameX=labelX+lw+gap;const fullW=ctx.measureText(nameString).width;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(nameX,baseline+6);ctx.lineTo(nameX+fullW,baseline+6);ctx.stroke();const typed=nameFull.slice(0,Math.floor(st.letters)).join("");ctx.fillText(typed,nameX,baseline);if(st.filled){ctx.fillStyle=FG;ctx.beginPath();ctx.arc(bubbleC.x,bubbleC.y,bubbleR-4,0,Math.PI*2);ctx.fill();}}let modeIndex=0,li=0,letters=0,filled=false,phase="typing",holdUntil=0,last=0;function reset(){letters=0;filled=false;phase="typing";}function tick(ts){if(!last)last=ts;const dt=ts-last;last=ts;draw({mode:modes[modeIndex],li,letters,filled});if(phase==="typing"){if(letters<nameFull.length){letters+=dt/110;if(letters>nameFull.length)letters=nameFull.length;}else{filled=true;phase="hold";holdUntil=ts+8000;}}else if(phase==="hold"){if(ts>=holdUntil){li++;if(li>=languages.length){li=0;modeIndex=(modeIndex+1)%modes.length;}reset();}}requestAnimationFrame(tick);}reset();requestAnimationFrame(tick);})();</script><script> --></script>
+<section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Platform — Index</p><h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2><p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p></div></div></section> 
+<style> 
+.platform-wrap { max-width: var(--container); margin: 20px auto; padding: 0 16px; } 
+.slider { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--stroke); background: var(--card); } 
+.track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .4s ease; will-change: transform; } 
+.slide { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; padding: 18px; min-height: 280px; } 
+.slide .txt h3 { margin: 0 0 8px; font-size: 1.4rem; } 
+.slide .txt p { margin: 0; color: var(--muted); } 
+.slide .txt .btn { margin-top: 10px; } 
+.slide .img { display: grid; place-items: center; } 
+.slide .img img { width: 100%; max-width: 380px; height: auto; border-radius: 10px; border: 1px solid var(--stroke); box-shadow: 0 6px 18px rgba(0,0,0,.25); } 
+.ctrl { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.35); color: #fff; border: 1px solid rgba(255,255,255,.25); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; } 
+.ctrl:hover { background: rgba(0,0,0,.55); } 
+.prev { left: 10px; } .next { right: 10px; } 
+.dots { display: flex; gap: 6px; justify-content: center; padding: 12px; } 
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #52607c; border: 1px solid #8391ae; opacity: .6; } 
+.dot[aria-current="true"] { background: #dbeafe; border-color: #ffffff; opacity: 1; } 
+.quick-links{max-width:var(--container);margin:8px auto 0;padding:0 16px} 
+.quick-links .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px} 
+.quick-links a{display:block;background:#0f1a38;border:1px solid var(--stroke);color:#e2e8f0;text-decoration:none;padding:10px 12px;border-radius:10px;text-align:center} 
+.quick-links a:hover{background:#132042} 
+@media (max-width: 780px){ .slide { grid-template-columns: 1fr; } .slide .img img{ max-width: 520px; } } 
+</style> 
+<div class="platform-wrap"> 
+ <div class="slider" aria-roledescription="carousel"> 
+ <div class="track" id="track" role="group" aria-label="Platform topics"> 
+<article class="slide" data-href="hearth.html"> 
+ <div class="txt"> 
+ <h3>Housing You Can Afford — HEARTH</h3> 
+ <p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p> 
+ <a class="btn" href="hearth.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/hearth.svg" alt="Housing You Can Afford — HEARTH"></div> 
+</article> 
+<article class="slide" data-href="fifa.html"> 
+ <div class="txt"> 
+ <h3>Insurance Fairness — FIFA</h3> 
+ <p>Full‑coverage option in every line; annual increases tied to inflation unless catastrophe is proven.</p> 
+ <a class="btn" href="fifa.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/fifa.svg" alt="Insurance Fairness — FIFA"></div> 
+</article> 
+<article class="slide" data-href="fair-pricing.html"> 
+ <div class="txt"> 
+ <h3>Fair Pricing & Equitable Compensation</h3> 
+ <p>Reasonable executive pay ratios; benefits parity; CPI guardrails for price hikes.</p> 
+ <a class="btn" href="fair-pricing.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/fair-pricing.svg" alt="Fair Pricing & Equitable Compensation"></div> 
+</article> 
+<article class="slide" data-href="second-amendment-integrity.html"> 
+ <div class="txt"> 
+ <h3>Second Amendment Integrity & Public Safety</h3> 
+ <p>Fund SROs, victim aid, crisis teams, conservation; rights respected with real safeguards.</p> 
+ <a class="btn" href="second-amendment-integrity.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/second-amendment-integrity.svg" alt="Second Amendment Integrity & Public Safety"></div> 
+</article> 
+<article class="slide" data-href="neutrality.html"> 
+ <div class="txt"> 
+ <h3>Neutrality & Leadership Unity</h3> 
+ <p>Neutral, functional government: transparency, open ballot access, on‑time budgets.</p> 
+ <a class="btn" href="neutrality.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/neutrality.svg" alt="Neutrality & Leadership Unity"></div> 
+</article> 
+<article class="slide" data-href="safe-harbor.html"> 
+ <div class="txt"> 
+ <h3>Safe Harbor Asset Protection</h3> 
+ <p>Protect victims, preserve due process, and keep businesses stable through trials.</p> 
+ <a class="btn" href="safe-harbor.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/safe-harbor.svg" alt="Safe Harbor Asset Protection"></div> 
+</article> 
+<article class="slide" data-href="education-nutrition.html"> 
+ <div class="txt"> 
+ <h3>Education & Nutrition Funding (ENUF)</h3> 
+ <p>Teacher floor tied to inflation; universal lunch; realistic funding mix.</p> 
+ <a class="btn" href="education-nutrition.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education & Nutrition Funding (ENUF)"></div> 
+</article> 
+<article class="slide" data-href="veterans-care.html"> 
+ <div class="txt"> 
+ <h3>Veterans — Florida Veterans CARE Act</h3> 
+ <p>Access to care & housing stability, with state gap coverage where federal support ends.</p> 
+ <a class="btn" href="veterans-care.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/veterans-care.svg" alt="Veterans — Florida Veterans CARE Act"></div> 
+</article> 
+<article class="slide" data-href="film-media.html"> 
+ <div class="txt"> 
+ <h3>Florida Film & Digital Media Excellence</h3> 
+ <p>Performance‑based incentives; strong audits; workforce pipeline for Florida talent.</p> 
+ <a class="btn" href="film-media.html">Read More…</a> 
+ </div> 
+ <div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film & Digital Media Excellence"></div> 
+</article> </div> 
+ <button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button> 
+ <button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button> 
+ </div> 
+ <div class="dots" id="dots" role="tablist" aria-label="Slides"></div> 
+</div><div class="quick-links"> 
+ <p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p> 
+ <div class="grid"> 
+ <a href="hearth.html">HEARTH</a> 
+ <a href="fifa.html">FIFA</a> 
+ <a href="fair-pricing.html">Fair Pricing</a> 
+ <a href="second-amendment-integrity.html">2A Integrity</a> 
+ <a href="neutrality.html">Neutrality</a> 
+ <a href="safe-harbor.html">Safe Harbor</a> 
+ <a href="education-nutrition.html">ENUF</a> 
+ <a href="veterans-care.html">Veterans CARE</a> 
+ <a href="film-media.html">Film & Media</a> 
+ </div> 
+</div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer> 
+ 

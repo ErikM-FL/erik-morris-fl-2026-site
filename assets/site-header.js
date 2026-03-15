@@ -1,7 +1,7 @@
 
 (function(){
   const BRAND_TEXT = 'Erik Morris 2026';
-  const TAGLINE_TEXT = 'Write\u2011in \u2022 Floridians First \u2022 For Florida Families & Future \u2022 Fix the Incentives';
+  const TAGLINE_TEXT = 'Write‑in • Floridians First • For Florida Families & Future • Fix the Incentives';
   const NAV_LINKS = [
     { label: 'Home', href: '/index.html' },
     { label: 'Platform', href: '/pages/platform.html' },
@@ -13,8 +13,7 @@
   function loadGT(cb){ if(window.google && window.google.translate){cb();return;} const s=el('script',{src:'//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'}); window.googleTranslateElementInit=function(){cb();}; document.body.appendChild(s); }
   function initGT(){ if(initGT._ready) return; try{ new window.google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'es,ht,zh-CN,vi,ko,pt',layout:google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element'); }catch(e){} initGT._ready=true; try{ const host=document.getElementById('google_translate_element'); const fix=()=>{ host.querySelectorAll('*').forEach(n=> n.style.setProperty('color','#fff','important'));}; new MutationObserver(fix).observe(host,{childList:true,subtree:true}); fix(); }catch(e){} }
   function build(){
-    ensureStyles();
-    let anchor=document.getElementById('site-header'); if(!anchor){ anchor=document.createElement('div'); anchor.id='site-header'; document.body.insertBefore(anchor, document.body.firstChild); }
+    ensureStyles(); let anchor=document.getElementById('site-header'); if(!anchor){ anchor=document.createElement('div'); anchor.id='site-header'; document.body.insertBefore(anchor, document.body.firstChild); }
     const H=el('header',{class:'site-header'}); const inner=el('div',{class:'site-header__inner'});
     const brandline=el('div',{class:'site-header__brandline'}); brandline.append(el('span',{class:'site-header__brand'}, BRAND_TEXT)); const tg=el('span',{class:'site-header__tagline'}); tg.textContent=TAGLINE_TEXT; brandline.append(tg);
     const images=el('div',{class:'site-header__images'}); const img1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); const img2=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'}); img1.onerror=()=>img1.style.display='none'; img2.onerror=()=>img2.style.display='none'; images.append(img1,img2);
