@@ -1,11 +1,11 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v9)
-  // Fix: solid color background cycle now guaranteed to start on all pages.
-  //  • New style id to bust cache and override earlier versions.
-  //  • Force-restart trick to ensure animation begins even if prior CSS halted it.
-  //  • Keeps Google Translate, About Erik nav, and Platform carousel+buttons.
+  // Centralized Header Controller (v10)
+  // Fix: solid color background cycle guaranteed to run on ALL pages.
+  //  • Apply animation to BOTH <html> and <body> (uniform, no gradients visible).
+  //  • New style id; force-restart via class toggle + reflow; visibilitychange restart; sanity check.
+  //  • Keeps Google Translate, About Erik nav, Platform carousel + button styles.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -48,12 +48,18 @@
   }
 
   // ---------- SOLID color animation (uniform; no gradient visible) ----------
-  // Uses !important to neutralize any legacy background; new id to ensure fresh injection.
-  const SOLID_BG_CSS_V9 = `
+  const SOLID_BG_CSS_V10 = `
     html, body{min-height:100%;}
-    body{ background-image:none !important; background:none !important; background-color:#0b2a6f !important;
-      animation: solid-bg-cycle 125s linear infinite !important; will-change: background-color; }
-    body.solid-bg-restart{ animation:none !important; }
+    /* Neutralize any legacy background + enforce solid color animation on BOTH html & body */
+    html, body{
+      background-image:none !important; background:none !important;
+      background-color:#0b2a6f !important; /* starting blue */
+      animation: solid-bg-cycle 125s linear infinite !important;
+      animation-play-state: running !important;
+      will-change: background-color;
+    }
+    /* one-frame pause to force-restart */
+    html.solid-bg-restart, body.solid-bg-restart{ animation:none !important; }
     .hero{ background-color:transparent !important; background-image:none !important; }
     @keyframes solid-bg-cycle{
       0%   { background-color:#0b2a6f; }
@@ -64,7 +70,27 @@
     }
   `;
 
-  // ---------- Platform page CSS: layout & controls ----------
+  function forceRestartAnimation(){
+    try{
+      const html=document.documentElement, body=document.body;
+      html.classList.add('solid-bg-restart'); body.classList.add('solid-bg-restart');
+      // Reflow to ensure the pause takes effect
+      void html.offsetHeight; // eslint-disable-line no-unused-expressions
+      requestAnimationFrame(()=>{ html.classList.remove('solid-bg-restart'); body.classList.remove('solid-bg-restart'); });
+    }catch(e){}
+  }
+
+  function sanityCheckAnimation(){
+    try{
+      const before=getComputedStyle(document.body).backgroundColor;
+      setTimeout(()=>{
+        const after=getComputedStyle(document.body).backgroundColor;
+        if(before===after){ forceRestartAnimation(); }
+      }, 4000);
+    }catch(e){}
+  }
+
+  // ---------- Platform page CSS ----------
   const PLATFORM_LAYOUT_CSS = `
     .platform-wrap{max-width:var(--container);margin:20px auto;padding:0 16px}
     .slider{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--stroke);background:var(--card)}
@@ -81,7 +107,6 @@
     @media(max-width:780px){.slide{grid-template-columns:1fr}.slide .img img{max-width:520px}}
   `;
 
-  // ---------- Platform page CSS: buttons & quick-link chips ----------
   const PLATFORM_BUTTON_CSS = `
     :root{--btn-bg:#14345c;--btn-bg-hover:#173b6a;--btn-border:#2b4772;--btn-border-hover:#35598a;--btn-fg:#e6f2ff}
     .slide .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;background:var(--btn-bg);
@@ -114,12 +139,10 @@
 
   function buildHeader(){
     // Inject/refresh solid background CSS and force-start the animation
-    ensureStyle('solid-bg-css-v9', SOLID_BG_CSS_V9, /*replace*/ true);
-    try{
-      document.body.classList.add('solid-bg-restart');
-      // Toggle on next frame to restart the animation reliably
-      requestAnimationFrame(()=>{ document.body.classList.remove('solid-bg-restart'); });
-    }catch(e){}
+    ensureStyle('solid-bg-css-v10', SOLID_BG_CSS_V10, /*replace*/ true);
+    forceRestartAnimation();
+    sanityCheckAnimation();
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) forceRestartAnimation(); });
 
     // Header mount
     let anchor=document.getElementById('site-header'); if(!anchor){anchor=el('div',{id:'site-header'});document.body.insertBefore(anchor,document.body.firstChild);} 
