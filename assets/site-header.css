@@ -1,4 +1,3 @@
-
 /* === Header overlay fix (Languages always above GIF/canvas) === */
 :root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.5rem;--gap:.65rem;--max:1280px;--img-h:48px}
 .site-header{position:relative;z-index:2147483645;background:var(--header-bg);color:var(--header-fg);border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif}
@@ -10,8 +9,8 @@
 .site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
 .site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative;z-index:2147483646}
 .site-header__btn{background:transparent;border:none;color:#fff;cursor:pointer;padding:.3rem .45rem;border-radius:6px;font-weight:600}
-.site-header__btn:after{content:'BE';margin-left:.35rem}
-/* FIX: panel is fixed and positioned just below header; always above everything */
+.site-header__btn:after{content:'\25BE';margin-left:.35rem}
+/* Fixed panel always above content */
 .site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
 .site-header__menu[aria-hidden="false"]{display:block}
 .menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
