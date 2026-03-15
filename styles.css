@@ -12,36 +12,3 @@ body{margin:0;background:#0a1023;color:#d9e3ee;font-family:system-ui,-apple-syst
 .footer-inner{max-width:var(--container);margin:0 auto;padding:18px 16px;color:#9fb3d9}
 .page{max-width:var(--container);margin:20px auto;padding:0 16px}
 .content{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
-
-/* -------- GLOBAL BALLOT GIF STYLES -------- */
-
-/* Preferred wrapper if present */
-.ballot-block {
-  max-width: 740px;               /* adjust to 740–760px to match your live reference exactly */
-  margin: 14px auto;
-  padding: 6px;
-  border: 1px solid var(--stroke);
-  border-radius: 6px;
-  background: var(--card, transparent);
-  box-shadow: 0 1px 8px rgba(0,0,0,.16);
-  overflow: hidden;               /* enables the visual 'trim' below */
-}
-.ballot-block img { display: block; max-width: 100%; height: auto; }
-
-/* Visually trim extra white strip at the bottom of the GIF */
-.ballot-block img[src*="write-in-ballot.gif"] { margin-bottom: -8px; }
-
-/* Fallback: style the figure directly if no wrapper class is used */
-figure img[src*="write-in-ballot.gif"] { display:block; max-width:100%; height:auto; }
-
-/* If the parent figure encloses the GIF, apply the smaller frame to that figure */
-figure:has(> img[src*="write-in-ballot.gif"]) {
-  max-width: 740px;
-  margin: 14px auto;
-  padding: 6px;
-  border: 1px solid var(--stroke);
-  border-radius: 6px;
-  background: var(--card, transparent);
-  box-shadow: 0 1px 8px rgba(0,0,0,.16);
-  overflow: hidden;
-}

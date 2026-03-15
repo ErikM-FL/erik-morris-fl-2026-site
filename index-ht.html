@@ -4,57 +4,40 @@
 <link rel="stylesheet" href="/styles.css?v=12">
 <link rel="stylesheet" href="/assets/site-header.css?v=12">
 <script src="/assets/site-header.js?v=12" defer></script>
-<style id="localized-overrides">
-.ballot-block{ max-width:820px; margin:16px auto; padding:8px; border:1px solid var(--stroke); border-radius:8px; background:var(--card, transparent); overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.18);} 
-.ballot-block img{ display:block; max-width:100%; height:auto; }
-.ballot-block img[src*="write-in-ballot.gif"]{ margin-bottom:-10px; }
-header.site-header{ position:relative; z-index:50; }
-header.site-header .lang, header.site-header [data-lang-menu]{ position:relative; z-index:60; }
-header.site-header img[src*="write-in.gif"]{ max-height:28px; width:auto; margin-inline:8px; flex-shrink:0; }
-header.site-header .header-row{ display:flex; align-items:center; gap:8px; }
-</style>
+
 <title>Loading…</title>
 </head>
 <body>
 <div id="site-header"></div>
+<!-- Placeholder hero so layout doesn't jump while fetching -->
 <section class="hero"><div class="hero-inner"><div class="hero-content">
   <figure style="margin:16px 0"><img src="/assets/write-in-ht.svg" alt="write-in ht" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
 </div></div></section>
-
 <script>
 (function(){
   const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-ht.html';
   const LANG = 'ht';
-  const MAX_WAIT = 2500;
+  const MAX_WAIT = 2000; // ms to wait for header injection
 
-  const q = (sel, root=document)=> root.querySelector(sel);
-  const qa = (sel, root=document)=> Array.from(root.querySelectorAll(sel));
+  function q(sel, root=document){ return root.querySelector(sel); }
+  function qa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
   function waitForHeader(){
     return new Promise(resolve=>{
       const t0 = performance.now();
       (function tick(){
-        const injected = q('header.site-header');
-        if(injected) return resolve(injected);
-        if(performance.now()-t0>MAX_WAIT) return resolve(null);
+        const hasInjected = !!q('header.site-header');
+        const hasAnchor = !!q('#site-header');
+        if(hasInjected || hasAnchor) return resolve();
+        if(performance.now()-t0 > MAX_WAIT) return resolve();
         requestAnimationFrame(tick);
       })();
     });
   }
 
-  function moveHeaderGif(){
-    try{
-      const header = q('header.site-header'); if(!header) return;
-      const gif = header.querySelector('img[src*="write-in.gif"]');
-      const emtest = header.querySelector('img[src*="emtest.png"]');
-      if(gif && emtest && emtest.parentNode){ emtest.parentNode.insertBefore(gif, emtest.nextSibling); }
-    }catch(_e){}
-  }
-
   async function syncFromReference(){
     try{
       await waitForHeader();
-      moveHeaderGif();
 
       const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
       if(!res.ok){ console.warn('Sync: fetch failed', res.status); return; }
@@ -62,12 +45,15 @@ header.site-header .header-row{ display:flex; align-items:center; gap:8px; }
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
+      // Build a clean fragment starting at the first hero section
       const frag = document.createDocumentFragment();
       const refHero = q('section.hero', refDoc);
       if(refHero){
         let node = refHero;
         while(node){
-          if(!(node.nodeType===1 && node.tagName==='SCRIPT')) frag.appendChild(node.cloneNode(true));
+          if(!(node.nodeType===1 && node.tagName==='SCRIPT')){
+            frag.appendChild(node.cloneNode(true));
+          }
           node = node.nextSibling;
         }
       } else {
@@ -75,36 +61,43 @@ header.site-header .header-row{ display:flex; align-items:center; gap:8px; }
         frag.appendChild(refDoc.body.cloneNode(true));
       }
 
-      const injectedHeader = q('header.site-header') || q('#site-header');
-      let n = injectedHeader ? injectedHeader.nextSibling : document.body.firstChild;
-      while(n){ const next=n.nextSibling; n.remove(); n=next; }
+      // Clear everything after header
+      const injectedHeader = q('header.site-header');
+      const headerAnchor = q('#site-header');
+      const startNode = injectedHeader || headerAnchor || document.body.firstChild;
+      let n = startNode ? startNode.nextSibling : document.body.firstChild;
+      while(n){ const next = n.nextSibling; n.remove(); n = next; }
 
+      // Inject reference content under the header
       document.body.appendChild(frag);
 
+      // Normalize hero figure image to local improved SVG (header logo untouched)
       const heroImg = q('section.hero figure img');
       if(heroImg){ heroImg.src = '/assets/write-in-'+LANG+'.svg'; heroImg.alt = 'write-in '+LANG; }
 
+      // --- NEW: Ensure write-in-ballot.gif exists like on reference ---
+      // If ref has it, mirror it; if not present in our DOM, insert after hero
       const refBallotImg = q('img[src*="write-in-ballot.gif"]', refDoc);
       const curBallotImg = q('img[src*="write-in-ballot.gif"]');
       if(refBallotImg && !curBallotImg){
-        let container = refBallotImg.closest('figure, section, div') || refBallotImg;
-        let clone = container.cloneNode(true);
-        clone.classList.add('ballot-block');
+        // Prefer cloning the parent figure/section if available for styling parity
+        let insertNode = refBallotImg.closest('figure, section, div') || refBallotImg;
+        let clone = insertNode.cloneNode(true);
+        // Force src to local asset path
         clone.querySelectorAll('img').forEach(img=>{
-          if(img.src.includes('write-in-ballot.gif')){ img.src='/assets/write-in-ballot.gif'; img.alt = img.alt || 'write-in ballot'; }
+          if(img.src.includes('write-in-ballot.gif')){ img.src = '/assets/write-in-ballot.gif'; img.alt = img.alt || 'write-in ballot'; }
         });
         const hero = q('section.hero');
-        if(hero && hero.parentNode) hero.parentNode.insertBefore(clone, hero.nextSibling);
-        else document.body.appendChild(clone);
-      } else if(curBallotImg) {
-        const container = curBallotImg.closest('figure, section, div');
-        if(container) container.classList.add('ballot-block');
+        if(hero && hero.parentNode){ hero.parentNode.insertBefore(clone, hero.nextSibling); }
+        else { document.body.appendChild(clone); }
       }
 
-      qa('a[href^="pages/\"]').forEach(a=> a.href = '/'+a.getAttribute('href'));
+      // Fix root-relative links
+      qa('a[href^="pages/\"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
 
       const refTitle = q('title', refDoc); if(refTitle) document.title = refTitle.textContent;
 
+      // Optional bake
       if(new URL(location.href).searchParams.get('bake')==='1'){
         const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
         const a = document.createElement('a');
@@ -119,6 +112,5 @@ header.site-header .header-row{ display:flex; align-items:center; gap:8px; }
   else syncFromReference();
 })();
 </script>
-
 </body>
 </html>
