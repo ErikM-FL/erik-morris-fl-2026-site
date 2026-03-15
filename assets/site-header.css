@@ -110,3 +110,38 @@ header.site-header {
 #google_translate_element *{color:#fff !important}
 .goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
 @media(max-width:720px){:root{--img-h:40px}.site-header__images{display:none}}
+
+/* -------- GLOBAL HEADER FIX (ALL PAGES) -------- */
+
+/* Layout baseline */
+header.site-header .header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+/* Keep language menu reliably above other header visuals */
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  position: relative;
+  z-index: 2;
+}
+
+/* Predictable order: emtest.png first, then write-in.gif */
+header.site-header img[src*="emtest.png"] { order: 10; }
+header.site-header img[src*="write-in.gif"] { order: 11; }
+
+/* Size & spacing for header GIF so it never crowds the menu */
+header.site-header img[src*="write-in.gif"] {
+  max-height: 28px;
+  width: auto;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* Prevent the header from overlaying the page content */
+header.site-header {
+  position: relative;   /* local stacking context only */
+  z-index: auto;        /* avoid global overlay */
+}
