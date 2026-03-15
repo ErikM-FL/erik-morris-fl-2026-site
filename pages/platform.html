@@ -150,3 +150,119 @@
               <a class="btn" href="education-nutrition.html">Read More…</a>
             </div>
             <div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education & Nutrition Funding (ENUF)" /></div>
+          </article>
+
+          <article class="slide" data-href="veterans-care.html">
+            <div class="txt">
+              <h3>Veterans — Florida Veterans CARE Act</h3>
+              <p>Access to care &amp; housing stability, with state gap coverage where federal support ends.</p>
+              <a class="btn" href="veterans-care.html">Read More…</a>
+            </div>
+            <div class="img"><img src="../assets/platform/veterans-care.svg" alt="Veterans — Florida Veterans CARE Act" /></div>
+          </article>
+
+          <article class="slide" data-href="film-media.html">
+            <div class="txt">
+              <h3>Florida Film &amp; Digital Media Excellence</h3>
+              <p>Performance‑based incentives; strong audits; workforce pipeline for Florida talent.</p>
+              <a class="btn" href="film-media.html">Read More…</a>
+            </div>
+            <div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film & Digital Media Excellence" /></div>
+          </article>
+        </div>
+
+        <button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button>
+        <button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button>
+      </div>
+
+      <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+    </div>
+
+    <div class="quick-links">
+      <p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p>
+      <div class="grid">
+        <a href="hearth.html">HEARTH</a>
+        <a href="fifa.html">FIFA</a>
+        <a href="fair-pricing.html">Fair Pricing</a>
+        <a href="second-amendment-integrity.html">2A Integrity</a>
+        <a href="neutrality.html">Neutrality</a>
+        <a href="safe-harbor.html">Safe Harbor</a>
+        <a href="education-nutrition.html">ENUF</a>
+        <a href="veterans-care.html">Veterans CARE</a>
+        <a href="film-media.html">Film &amp; Media</a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.
+      </div>
+    </footer>
+
+    <!-- Minimal carousel script (same behavior as GH Pages) -->
+    <script>
+      (function(){
+        const track = document.getElementById('track');
+        const slides = Array.from(track.children);
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const dotsWrap = document.getElementById('dots');
+
+        let index = 0, locked = false;
+        const count = slides.length;
+
+        // dots
+        slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className='dot'; dot.type='button';
+          dot.setAttribute('role','tab');
+          dot.setAttribute('aria-label','Go to slide ' + (i+1));
+          dot.addEventListener('click',()=>go(i));
+          dotsWrap.appendChild(dot);
+        });
+
+        function update(){
+          track.style.transform = 'translateX(-' + (index * 100) + '%)';
+          Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current', i===index?'true':'false'));
+        }
+        function go(i){
+          if(locked) return;
+          index = (i + count) % count;
+          locked = true;
+          update();
+          setTimeout(()=>locked=false, 350);
+        }
+
+        prev.addEventListener('click',()=>go(index-1));
+        next.addEventListener('click',()=>go(index+1));
+
+        // Arrow keys
+        window.addEventListener('keydown',(e)=>{
+          if(e.key==='ArrowLeft') go(index-1);
+          if(e.key==='ArrowRight') go(index+1);
+        });
+
+        // Tap/click card to navigate if user clicks card area (but not the button/link)
+        slides.forEach(s=>{
+          s.addEventListener('click',(e)=>{
+            if(e.target.closest('a')) return;
+            const href=s.getAttribute('data-href');
+            if(href) location.href = href;
+          });
+        });
+
+        // Touch swipe
+        let sx=0, dx=0, touching=false;
+        track.addEventListener('touchstart',e=>{ touching=true; sx=e.touches[0].clientX; dx=0; }, {passive:true});
+        track.addEventListener('touchmove', e=>{ if(!touching) return; dx=e.touches[0].clientX - sx; }, {passive:true});
+        track.addEventListener('touchend', ()=>{ touching=false; if(Math.abs(dx)>50){ if(dx<0) go(index+1); else go(index-1); } });
+
+        // Auto-advance
+        const auto = setInterval(()=>go(index+1), 7000);
+        document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(auto); });
+
+        update();
+      })();
+    </script>
+  </body>
+</html>
