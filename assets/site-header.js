@@ -44,7 +44,7 @@
   // ---------- SOLID color animation (that worked in v7) ----------
   const SOLID_BG_CSS = `
     html, body{min-height:100%;}
-    body{ background-color:#0b2a6f; animation: solid-bg-cycle 125s linear infinite; }
+    body{ background-color:#0b2a6f; animation: solid-bg-cycle 25s linear infinite; }
     .hero{ background-color:transparent !important; background-image:none !important; }
     @keyframes solid-bg-cycle{
       0%   { background-color:#0b2a6f; }
