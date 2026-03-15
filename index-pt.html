@@ -1,21 +1,18 @@
 <!doctype html><html lang="pt">
+<head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="/styles.css?v=12">
 <link rel="stylesheet" href="/assets/site-header.css?v=12">
 <script src="/assets/site-header.js?v=12" defer></script>
-<div id="site-header"></div>
 
 <title>Loading…</title>
+</head>
+<body>
+<div id="site-header"></div>
+<!-- Minimal placeholder while the reference is fetched -->
 <section class="hero"><div class="hero-inner"><div class="hero-content">
-  <!-- Hero text will be replaced verbatim from reference on load; figure below stays local -->
   <figure style="margin:16px 0"><img src="/assets/write-in-pt.svg" alt="write-in pt" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
 </div></div></section>
-<div class="home-wrap" style="max-width:var(--container);margin:20px auto;padding:0 16px">
-  <!-- This block will be replaced 1:1 from reference on load -->
-  <p class="kicker" style="opacity:.75">…</p>
-  <div class="grid3"><a class="card" href="#"><h3>…</h3><span class="btn">…</span></a></div>
-</div>
-<footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 <script>
 (function(){
   const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-pt.html';
@@ -30,27 +27,30 @@
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
+      // capture current header to preserve it after body swap
+      const currentHeader = document.querySelector('header.site-header');
+
+      // swap entire body with reference body (max fidelity)
+      document.body.innerHTML = refDoc.body ? refDoc.body.innerHTML : text;
+
+      // ensure a header placeholder exists then re-attach original header
+      const anchor = document.createElement('div');
+      anchor.id = 'site-header';
+      document.body.insertBefore(anchor, document.body.firstChild);
+      if(currentHeader){ anchor.replaceWith(currentHeader); }
+
+      // normalize write-in figure to local improved SVG
+      const figImg = document.querySelector('img[src*="write-in-"]');
+      if(figImg){ figImg.src = '/assets/write-in-'+LANG+'.svg'; figImg.setAttribute('alt','write-in '+LANG); }
+
+      // also fix any link hrefs missing leading slash for root-level pages
+      document.querySelectorAll('a[href^="pages/"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
+
+      // title — use reference title if present
       const refTitle = refDoc.querySelector('title');
       if(refTitle) document.title = refTitle.textContent;
 
-      const curHero = $('.hero .hero-content');
-      const refHero = refDoc.querySelector('.hero .hero-content');
-      if(curHero && refHero){
-        const ourFigure = curHero.querySelector('figure');
-        const refClone = refHero.cloneNode(true);
-        refClone.querySelectorAll('figure').forEach(f=>f.remove());
-        curHero.innerHTML = refClone.innerHTML;
-        if(ourFigure){ curHero.appendChild(ourFigure); }
-      }
-
-      const curWrap = document.querySelector('.home-wrap');
-      const refWrap = refDoc.querySelector('.home-wrap');
-      if(curWrap && refWrap){ curWrap.innerHTML = refWrap.innerHTML; }
-
-      const refNav = refDoc.querySelector('nav[aria-label]');
-      const curNav = document.querySelector('nav[aria-label]');
-      if(refNav && curNav){ curNav.setAttribute('aria-label', refNav.getAttribute('aria-label')); }
-
+      // optional: bake to static
       if(new URL(location.href).searchParams.get('bake')==='1'){
         const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
         const a = document.createElement('a');
@@ -63,3 +63,5 @@
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', syncFromReference); else syncFromReference();
 })();
 </script>
+</body>
+</html>
