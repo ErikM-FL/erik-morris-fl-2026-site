@@ -1,152 +1,190 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1"
-    />
-    <title>Platform — Index</title>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Platform — Index</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • For Floridians First; For Florida's Future • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a><div class="dropdown" aria-expanded="false">
+  <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
+  <div class="dd-menu" role="menu" aria-label="Language options">
+    <div class="dd-group">
+      <div class="dd-label">Visit localized landing</div>
+      <a role="menuitem" href="../index-es.html">Español</a>
+      <a role="menuitem" href="../index-ht.html">Kreyòl Ayisyen</a>
+      <a role="menuitem" href="../index-zh.html">中文（简体）</a>
+      <a role="menuitem" href="../index-vi.html">Tiếng Việt</a>
+      <a role="menuitem" href="../index-ko.html">한국어</a>
+      <a role="menuitem" href="../index-pt.html">Português</a>
+    </div>
+    <div class="dd-group">
+      <div class="dd-label">Translate this page</div>
+      <div id="google_translate_element"></div>
+    </div>
+  </div>
+</div></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Platform — Index</p><h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2><p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p></div></div></section>
+<style>
+.platform-wrap { max-width: var(--container); margin: 20px auto; padding: 0 16px; }
+.slider { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--stroke); background: var(--card); }
+.track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .4s ease; will-change: transform; }
+.slide { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; padding: 18px; min-height: 280px; }
+.slide .txt h3 { margin: 0 0 8px; font-size: 1.4rem; }
+.slide .txt p { margin: 0; color: var(--muted); }
+.slide .txt .btn { margin-top: 10px; }
+.slide .img { display: grid; place-items: center; }
+.slide .img img { width: 100%; max-width: 380px; height: auto; border-radius: 10px; border: 1px solid var(--stroke); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.ctrl { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.35); color: #fff; border: 1px solid rgba(255,255,255,.25); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
+.ctrl:hover { background: rgba(0,0,0,.55); }
+.prev { left: 10px; } .next { right: 10px; }
+.dots { display: flex; gap: 6px; justify-content: center; padding: 12px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #52607c; border: 1px solid #8391ae; opacity: .6; }
+.dot[aria-current="true"] { background: #dbeafe; border-color: #ffffff; opacity: 1; }
+.quick-links{max-width:var(--container);margin:8px auto 0;padding:0 16px}
+.quick-links .grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.quick-links a{display:block;background:#0f1a38;border:1px solid var(--stroke);color:#e2e8f0;text-decoration:none;padding:10px 12px;border-radius:10px;text-align:center}
+.quick-links a:hover{background:#132042}
+@media (max-width: 780px){ .slide { grid-template-columns: 1fr; } .slide .img img{ max-width: 520px; } }
+</style>
+<div class="platform-wrap">
+  <div class="slider" aria-roledescription="carousel">
+    <div class="track" id="track" role="group" aria-label="Platform topics">
+<article class="slide" data-href="hearth.html">
+  <div class="txt">
+    <h3>Housing You Can Afford — HEARTH</h3>
+    <p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p>
+    <a class="btn" href="hearth.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/hearth.svg" alt="Housing You Can Afford — HEARTH"></div>
+</article>
+<article class="slide" data-href="fifa.html">
+  <div class="txt">
+    <h3>Insurance Fairness — FIFA</h3>
+    <p>Full‑coverage option in every line; annual increases tied to inflation unless catastrophe is proven.</p>
+    <a class="btn" href="fifa.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/fifa.svg" alt="Insurance Fairness — FIFA"></div>
+</article>
+<article class="slide" data-href="fair-pricing.html">
+  <div class="txt">
+    <h3>Fair Pricing &amp; Equitable Compensation</h3>
+    <p>Reasonable executive pay ratios; benefits parity; CPI guardrails for price hikes.</p>
+    <a class="btn" href="fair-pricing.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/fair-pricing.svg" alt="Fair Pricing &amp; Equitable Compensation"></div>
+</article>
+<article class="slide" data-href="second-amendment-integrity.html">
+  <div class="txt">
+    <h3>Second Amendment Integrity &amp; Public Safety</h3>
+    <p>Fund SROs, victim aid, crisis teams, conservation; rights respected with real safeguards.</p>
+    <a class="btn" href="second-amendment-integrity.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/second-amendment-integrity.svg" alt="Second Amendment Integrity &amp; Public Safety"></div>
+</article>
+<article class="slide" data-href="neutrality.html">
+  <div class="txt">
+    <h3>Neutrality &amp; Leadership Unity</h3>
+    <p>Neutral, functional government: transparency, open ballot access, on‑time budgets.</p>
+    <a class="btn" href="neutrality.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/neutrality.svg" alt="Neutrality &amp; Leadership Unity"></div>
+</article>
+<article class="slide" data-href="safe-harbor.html">
+  <div class="txt">
+    <h3>Safe Harbor Asset Protection</h3>
+    <p>Protect victims, preserve due process, and keep businesses stable through trials.</p>
+    <a class="btn" href="safe-harbor.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/safe-harbor.svg" alt="Safe Harbor Asset Protection"></div>
+</article>
+<article class="slide" data-href="education-nutrition.html">
+  <div class="txt">
+    <h3>Education &amp; Nutrition Funding (ENUF)</h3>
+    <p>Teacher floor tied to inflation; universal lunch; realistic funding mix.</p>
+    <a class="btn" href="education-nutrition.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education &amp; Nutrition Funding (ENUF)"></div>
+</article>
+<article class="slide" data-href="veterans-care.html">
+  <div class="txt">
+    <h3>Veterans — Florida Veterans CARE Act</h3>
+    <p>Access to care &amp; housing stability, with state gap coverage where federal support ends.</p>
+    <a class="btn" href="veterans-care.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/veterans-care.svg" alt="Veterans — Florida Veterans CARE Act"></div>
+</article>
+<article class="slide" data-href="film-media.html">
+  <div class="txt">
+    <h3>Florida Film &amp; Digital Media Excellence</h3>
+    <p>Performance‑based incentives; strong audits; workforce pipeline for Florida talent.</p>
+    <a class="btn" href="film-media.html">Read More…</a>
+  </div>
+  <div class="img"><img src="../assets/platform/film-media.svg" alt="Florida Film &amp; Digital Media Excellence"></div>
+</article>    </div>
+    <button class="ctrl prev" id="prev" aria-label="Previous slide" type="button">‹</button>
+    <button class="ctrl next" id="next" aria-label="Next slide" type="button">›</button>
+  </div>
+  <div class="dots" id="dots" role="tablist" aria-label="Slides"></div>
+</div><div class="quick-links">
+  <p class="kicker" style="margin:6px 0;color:var(--muted)">Quick links</p>
+  <div class="grid">
+    <a href="hearth.html">HEARTH</a>
+    <a href="fifa.html">FIFA</a>
+    <a href="fair-pricing.html">Fair Pricing</a>
+    <a href="second-amendment-integrity.html">2A Integrity</a>
+    <a href="neutrality.html">Neutrality</a>
+    <a href="safe-harbor.html">Safe Harbor</a>
+    <a href="education-nutrition.html">ENUF</a>
+    <a href="veterans-care.html">Veterans CARE</a>
+    <a href="film-media.html">Film & Media</a>
+  </div>
+</div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+<script>
+(function(){
+  const track = document.getElementById('track');
+  const slides = Array.from(track.children);
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const dotsWrap = document.getElementById('dots');
+  let index = 0, locked = false; const count = slides.length;
+  slides.forEach((_, i) => { const dot = document.createElement('button'); dot.className='dot'; dot.type='button'; dot.setAttribute('role','tab'); dot.setAttribute('aria-label','Go to slide '+(i+1)); dot.addEventListener('click',()=>go(i)); dotsWrap.appendChild(dot); });
+  function update(){ track.style.transform = `translateX(-${index*100}%)`; Array.from(dotsWrap.children).forEach((d,i)=>d.setAttribute('aria-current', i===index?'true':'false')); }
+  function go(i){ if(locked) return; index=(i+count)%count; locked=true; update(); setTimeout(()=>locked=false, 350);} 
+  prev.addEventListener('click',()=>go(index-1)); next.addEventListener('click',()=>go(index+1));
+  window.addEventListener('keydown',(e)=>{ if(e.key==='ArrowLeft') go(index-1); if(e.key==='ArrowRight') go(index+1);});
+  slides.forEach(s=>{ s.addEventListener('click',(e)=>{ if(e.target.closest('a')) return; const href=s.getAttribute('data-href'); if(href) location.href=href; });});
+  let sx=0,dx=0,touching=false; track.addEventListener('touchstart',(e)=>{touching=true;sx=e.touches[0].clientX;dx=0;},{passive:true});
+  track.addEventListener('touchmove',(e)=>{if(!touching) return; dx=e.touches[0].clientX-sx;},{passive:true});
+  track.addEventListener('touchend',()=>{touching=false; if(Math.abs(dx)>50){ if(dx<0) go(index+1); else go(index-1);} });
+  const auto=setInterval(()=>go(index+1), 7000); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(auto); });
+  update();
+})();
+</script>
 
-    <!-- Core site styles -->
-    <link rel="stylesheet" href="../styles.css?v=6" />
-
-    <!-- Global header (kept as-is so Languages works on this page too) -->
-    <link rel="stylesheet" href="/assets/site-header.css?v=3" />
-    <script src="/assets/site-header.js?v=3" defer></script>
-
-    <!-- Page-scoped fixes so buttons match GitHub Pages look -->
-    <style>
-      :root{
-        --btn-bg:#14345c; --btn-bg-hover:#173b6a;
-        --btn-border:#2b4772; --btn-border-hover:#35598a;
-        --btn-fg:#e6f2ff;
+<script>
+(function(){
+  const dd=document.querySelector('.dropdown');
+  const btn=document.getElementById('langBtn');
+  if(btn && dd){
+    btn.addEventListener('click',()=>{
+      const exp = dd.getAttribute('aria-expanded')==='true';
+      dd.setAttribute('aria-expanded', String(!exp));
+      btn.setAttribute('aria-expanded', String(!exp));
+    });
+    document.addEventListener('click',(e)=>{
+      if(!dd.contains(e.target)){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
       }
-
-      /* Layout & carousel (same structure as GH Pages) */
-      .platform-wrap { max-width: var(--container); margin: 20px auto; padding: 0 16px; }
-      .slider { position: relative; overflow: hidden; border-radius: 14px; border: 1px solid var(--stroke); background: var(--card); }
-      .track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; transition: transform .4s ease; will-change: transform; }
-      .slide { display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: center; padding: 18px; min-height: 280px; }
-      .slide .img img { width: 100%; max-width: 380px; height: auto; border-radius: 10px; border: 1px solid var(--stroke); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-
-      .ctrl { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.35); color: #fff; border: 1px solid rgba(255,255,255,.25); width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
-      .ctrl:hover { background: rgba(0,0,0,.55); }
-      .prev { left: 10px; } .next { right: 10px; }
-
-      .dots { display: flex; gap: 6px; justify-content: center; padding: 12px; }
-      .dot { width: 9px; height: 9px; border-radius: 50%; background: #52607c; border: 1px solid #8391ae; opacity: .6; }
-      .dot[aria-current="true"] { background: #dbeafe; border-color: #ffffff; opacity: 1; }
-
-      /* Make primary CTAs look like your GH Pages buttons */
-      .slide .btn{
-        display:inline-flex; align-items:center; gap:6px;
-        padding:10px 14px; border-radius:10px;
-        background:var(--btn-bg); color:var(--btn-fg);
-        text-decoration:none; border:1px solid var(--btn-border);
-        font-weight:700; box-shadow:0 1px 0 rgba(255,255,255,.06) inset;
-        transition: background .2s ease, border-color .2s ease, color .2s ease;
+    });
+    document.addEventListener('keydown',(e)=>{
+      if(e.key==='Escape'){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
       }
-      .slide .btn:hover, .slide .btn:focus-visible{
-        background:var(--btn-bg-hover); color:#fff; border-color:var(--btn-border-hover); outline:none;
-      }
-      .platform-wrap .slide .txt .btn{ margin-top:10px; }
-
-      /* Quick links should also look like button chips */
-      .quick-links{ max-width:var(--container); margin:8px auto 0; padding:0 16px; }
-      .quick-links .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; }
-      .quick-links .grid a{
-        display:inline-flex; align-items:center; justify-content:center; gap:6px;
-        padding:10px 12px; border-radius:10px; background:#0f1a38; color:#e2e8f0;
-        text-decoration:none; border:1px solid var(--btn-border); font-weight:700;
-      }
-      .quick-links .grid a:hover, .quick-links .grid a:focus-visible{
-        background:#132042; color:#fff; outline:none;
-      }
-
-      @media (max-width: 780px){
-        .slide { grid-template-columns: 1fr; }
-        .slide .img img{ max-width: 520px; }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Header mounts here -->
-    <div id="site-header"></div>
-
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-content">
-          <p class="kicker">Platform — Index</p>
-          <h2>Clear priorities. Practical solutions. Transparent trade‑offs.</h2>
-          <p>Swipe or use the arrows to explore. Tap “Read More…” on any card for details.</p>
-        </div>
-      </div>
-    </section>
-
-    <div class="platform-wrap">
-      <div class="slider" aria-roledescription="carousel">
-        <div class="track" id="track" role="group" aria-label="Platform topics">
-          <!-- ✅ Full slide set restored -->
-          <article class="slide" data-href="hearth.html">
-            <div class="txt">
-              <h3>Housing You Can Afford — HEARTH</h3>
-              <p>Increase homestead relief; fair rules for mega‑owners; stabilize neighborhoods.</p>
-              <a class="btn" href="hearth.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/hearth.svg" alt="Housing You Can Afford — HEARTH" /></div>
-          </article>
-
-          <article class="slide" data-href="fifa.html">
-            <div class="txt">
-              <h3>Insurance Fairness — FIFA</h3>
-              <p>Full‑coverage option in every line; annual increases tied to inflation unless catastrophe is proven.</p>
-              <a class="btn" href="fifa.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/fifa.svg" alt="Insurance Fairness — FIFA" /></div>
-          </article>
-
-          <article class="slide" data-href="fair-pricing.html">
-            <div class="txt">
-              <h3>Fair Pricing &amp; Equitable Compensation</h3>
-              <p>Reasonable executive pay ratios; benefits parity; CPI guardrails for price hikes.</p>
-              <a class="btn" href="fair-pricing.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/fair-pricing.svg" alt="Fair Pricing & Equitable Compensation" /></div>
-          </article>
-
-          <article class="slide" data-href="second-amendment-integrity.html">
-            <div class="txt">
-              <h3>Second Amendment Integrity &amp; Public Safety</h3>
-              <p>Fund SROs, victim aid, crisis teams, conservation; rights respected with real safeguards.</p>
-              <a class="btn" href="second-amendment-integrity.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/second-amendment-integrity.svg" alt="Second Amendment Integrity & Public Safety" /></div>
-          </article>
-
-          <article class="slide" data-href="neutrality.html">
-            <div class="txt">
-              <h3>Neutrality &amp; Leadership Unity</h3>
-              <p>Neutral, functional government: transparency, open ballot access, on‑time budgets.</p>
-              <a class="btn" href="neutrality.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/neutrality.svg" alt="Neutrality & Leadership Unity" /></div>
-          </article>
-
-          <article class="slide" data-href="safe-harbor.html">
-            <div class="txt">
-              <h3>Safe Harbor Asset Protection</h3>
-              <p>Protect victims, preserve due process, and keep businesses stable through trials.</p>
-              <a class="btn" href="safe-harbor.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/safe-harbor.svg" alt="Safe Harbor Asset Protection" /></div>
-          </article>
-
-          <article class="slide" data-href="education-nutrition.html">
-            <div class="txt">
-              <h3>Education &amp; Nutrition Funding (ENUF)</h3>
-              <p>Teacher floor tied to inflation; universal lunch; realistic funding mix.</p>
-              <a class="btn" href="education-nutrition.html">Read More…</a>
-            </div>
-            <div class="img"><img src="../assets/platform/education-nutrition.svg" alt="Education & Nutrition Funding (ENUF)" /></div>
+    });
+  }
+})();
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
