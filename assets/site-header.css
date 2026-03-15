@@ -1,20 +1,19 @@
 
-/* Global Header (two rows): brand+tagline left, images spanning 2 rows center, dropdown right */
-:root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.55rem;--gap:.7rem;--max:1280px;--lang-bg:#0f243a;--lang-border:#3a516b;--shadow:0 10px 30px rgba(0,0,0,.35)}
+:root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.5rem;--gap:.65rem;--max:1280px;--lang-bg:#0f243a;--lang-border:#3a516b;--shadow:0 10px 30px rgba(0,0,0,.35);--img-h:58px}
 .site-header{background:var(--header-bg);color:var(--header-fg);border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif}
-.site-header__inner{max-width:var(--max);margin:0 auto;padding:var(--pad-y) var(--pad-x);display:grid;grid-template-columns:1fr auto auto;grid-template-rows:auto auto;column-gap:var(--gap);row-gap:.4rem;align-items:center}
-/* Top-left */
-.site-header__brandline{grid-column:1;grid-row:1;display:flex;flex-wrap:wrap;gap:.45rem .6rem;align-items:flex-start}
-.site-header__brand{font-weight:800;letter-spacing:.2px;font-size:clamp(16px,2.2vw,20px)}
-.site-header__tagline{font-weight:500;letter-spacing:.2px;line-height:1.25;font-size:clamp(13px,2vw,16px);opacity:.95}
-/* Center images spanning two rows */
-.site-header__images{grid-column:2;grid-row:1 / span 2;align-self:stretch;display:flex;align-items:stretch;gap:.4rem}
-.site-header__img{height:100%;width:auto;object-fit:contain;border-radius:2px}
-/* Top-right dropdown trigger */
+/* Fix columns to prevent overlap: brand grows, images have a max width, dropdown fits */
+.site-header__inner{max-width:var(--max);margin:0 auto;padding:var(--pad-y) var(--pad-x);display:grid;grid-template-columns:1fr minmax(160px,220px) auto;grid-template-rows:auto auto;column-gap:var(--gap);row-gap:.35rem;align-items:center}
+/* Top-left line: keep on one line */
+.site-header__brandline{grid-column:1;grid-row:1;display:flex;gap:.5rem;align-items:flex-start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-header__brand{font-weight:800;letter-spacing:.2px}
+.site-header__tagline{font-weight:500;letter-spacing:.2px;line-height:1; font-size:clamp(12px,1.6vw,16px)}
+/* Images spanning two rows but constrained height/width so they never overlap menu */
+.site-header__images{grid-column:2;grid-row:1 / span 2;align-self:stretch;display:flex;align-items:center;justify-content:flex-start;gap:.4rem;max-width:220px}
+.site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
+/* Top-right Languages button (not bold) and dropdown panel */
 .site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative}
-.site-header__btn{background:transparent;border:none;color:#fff;cursor:pointer;padding:.35rem .5rem;border-radius:6px;font-weight:600}
-.site-header__btn:after{content:'BE';margin-left:.35rem}
-/* Dropdown panel */
+.site-header__btn{background:transparent;border:none;color:#fff;cursor:pointer;padding:.3rem .45rem;border-radius:6px;font-weight:500}
+.site-header__btn:after{content:'\25BE';margin-left:.35rem}
 .site-header__menu{position:absolute;right:0;top:calc(100% + 8px);width:min(340px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:var(--shadow);padding:12px;display:none;color:#fff}
 .site-header__menu[aria-hidden="false"]{display:block}
 .menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
@@ -22,15 +21,12 @@
 .menu-list{list-style:none;margin:0;padding:0}
 .menu-list a{display:block;color:#fff;text-decoration:none;padding:.4rem .45rem;border-radius:6px}
 .menu-list a:hover{background:rgba(255,255,255,.08)}
-/* Force white text inside the dropdown, including Google gadget */
-.site-header__menu *, .site-header__menu select, .site-header__menu option, .site-header__menu a, .site-header__menu span, .site-header__menu div{color:#fff !important}
-#google_translate_element *, #google_translate_element a, #google_translate_element span{color:#fff !important}
-/* Make the GT combo readable on dark bg */
+/* Force white text inside dropdown and Google gadget */
+.site-header__menu *, #google_translate_element *, #google_translate_element a, #google_translate_element span{color:#fff !important}
 .goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
-.goog-te-gadget-simple .goog-te-menu-value{color:#fff !important}
-/* Bottom nav */
-.site-header__bottom{grid-column:1 / span 3;grid-row:2;display:flex;flex-wrap:wrap;gap:.65rem 1rem;align-items:flex-end}
+/* Bottom row nav */
+.site-header__bottom{grid-column:1 / span 3;grid-row:2;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:flex-end}
 .site-header__nav a{color:#fff;text-decoration:none;font-weight:700;padding:.35rem .5rem;border-radius:8px}
 .site-header__nav a:hover,.site-header__nav a:focus-visible{background:rgba(255,255,255,.08);color:var(--header-accent);outline:none}
-/* Small screens */
-@media(max-width:520px){.site-header__images{display:none}}
+/* Small screens: hide images to preserve one-line header */
+@media(max-width:640px){:root{--img-h:44px}.site-header__images{display:none}}
