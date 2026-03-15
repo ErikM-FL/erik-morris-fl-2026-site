@@ -70,3 +70,24 @@
 #google_translate_element *{color:#fff !important}
 .goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
 @media(max-width:720px){:root{--img-h:40px}.site-header__images{display:none}}
+
+/* --- Row-2 Languages (non-destructive add-on) --- */
+header.site-header .header-row {
+  display: flex;
+  flex-wrap: wrap;            /* allow a second row */
+}
+
+/* Keep nav before Languages */
+header.site-header .main-nav { order: 10; }
+
+/* Push Languages block to a new line after the nav */
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header #google_translate_element {
+  order: 11;
+  flex-basis: 100%;           /* forces a line break = second row */
+  margin-top: 6px;
+  color: #fff;                /* always white text */
+  position: relative;
+  z-index: 2;                 /* sits above header icons if they overlap */
+}
