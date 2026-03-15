@@ -299,3 +299,61 @@ header.site-header .header-row,
 header.site-header .container {
   overflow: visible;
 }
+/* ====== FIX 1: Make sure the Languages dropdown sits above the images ====== */
+header.site-header { position: relative; z-index: 0; overflow: visible; }
+
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  position: relative;
+  z-index: 1000;       /* above header icons */
+  color: #fff;
+}
+
+/* Google Translate injects a menu iframe into <body>. Put it on top. */
+html body .goog-te-menu-frame,
+html body .goog-te-balloon-frame {
+  z-index: 2147483647 !important; /* max practical z for safety */
+}
+
+/* Keep header images behind the dropdown */
+header.site-header img[src*="emtest"],
+header.site-header img[src*="write-in"] {
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== FIX 2: Robust fallback ordering without relying on specific wrappers ====== */
+/* Treat common containers as flexible rows that can wrap */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible;
+}
+
+/* Nav should follow icons */
+header.site-header nav.main-nav { order: 10; }
+
+/* Force Languages to a new line under the row */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* If we can’t identify the icon wrapper by class, treat any element that
+   directly contains the emtest or write-in image as the “icons” block */
+header.site-header :has(> img[src*="emtest"], > img[src*="write-in"]) {
+  order: 5;            /* before the nav */
+  position: relative;  /* give it a local stacking context below languages */
+  z-index: 1;
+}
