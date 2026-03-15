@@ -91,3 +91,57 @@ header.site-header #google_translate_element {
   position: relative;
   z-index: 2;                 /* sits above header icons if they overlap */
 }
+/* ===== Languages → dedicated second row; robust targeting ===== */
+
+/* Make the common header row containers flex + wrap.
+   We include several likely wrappers so it works regardless of exact markup.
+   (No harm if some selectors don't exist on a page.) */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .row-1,
+header.site-header .topbar,
+header.site-header .inner {
+  display: flex;
+  flex-wrap: wrap;       /* allow a second visual row */
+  align-items: center;
+}
+
+/* Keep brand/nav before languages (low order value) */
+header.site-header .brand-wrap,
+header.site-header .brand,
+header.site-header nav.main-nav {
+  order: 10;
+}
+
+/* Right-side icons (png/gif) come after nav but before languages */
+header.site-header .header-right {
+  order: 20;
+}
+
+/* Move the Languages control to its own forced line (row 2). 
+   We target all variants we've seen: Google Translate, data attributes, or .lang. */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  order: 99;             /* after nav + icons */
+  flex: 1 0 100%;        /* NEW LINE: forces a wrap to row 2 */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;           /* keep text white */
+  position: relative;    /* create stacking context */
+  z-index: 5;            /* ensure the dropdown sits above images */
+  float: none !important;/* neutralize any legacy float if present */
+}
+
+/* Lower the stacking priority of the header images so they don't overlay the menu */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* If any container accidentally clips the dropdown, let it overflow visibly. */
+header.site-header .header-row,
+header.site-header .container {
+  overflow: visible;
+}
