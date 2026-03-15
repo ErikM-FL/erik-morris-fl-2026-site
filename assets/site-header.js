@@ -1,11 +1,11 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v8)
-  // Update: solid-color background cycle that overrides any prior gradient CSS
-  // (blue→purple→red→purple→blue, 125s) and applies uniformly on ALL pages,
-  // including /pages/platform.html and /pages/about-erik.html.
-  // Keeps: Google Translate in Languages, About Erik nav, platform carousel+buttons.
+  // Centralized Header Controller (v9)
+  // Fix: solid color background cycle now guaranteed to start on all pages.
+  //  • New style id to bust cache and override earlier versions.
+  //  • Force-restart trick to ensure animation begins even if prior CSS halted it.
+  //  • Keeps Google Translate, About Erik nav, and Platform carousel+buttons.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -18,7 +18,12 @@
   ];
 
   function el(tag,attrs={},html){const e=document.createElement(tag);for(const k in attrs){k==='class'?e.className=attrs[k]:e.setAttribute(k,attrs[k])}if(html!=null)e.innerHTML=html;return e;}
-  function ensureStyle(id, css){ if(document.getElementById(id)) return; const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s); }
+  function ensureStyle(id, css, replace){
+    const prev=document.getElementById(id);
+    if(prev && replace){ prev.remove(); }
+    if(document.getElementById(id)) return;
+    const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s);
+  }
   function onReady(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);} else { fn(); } }
   function isPlatform(){ return /\/pages\/platform\.html(?:$|[?#])/.test(location.pathname+location.search+location.hash); }
 
@@ -31,8 +36,7 @@
     window.googleTranslateElementInit=function(){
       try{
         new window.google.translate.TranslateElement({
-          pageLanguage:'en',
-          includedLanguages:'es,ht,zh-CN,vi,ko,pt',
+          pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt',
           layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
         }, 'google_translate_element');
         gtLoaded=true; cb&&cb();
@@ -43,16 +47,13 @@
     (document.head||document.body).appendChild(s);
   }
 
-  // ---------- SOLID color animation (no gradient visible) ----------
-  // Uses !important to override any legacy background declarations (e.g., animated-gradient.css)
-  const SOLID_BG_CSS = `
+  // ---------- SOLID color animation (uniform; no gradient visible) ----------
+  // Uses !important to neutralize any legacy background; new id to ensure fresh injection.
+  const SOLID_BG_CSS_V9 = `
     html, body{min-height:100%;}
-    body{
-      background-image: none !important;  /* neutralize any gradient */
-      background: none !important;         /* reset shorthand to ensure a clean slate */
-      background-color:#0b2a6f !important; /* starting blue */
-      animation: solid-bg-cycle 125s linear infinite !important;
-    }
+    body{ background-image:none !important; background:none !important; background-color:#0b2a6f !important;
+      animation: solid-bg-cycle 125s linear infinite !important; will-change: background-color; }
+    body.solid-bg-restart{ animation:none !important; }
     .hero{ background-color:transparent !important; background-image:none !important; }
     @keyframes solid-bg-cycle{
       0%   { background-color:#0b2a6f; }
@@ -112,8 +113,13 @@
   }
 
   function buildHeader(){
-    // Solid background color cycle (force-override any old gradient rules)
-    ensureStyle('solid-bg-css', SOLID_BG_CSS);
+    // Inject/refresh solid background CSS and force-start the animation
+    ensureStyle('solid-bg-css-v9', SOLID_BG_CSS_V9, /*replace*/ true);
+    try{
+      document.body.classList.add('solid-bg-restart');
+      // Toggle on next frame to restart the animation reliably
+      requestAnimationFrame(()=>{ document.body.classList.remove('solid-bg-restart'); });
+    }catch(e){}
 
     // Header mount
     let anchor=document.getElementById('site-header'); if(!anchor){anchor=el('div',{id:'site-header'});document.body.insertBefore(anchor,document.body.firstChild);} 
@@ -125,7 +131,7 @@
     // Images
     const imgs=el('div',{class:'site-header__images'}); const i1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); const i2=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'}); i1.onerror=()=>i1.style.display='none'; i2.onerror=()=>i2.style.display='none'; imgs.append(i1,i2);
 
-    // Languages with Google Translate
+    // Languages
     const lang=el('div',{class:'site-header__lang'}); const btn=el('button',{class:'site-header__btn',id:'langBtn','aria-expanded':'false','aria-haspopup':'true'},'Languages'); const menu=el('div',{class:'site-header__menu','aria-hidden':'true',role:'menu','aria-label':'Languages'});
     menu.append(el('div',{class:'menu-label'},'Translate this page')); const gt=el('div',{id:'google_translate_element'}); menu.append(gt);
     const grp=el('div',{class:'menu-group'}); grp.append(el('div',{class:'menu-label'},'Visit localized landing'));
