@@ -1,97 +1,95 @@
 
-/* =============================
-   /assets/site-header.js  (FULL REPLACEMENT)
-   Injects a two-row header globally and places the Languages control on row-2
-   ============================= */
+/* ===============================================
+   /assets/site-header.js  — SAFE ROLLBACK + ROW‑2 ADD‑ON
+   1) Loads your last known good header script from the BACKUP branch.
+   2) After it renders, creates a second row and moves the Languages control there.
+   3) Injects small, global CSS for ballot GIF sizing (body) + header row‑2.
+   ----------------------------------------------- */
 (function(){
-  function h(tag, attrs={}, children=[]) {
-    const el = document.createElement(tag);
-    for (const [k,v] of Object.entries(attrs)) {
-      if (k === 'class') el.className = v; else if (k === 'html') el.innerHTML = v; else el.setAttribute(k,v);
+  const RAW_ORIGINAL_JS = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/assets/site-header.js';
+
+  // --- tiny CSS injector ---
+  function injectCSS(css){
+    const style = document.createElement('style');
+    style.setAttribute('data-source','header-row2-addon');
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  // Global CSS: header row-2 + ballot size fixes (non-destructive)
+  injectCSS([
+    'header.site-header .row-2{display:flex;align-items:center;gap:12px;margin-top:6px}',
+    'header.site-header #languages-slot{display:inline-flex;align-items:center;position:relative;z-index:2}',
+    'header.site-header [data-lang-menu],header.site-header .lang{position:relative;z-index:2;color:#fff}',
+    '/* body ballot image frame (smaller like live) */',
+    '.ballot-block{max-width:740px;margin:14px auto;padding:6px;border:1px solid var(--stroke);border-radius:6px;background:var(--card,transparent);box-shadow:0 1px 8px rgba(0,0,0,.16);overflow:hidden}',
+    '.ballot-block img{display:block;max-width:100%;height:auto}',
+    '.ballot-block img[src*="write-in-ballot"]{margin-bottom:-8px}',
+    'figure img[src*="write-in-ballot"]{display:block;max-width:100%;height:auto}',
+    'figure:has(> img[src*="write-in-ballot"]) {max-width:740px;margin:14px auto;padding:6px;border:1px solid var(--stroke);border-radius:6px;background:var(--card,transparent);box-shadow:0 1px 8px rgba(0,0,0,.16);overflow:hidden}'
+  ].join('
+'));
+
+  // 1) Load the last working header (from BACKUP branch) and execute it
+  function loadOriginalHeader(){
+    return fetch(RAW_ORIGINAL_JS, {cache:'no-store', credentials:'omit'})
+      .then(r => { if(!r.ok) throw new Error('Failed to fetch original header: '+r.status); return r.text(); })
+      .then(code => {
+        const s = document.createElement('script');
+        s.type='text/javascript';
+        s.text = code + '
+//# sourceURL=backup-site-header.js';
+        document.head.appendChild(s);
+      });
+  }
+
+  // 2) After header exists, add row‑2 and move Languages
+  function ensureRow2AndMoveLanguages(){
+    const header = document.querySelector('header.site-header'); if(!header) return;
+
+    // create row‑2 once
+    let row2 = header.querySelector('.row-2');
+    if(!row2){
+      row2 = document.createElement('div');
+      row2.className = 'row-2';
+      // place after the first header row
+      const row1 = header.querySelector('.header-row') || header.firstElementChild;
+      if(row1 && row1.parentNode) row1.parentNode.insertBefore(row2, row1.nextSibling); else header.appendChild(row2);
+      // slot for Languages
+      const slot = document.createElement('div'); slot.id = 'languages-slot'; slot.setAttribute('aria-label','Language selector');
+      row2.appendChild(slot);
     }
-    (Array.isArray(children)?children:[children]).forEach(c=>{ if(c) el.appendChild(c); });
-    return el;
-  }
 
-  function buildHeader(){
-    const container1 = h('div',{class:'container'});
-    const container2 = h('div',{class:'container'});
-
-    // Row 1
-    const brand = h('div',{class:'brand-wrap'},[
-      h('a',{class:'brand', href:'/' , html:'Erik Morris 2026'})
-    ]);
-
-    const nav = h('nav',{class:'main-nav', 'aria-label':'Primary'},[
-      h('a',{href:'/' , html:'Home'}),
-      h('a',{href:'/platform.html', html:'Platform'}),
-      h('a',{href:'/pages/how-to-write-in-en.html', html:'Voting &amp; Write-In Candidate'}),
-      h('a',{href:'/about.html', html:'About Erik'})
-    ]);
-
-    const right = h('div',{class:'header-right'},[
-      h('img',{src:'/assets/emtest.png', alt:'emtest'}),
-      h('img',{src:'/assets/write-in.gif', alt:'write-in header'})
-    ]);
-
-    const row1 = h('div',{class:'header-row row-1'},[]);
-    row1.appendChild(brand);
-    row1.appendChild(nav);
-    row1.appendChild(right);
-    container1.appendChild(row1);
-
-    // Row 2 (Languages slot)
-    const row2 = h('div',{class:'header-row row-2'},[]);
-    const slot = h('div',{id:'languages-slot', 'aria-label':'Language selector'});
-    row2.appendChild(slot);  // column 1
-    row2.appendChild(h('div')); // empty column to keep grid structure
-    container2.appendChild(row2);
-
-    const header = h('header',{class:'site-header'},[container1, container2]);
-    return header;
-  }
-
-  function mountHeader(){
-    let mount = document.getElementById('site-header');
-    if (!mount) { mount = document.createElement('div'); mount.id='site-header'; document.body.insertBefore(mount, document.body.firstChild); }
-    // Clear and inject
-    mount.innerHTML='';
-    mount.appendChild(buildHeader());
-  }
-
-  function moveLanguages(){
-    const header = document.querySelector('header.site-header');
-    if (!header) return;
-
-    // Support several possible selectors for the Languages control
-    const languages = header.querySelector('[data-lang-menu]') ||
+    // find existing Languages control (keep all working selectors)
+    const languages = header.querySelector('#google_translate_element') ||
+                      header.querySelector('[data-lang-menu]') ||
                       header.querySelector('.lang') ||
+                      document.getElementById('google_translate_element') ||
                       document.querySelector('[data-lang-menu]') ||
                       document.querySelector('.lang') ||
                       document.getElementById('languages');
-
-    const slot = header.querySelector('#languages-slot');
-    if (languages && slot && languages !== slot.firstElementChild) {
-      slot.appendChild(languages);
-      // ensure it’s visible and not absolutely positioned by old styles
+    if(languages && languages.parentNode !== row2){
+      row2.appendChild(languages);
       languages.style.position='relative';
       languages.style.zIndex='2';
-    }
-
-    // Keep predictable order for emtest + write-in.gif (safety)
-    const gif    = header.querySelector('img[src*="write-in.gif"]');
-    const emtest = header.querySelector('img[src*="emtest.png"]');
-    if (gif && emtest && emtest.nextSibling !== gif) {
-      emtest.parentNode.insertBefore(gif, emtest.nextSibling);
+      languages.style.color='#fff'; // keep white text
     }
   }
 
-  function ready(fn){
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn); else fn();
+  // 3) Observe in case Languages is injected later (e.g., Google Translate)
+  function observeLanguages(){
+    const obs = new MutationObserver(()=>{ ensureRow2AndMoveLanguages(); });
+    obs.observe(document.documentElement, {childList:true, subtree:true});
+    // stop after 6s (enough for GTM/Translate to appear)
+    setTimeout(()=>obs.disconnect(), 6000);
   }
 
+  function ready(fn){ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', fn); } else fn(); }
+
+  // Run
   ready(function(){
-    mountHeader();
-    moveLanguages();
+    loadOriginalHeader()
+      .then(()=>{ ensureRow2AndMoveLanguages(); observeLanguages(); })
+      .catch(err=>{ console.warn('[header-rollback] Could not load original header from backup:', err); /* as a fallback, still try to move if header exists */ ensureRow2AndMoveLanguages(); observeLanguages(); });
   });
 })();
