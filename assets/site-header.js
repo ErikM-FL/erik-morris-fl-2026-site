@@ -54,7 +54,7 @@
     html, body{
       background-image:none !important; background:none !important;
       background-color:#0b2a6f !important; /* starting blue */
-      animation: solid-bg-cycle 125s linear infinite !important;
+      animation: solid-bg-cycle 25s linear infinite !important;
       animation-play-state: running !important;
       will-change: background-color;
     }
