@@ -1,10 +1,28 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HEARTH — Housing & Homestead Reform</title>
 <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../assets/format-fixes.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<header id="site-header"></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">HEARTH — Housing &amp; Homestead Reform</p><h2>Housing you can afford.</h2>
+<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a><div class="dropdown" aria-expanded="false">
+  <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
+  <div class="dd-menu" role="menu" aria-label="Language options">
+    <div class="dd-group">
+      <div class="dd-label">Visit localized landing</div>
+      <a role="menuitem" href="../index-es.html">Español</a>
+      <a role="menuitem" href="../index-ht.html">Kreyòl Ayisyen</a>
+      <a role="menuitem" href="../index-zh.html">中文（简体）</a>
+      <a role="menuitem" href="../index-vi.html">Tiếng Việt</a>
+      <a role="menuitem" href="../index-ko.html">한국어</a>
+      <a role="menuitem" href="../index-pt.html">Português</a>
+    </div>
+    <div class="dd-group">
+      <div class="dd-label">Translate this page</div>
+      <div id="google_translate_element"></div>
+    </div>
+  </div>
+</div></div></nav></header><section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">HEARTH — Housing &amp; Homestead Reform</p><h2>Housing you can afford.</h2>
 <a href="hearth-details.html" style="display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .9rem;border:1px solid #2A3559;border-radius:10px;background:#334155;color:#dbeafe;text-decoration:none;font-weight:600">Read More… <span aria-hidden="true">→</span></a>
 </div><div id="ballotBanner" aria-label="Write-in demo banner">
   <div class="card">
@@ -46,5 +64,32 @@
 })();
 </script>
 
-
-
+<script>
+(function(){
+  const dd=document.querySelector('.dropdown');
+  const btn=document.getElementById('langBtn');
+  if(btn && dd){
+    btn.addEventListener('click',()=>{
+      const exp = dd.getAttribute('aria-expanded')==='true';
+      dd.setAttribute('aria-expanded', String(!exp));
+      btn.setAttribute('aria-expanded', String(!exp));
+    });
+    document.addEventListener('click',(e)=>{
+      if(!dd.contains(e.target)){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+    document.addEventListener('keydown',(e)=>{
+      if(e.key==='Escape'){
+        dd.setAttribute('aria-expanded','false');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+})();
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
