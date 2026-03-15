@@ -27,30 +27,43 @@
       const parser = new DOMParser();
       const refDoc = parser.parseFromString(text, 'text/html');
 
-      // capture current header to preserve it after body swap
-      const currentHeader = document.querySelector('header.site-header');
+      // --- HEADER: preserve only our local header placeholder ---
+      // Remove any header/placeholder that may have come from the reference
+      refDoc.querySelectorAll('#site-header, header.site-header').forEach(n=>n.remove());
 
-      // swap entire body with reference body (max fidelity)
-      document.body.innerHTML = refDoc.body ? refDoc.body.innerHTML : text;
+      // Prepare a new body fragment containing: our local header placeholder + reference content
+      const frag = document.createDocumentFragment();
+      // keep exactly one placeholder so /assets/site-header.js can inject once
+      const headerAnchor = document.getElementById('site-header') || document.createElement('div');
+      headerAnchor.id = 'site-header';
 
-      // ensure a header placeholder exists then re-attach original header
-      const anchor = document.createElement('div');
-      anchor.id = 'site-header';
-      document.body.insertBefore(anchor, document.body.firstChild);
-      if(currentHeader){ anchor.replaceWith(currentHeader); }
+      // Recreate a clean <body> content: header anchor + ref body children
+      frag.appendChild(headerAnchor);
+      Array.from(refDoc.body.childNodes).forEach(n=>{
+        // skip scripts from ref to avoid double-exec
+        if(n.nodeType===1 && n.tagName==='SCRIPT') return;
+        frag.appendChild(n.cloneNode(true));
+      });
 
-      // normalize write-in figure to local improved SVG
-      const figImg = document.querySelector('img[src*="write-in-"]');
-      if(figImg){ figImg.src = '/assets/write-in-'+LANG+'.svg'; figImg.setAttribute('alt','write-in '+LANG); }
+      // Replace current body children with the new fragment
+      document.body.innerHTML='';
+      document.body.appendChild(frag);
 
-      // also fix any link hrefs missing leading slash for root-level pages
+      // --- HERO FIGURE: normalize ONLY the hero figure image to our local SVG ---
+      const heroFigImg = document.querySelector('section.hero figure img');
+      if(heroFigImg){
+        heroFigImg.src = '/assets/write-in-'+LANG+'.svg';
+        heroFigImg.setAttribute('alt','write-in '+LANG);
+      }
+
+      // Fix relative links like "pages/..." to root-based "/pages/..."
       document.querySelectorAll('a[href^="pages/"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
 
-      // title — use reference title if present
+      // Title — use reference
       const refTitle = refDoc.querySelector('title');
       if(refTitle) document.title = refTitle.textContent;
 
-      // optional: bake to static
+      // Bake support
       if(new URL(location.href).searchParams.get('bake')==='1'){
         const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
         const a = document.createElement('a');
