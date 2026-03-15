@@ -131,7 +131,7 @@
     setTimeout(()=>loadGoogleTranslate(),1200);
     document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
     document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
-
+    
     // Primary nav
     const nav=el('nav',{class:'site-header__bottom site-header__nav','aria-label':'Primary'}); NAV.forEach(({label,href})=> nav.appendChild(el('a',{href},label)) );
 
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const gif    = header.querySelector('img[src*="write-in.gif"]');
   const emtest = header.querySelector('img[src*="emtest.png"]');
 
-  // If both exist and their order is wrong, fix it once (no per-page code needed)
+  // If order is wrong in DOM, fix it once globally (no per-page logic)
   if (gif && emtest && emtest.nextSibling !== gif) {
     emtest.parentNode.insertBefore(gif, emtest.nextSibling);
   }
