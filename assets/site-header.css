@@ -145,3 +145,41 @@ header.site-header .header-row,
 header.site-header .container {
   overflow: visible;
 }
+/* === move icons left, Languages on row 2 === */
+
+/* Treat common header wrappers as flex and allow wrapping */
+header.site-header .header-row,
+header.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Stable ordering: icons → nav → (row break) → Languages */
+header.site-header .header-right { order: 5; }        /* .png/.gif block */
+header.site-header nav.main-nav   { order: 10; }       /* Home, Platform, Voting & Write-In Candidate, About Erik */
+
+/* Force Languages onto its own line (row 2) and above icons in z-order */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  order: 99;
+  flex: 1 0 100%;     /* NEW line under the row (wrap) */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;
+  position: relative;
+  z-index: 5;         /* dropdown above images */
+}
+
+/* Keep icons visually behind the dropdown if they overlap */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Avoid clipping the dropdown in tight containers */
+header.site-header .header-row,
+header.site-header .container { overflow: visible; }
