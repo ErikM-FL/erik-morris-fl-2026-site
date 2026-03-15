@@ -144,5 +144,18 @@
     }
   }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header.site-header');
+  if (!header) return;
+
+  const gif    = header.querySelector('img[src*="write-in.gif"]');
+  const emtest = header.querySelector('img[src*="emtest.png"]');
+
+  // If both exist and their order is wrong, fix it once (no per-page code needed)
+  if (gif && emtest && emtest.nextSibling !== gif) {
+    emtest.parentNode.insertBefore(gif, emtest.nextSibling);
+  }
+});
+  
   onReady(build);
 })();
