@@ -1,9 +1,11 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v7)
-  // Changes: solid color background cycle (no visible gradient) — blue→purple→red→purple→blue, 125s.
-  // Keeps: Languages (Google Translate), About Erik in nav, and platform carousel + buttons on /pages/platform.html.
+  // Centralized Header Controller (v8)
+  // Update: solid-color background cycle that overrides any prior gradient CSS
+  // (blue→purple→red→purple→blue, 125s) and applies uniformly on ALL pages,
+  // including /pages/platform.html and /pages/about-erik.html.
+  // Keeps: Google Translate in Languages, About Erik nav, platform carousel+buttons.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -42,11 +44,15 @@
   }
 
   // ---------- SOLID color animation (no gradient visible) ----------
-  // Colors: blue (#0b2a6f) → purple (#3a1d6e) → red (#7a0b0b) → purple → blue
+  // Uses !important to override any legacy background declarations (e.g., animated-gradient.css)
   const SOLID_BG_CSS = `
     html, body{min-height:100%;}
-    body{ background-color:#0b2a6f; animation: solid-bg-cycle 125s linear infinite; }
-    /* ensure sections don't paint over the solid color */
+    body{
+      background-image: none !important;  /* neutralize any gradient */
+      background: none !important;         /* reset shorthand to ensure a clean slate */
+      background-color:#0b2a6f !important; /* starting blue */
+      animation: solid-bg-cycle 125s linear infinite !important;
+    }
     .hero{ background-color:transparent !important; background-image:none !important; }
     @keyframes solid-bg-cycle{
       0%   { background-color:#0b2a6f; }
@@ -106,7 +112,7 @@
   }
 
   function buildHeader(){
-    // Solid background color cycle
+    // Solid background color cycle (force-override any old gradient rules)
     ensureStyle('solid-bg-css', SOLID_BG_CSS);
 
     // Header mount
@@ -119,7 +125,7 @@
     // Images
     const imgs=el('div',{class:'site-header__images'}); const i1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); const i2=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'}); i1.onerror=()=>i1.style.display='none'; i2.onerror=()=>i2.style.display='none'; imgs.append(i1,i2);
 
-    // Languages
+    // Languages with Google Translate
     const lang=el('div',{class:'site-header__lang'}); const btn=el('button',{class:'site-header__btn',id:'langBtn','aria-expanded':'false','aria-haspopup':'true'},'Languages'); const menu=el('div',{class:'site-header__menu','aria-hidden':'true',role:'menu','aria-label':'Languages'});
     menu.append(el('div',{class:'menu-label'},'Translate this page')); const gt=el('div',{id:'google_translate_element'}); menu.append(gt);
     const grp=el('div',{class:'menu-group'}); grp.append(el('div',{class:'menu-label'},'Visit localized landing'));
@@ -128,10 +134,8 @@
       .forEach(([label,href])=> list.appendChild(el('li',{},`<a href="${href}">${label}</a>`)) );
     grp.append(list); menu.append(grp); lang.append(btn,menu);
 
-    // Toggle: load Google widget on open; also pre-load after first paint
     btn.addEventListener('click',()=>{ const open=btn.getAttribute('aria-expanded')==='true'; btn.setAttribute('aria-expanded', String(!open)); menu.setAttribute('aria-hidden', String(open)); if(!open){ loadGoogleTranslate(); } });
     setTimeout(()=>loadGoogleTranslate(),1200);
-
     document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
     document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
 
