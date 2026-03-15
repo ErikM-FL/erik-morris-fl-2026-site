@@ -1,20 +1,65 @@
 <!doctype html><html lang="vi">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="/styles.css?v=12">
-<link rel="stylesheet" href="/assets/site-header.css?v=12"><script src="/assets/site-header.js?v=12" defer></script>
+<link rel="stylesheet" href="/assets/site-header.css?v=12">
+<script src="/assets/site-header.js?v=12" defer></script>
 <div id="site-header"></div>
-<title>Erik Morris 2026 — Ghi tên</title>
+
+<title>Loading…</title>
 <section class="hero"><div class="hero-inner"><div class="hero-content">
-<p class="kicker">Thống đốc Florida — 2026 (Ghi tên ứng cử viên)</p>
-<h2>Lãnh đạo liêm chính, hiệu quả; chỉnh đúng động lực và mang lại kết quả thực tế.</h2>
-<figure style="margin:16px 0"><img src="/assets/write-in-vi.svg" alt="write-in vi" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
+  <!-- Hero text will be replaced verbatim from reference on load; figure below stays local -->
+  <figure style="margin:16px 0"><img src="/assets/write-in-vi.svg" alt="write-in vi" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
 </div></div></section>
 <div class="home-wrap" style="max-width:var(--container);margin:20px auto;padding:0 16px">
-  <p class="kicker" style="margin:6px 0;color:var(--muted)">Liên kết nhanh</p>
-  <div class="grid3">
-    <a class="card" href="/pages/hearth.html"><h3>Nhà Ở Bạn Có Thể Chi Trả — HEARTH</h3><span class="btn">Đọc thêm…</span></a>
-    <a class="card" href="/pages/fifa.html"><h3>Công Bằng Bảo Hiểm — FIFA</h3><span class="btn">Đọc thêm…</span></a>
-    <a class="card" href="/pages/fair-pricing.html"><h3>Giá Cả Công Bằng & Thù Lao Công Bằng</h3><span class="btn">Đọc thêm…</span></a>
-  </div>
+  <!-- This block will be replaced 1:1 from reference on load -->
+  <p class="kicker" style="opacity:.75">…</p>
+  <div class="grid3"><a class="card" href="#"><h3>…</h3><span class="btn">…</span></a></div>
 </div>
 <footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+<script>
+(function(){
+  const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-vi.html';
+  const LANG = 'vi';
+  function $(sel, root=document){ return root.querySelector(sel); }
+
+  async function syncFromReference(){
+    try{
+      const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
+      if(!res.ok){ console.warn('Sync: failed to fetch reference', res.status); return; }
+      const text = await res.text();
+      const parser = new DOMParser();
+      const refDoc = parser.parseFromString(text, 'text/html');
+
+      const refTitle = refDoc.querySelector('title');
+      if(refTitle) document.title = refTitle.textContent;
+
+      const curHero = $('.hero .hero-content');
+      const refHero = refDoc.querySelector('.hero .hero-content');
+      if(curHero && refHero){
+        const ourFigure = curHero.querySelector('figure');
+        const refClone = refHero.cloneNode(true);
+        refClone.querySelectorAll('figure').forEach(f=>f.remove());
+        curHero.innerHTML = refClone.innerHTML;
+        if(ourFigure){ curHero.appendChild(ourFigure); }
+      }
+
+      const curWrap = document.querySelector('.home-wrap');
+      const refWrap = refDoc.querySelector('.home-wrap');
+      if(curWrap && refWrap){ curWrap.innerHTML = refWrap.innerHTML; }
+
+      const refNav = refDoc.querySelector('nav[aria-label]');
+      const curNav = document.querySelector('nav[aria-label]');
+      if(refNav && curNav){ curNav.setAttribute('aria-label', refNav.getAttribute('aria-label')); }
+
+      if(new URL(location.href).searchParams.get('bake')==='1'){
+        const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = document.location.pathname.split('/').pop() || ('index-'+LANG+'.html');
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+    }catch(err){ console.warn('Sync: error', err); }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', syncFromReference); else syncFromReference();
+})();
+</script>
