@@ -1,17 +1,14 @@
-
 /* Header z-index & layout hotfix */
 :root{--img-h:50px}
-.site-header{position:relative;z-index:9999}
-.site-header__inner{display:grid;grid-template-columns:1fr minmax(90px,130px) auto;grid-template-rows:auto auto;align-items:center;column-gap:.6rem}
-.site-header__images{grid-column:2;grid-row:1 / span 2;max-width:130px;display:flex;gap:.3rem;align-items:center}
-.site-header__img{height:var(--img-h);width:auto;object-fit:contain}
+.site-header{position:relative;z-index:9999;background:#0b1b2b;color:#fff;border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif}
+.site-header__inner{display:grid;grid-template-columns:1fr minmax(90px,130px) auto;grid-template-rows:auto auto;align-items:center;column-gap:.6rem;max-width:1280px;margin:0 auto;padding:.5rem 1rem}
+.site-header__images{grid-column:2;grid-row:1 / span 2;max-width:130px;display:flex;gap:.3rem;align-items:center;overflow:visible}
+.site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
 .site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative;z-index:10000}
 .site-header__menu{position:absolute;right:0;top:calc(100% + 8px);z-index:10001;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;color:#fff}
-/* One-line brand/tagline; slight brand bump for alignment */
 .site-header__brandline{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-items:flex-start}
 .site-header__brand{font-weight:800;font-size:calc(16px + 2px)}
 .site-header__tagline{font-weight:500;line-height:1;font-size:clamp(12px,1.45vw,16px)}
-/* Force white inside dropdown & Google gadget */
 .site-header__menu *, #google_translate_element *, #google_translate_element a, #google_translate_element span{color:#fff !important}
 .goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
 @media(max-width:700px){.site-header__images{display:none}}
