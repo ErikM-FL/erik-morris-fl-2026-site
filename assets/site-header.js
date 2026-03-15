@@ -1,11 +1,12 @@
 
 (function(){
   // =============================
-  // Centralized Header Controller (v10)
-  // Fix: solid color background cycle guaranteed to run on ALL pages.
-  //  • Apply animation to BOTH <html> and <body> (uniform, no gradients visible).
-  //  • New style id; force-restart via class toggle + reflow; visibilitychange restart; sanity check.
-  //  • Keeps Google Translate, About Erik nav, Platform carousel + button styles.
+  // Centralized Header Controller (v11)
+  // Purpose: GUARANTEE a uniform, solid background color cycle on ALL pages.
+  //  • Applies animation to <html> + <body> and to a fixed #bg-cycle-layer fallback.
+  //  • Neutralizes legacy gradients; introduces new style id to bust stale caches.
+  //  • Force-restarts on load/visibilitychange/pageshow and sanity-checks progress.
+  //  • Keeps Google Translate, About Erik nav, and Platform carousel + button styles.
   // =============================
 
   const BRAND_TEXT='Erik Morris 2026';
@@ -47,45 +48,70 @@
     (document.head||document.body).appendChild(s);
   }
 
-  // ---------- SOLID color animation (uniform; no gradient visible) ----------
-  const SOLID_BG_CSS_V10 = `
+  // ---------- SOLID color animation — triple-redundant ----------
+  const COLORS = ['#0b2a6f','#3a1d6e','#7a0b0b','#3a1d6e','#0b2a6f']; // blue→purple→red→purple→blue
+  const DURATION = 125; // seconds; change to 25 for testing if desired
+
+  const SOLID_BG_CSS_V11 = `
     html, body{min-height:100%;}
-    /* Neutralize any legacy background + enforce solid color animation on BOTH html & body */
+    /* Neutralize any legacy background */
+    html, body{ background-image:none !important; background:none !important; }
+
+    /* Primary: animate background-color on both html and body */
     html, body{
-      background-image:none !important; background:none !important;
-      background-color:#0b2a6f !important; /* starting blue */
-      animation: solid-bg-cycle 25s linear infinite !important;
+      background-color:${COLORS[0]} !important;
+      animation: solid-bg-cycle ${DURATION}s linear infinite !important;
       animation-play-state: running !important;
       will-change: background-color;
     }
-    /* one-frame pause to force-restart */
-    html.solid-bg-restart, body.solid-bg-restart{ animation:none !important; }
+
+    /* Fallback layer (behind everything) */
+    #bg-cycle-layer{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+      background-color:${COLORS[0]}; animation: solid-bg-cycle ${DURATION}s linear infinite; }
+
+    /* One-frame pause to force-restart */
+    html.solid-bg-restart, body.solid-bg-restart, #bg-cycle-layer.solid-bg-restart{ animation:none !important; }
+
+    /* Ensure site sections don't overpaint */
     .hero{ background-color:transparent !important; background-image:none !important; }
+
     @keyframes solid-bg-cycle{
-      0%   { background-color:#0b2a6f; }
-      25%  { background-color:#3a1d6e; }
-      50%  { background-color:#7a0b0b; }
-      75%  { background-color:#3a1d6e; }
-      100% { background-color:#0b2a6f; }
+      0%   { background-color:${COLORS[0]}; }
+      25%  { background-color:${COLORS[1]}; }
+      50%  { background-color:${COLORS[2]}; }
+      75%  { background-color:${COLORS[1]}; }
+      100% { background-color:${COLORS[0]}; }
     }
   `;
 
+  function insertFallbackLayer(){
+    if(document.getElementById('bg-cycle-layer')) return;
+    const layer=el('div',{id:'bg-cycle-layer'});
+    document.body.insertBefore(layer, document.body.firstChild);
+  }
+
   function forceRestartAnimation(){
     try{
-      const html=document.documentElement, body=document.body;
-      html.classList.add('solid-bg-restart'); body.classList.add('solid-bg-restart');
-      // Reflow to ensure the pause takes effect
+      const html=document.documentElement, body=document.body, layer=document.getElementById('bg-cycle-layer');
+      html.classList.add('solid-bg-restart'); body.classList.add('solid-bg-restart'); if(layer) layer.classList.add('solid-bg-restart');
+      // Reflow to ensure pause
       void html.offsetHeight; // eslint-disable-line no-unused-expressions
-      requestAnimationFrame(()=>{ html.classList.remove('solid-bg-restart'); body.classList.remove('solid-bg-restart'); });
+      requestAnimationFrame(()=>{ html.classList.remove('solid-bg-restart'); body.classList.remove('solid-bg-restart'); if(layer) layer.classList.remove('solid-bg-restart'); });
     }catch(e){}
   }
 
   function sanityCheckAnimation(){
     try{
-      const before=getComputedStyle(document.body).backgroundColor;
+      const probe=(node)=> getComputedStyle(node).backgroundColor;
+      const a1=probe(document.body);
+      const l=document.getElementById('bg-cycle-layer');
+      const a1b=l?probe(l):null;
       setTimeout(()=>{
-        const after=getComputedStyle(document.body).backgroundColor;
-        if(before===after){ forceRestartAnimation(); }
+        const a2=probe(document.body);
+        const a2b=l?probe(l):null;
+        if(a1===a2 && (!l || a1b===a2b)){
+          forceRestartAnimation();
+        }
       }, 4000);
     }catch(e){}
   }
@@ -133,15 +159,17 @@
     const auto=setInterval(()=>go(index+1),7000); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(auto); });
     update();
 
-    // Ensure "About Erik" quick-link exists (last) without editing HTML
     try{ const grid=document.querySelector('.quick-links .grid'); if(grid && !grid.querySelector('a[href$="about-erik.html"]')){ grid.appendChild(el('a',{href:'about-erik.html'},'About Erik')); } }catch(e){}
   }
 
   function buildHeader(){
-    // Inject/refresh solid background CSS and force-start the animation
-    ensureStyle('solid-bg-css-v10', SOLID_BG_CSS_V10, /*replace*/ true);
+    // Inject/refresh solid background CSS, insert fallback layer, and start animation
+    ensureStyle('solid-bg-css-v11', SOLID_BG_CSS_V11, /*replace*/ true);
+    if(document.body) insertFallbackLayer(); else document.addEventListener('DOMContentLoaded', insertFallbackLayer);
+    // Multiple restart hooks for robustness
     forceRestartAnimation();
     sanityCheckAnimation();
+    window.addEventListener('pageshow', ()=>{ forceRestartAnimation(); });
     document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) forceRestartAnimation(); });
 
     // Header mount
