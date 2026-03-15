@@ -271,3 +271,55 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => obs.disconnect(), 12000);
   });
 })();
+/* === Add to bottom of BOTH files: move icons left, keep nav after, adopt Languages if needed === */
+(function () {
+  function ready(fn) {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
+  }
+
+  ready(function () {
+    const header = document.querySelector('header.site-header');
+    if (!header) return;
+
+    // Find the primary row/container that holds brand, nav, and images
+    const row = header.querySelector('.header-row')
+             || header.querySelector('.container')
+             || header;
+
+    // 1) IDENTIFY ICONS GROUP (closest container around emtest/write-in images)
+    const iconImg = header.querySelector('img[src*="emtest"], img[src*="write-in"]');
+    let icons = null;
+    if (iconImg) {
+      // Walk up to a sensible block container for the icons
+      icons = iconImg.closest('div, section, header');
+    }
+
+    // 2) PLACE ICONS FIRST, THEN NAV
+    const nav = header.querySelector('nav.main-nav');
+    if (row && icons && nav) {
+      // Make sure icons are before nav (left side), regardless of original DOM order
+      if (icons !== row.firstElementChild) row.insertBefore(icons, row.firstChild);
+      if (nav !== icons.nextElementSibling) row.insertBefore(nav, icons.nextSibling);
+    }
+
+    // 3) ADOPT LANGUAGES INTO THE HEADER (if Translate injected it elsewhere)
+    const languages =
+      document.getElementById('google_translate_element') ||
+      header.querySelector('[data-lang-menu]') ||
+      header.querySelector('.lang') ||
+      document.querySelector('[data-lang-menu]') ||
+      document.querySelector('.lang') ||
+      document.getElementById('languages');
+
+    if (languages && !header.contains(languages)) {
+      row.appendChild(languages); // bring into the header so CSS can wrap it
+    }
+    if (languages) {
+      languages.classList.add('header-languages');
+      languages.style.position = 'relative';
+      languages.style.zIndex = '1000';
+      languages.style.color = '#fff';
+    }
+  });
+})();
