@@ -1,48 +1,12 @@
-/* === format-fixes.css (added by DEV update on 2026-03-15) === */
-:root {
-  --grad-blue:   #1e3a8a;  /* blue 800 */
-  --grad-purple: #7c3aed;  /* purple 600 */
-  --grad-red:    #ef4444;  /* red 500 */
-  --grad-speed:  36s;      /* full cycle */
-}
 
-body {
-  background: linear-gradient(
-    270deg,
-    var(--grad-blue),
-    var(--grad-purple),
-    var(--grad-red),
-    var(--grad-purple),
-    var(--grad-blue)
-  );
-  background-size: 1000% 100%;
-  animation: brandGradient var(--grad-speed) ease-in-out infinite;
-}
 
-@keyframes brandGradient {
-  0%   { background-position:   0% 50%; }
-  25%  { background-position:  50% 50%; }
-  50%  { background-position: 100% 50%; }
-  75%  { background-position:  50% 50%; }
-  100% { background-position:   0% 50%; }
-}
-
+/* --- Additional fixes (header & ballot placement) --- */
 #ballotBanner .card {
-  max-width: 720px;
-  width: 100%;
-  margin-inline: auto;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
 }
 
-#ballotFallback {
-  display: block;
-  max-width: 360px;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-}
-
-#ballotCanvas {
-  width: 100%;
-  height: auto;
-  max-width: 720px;
-}
+/* Optional spacing in content context */
+.content #ballotBanner { margin-block: 1rem 1.25rem; }
