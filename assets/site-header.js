@@ -1,13 +1,10 @@
 
 (function(){
-  // =============================
-  // Centralized Header Controller (v11)
-  // Purpose: GUARANTEE a uniform, solid background color cycle on ALL pages.
-  //  • Applies animation to <html> + <body> and to a fixed #bg-cycle-layer fallback.
-  //  • Neutralizes legacy gradients; introduces new style id to bust stale caches.
-  //  • Force-restarts on load/visibilitychange/pageshow and sanity-checks progress.
-  //  • Keeps Google Translate, About Erik nav, and Platform carousel + button styles.
-  // =============================
+  // ============ Header controller — v12 (based on v7 that worked) ============
+  // • Solid COLOR background cycle (no visible gradient): blue→purple→red→purple→blue (125s)
+  // • Languages (Google Translate) works and preloads lazily
+  // • Adds “About Erik” to the nav
+  // • On /pages/platform.html: injects carousel layout & button styles and initializes the slider
 
   const BRAND_TEXT='Erik Morris 2026';
   const TAGLINE='Write\u2011in \u2022 Floridians First \u2022 For Florida Families & Future \u2022 Fix the Incentives';
@@ -18,13 +15,8 @@
     {label:'About Erik',href:'/pages/about-erik.html'}
   ];
 
-  function el(tag,attrs={},html){const e=document.createElement(tag);for(const k in attrs){k==='class'?e.className=attrs[k]:e.setAttribute(k,attrs[k])}if(html!=null)e.innerHTML=html;return e;}
-  function ensureStyle(id, css, replace){
-    const prev=document.getElementById(id);
-    if(prev && replace){ prev.remove(); }
-    if(document.getElementById(id)) return;
-    const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s);
-  }
+  function el(t,a={},h){const e=document.createElement(t);for(const k in a){k==='class'?e.className=a[k]:e.setAttribute(k,a[k])}if(h!=null)e.innerHTML=h;return e;}
+  function ensureStyle(id, css){ if(document.getElementById(id)) return; const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s); }
   function onReady(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);} else { fn(); } }
   function isPlatform(){ return /\/pages\/platform\.html(?:$|[?#])/.test(location.pathname+location.search+location.hash); }
 
@@ -37,7 +29,8 @@
     window.googleTranslateElementInit=function(){
       try{
         new window.google.translate.TranslateElement({
-          pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt',
+          pageLanguage:'en',
+          includedLanguages:'es,ht,zh-CN,vi,ko,pt',
           layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
         }, 'google_translate_element');
         gtLoaded=true; cb&&cb();
@@ -48,75 +41,21 @@
     (document.head||document.body).appendChild(s);
   }
 
-  // ---------- SOLID color animation — triple-redundant ----------
-  const COLORS = ['#0b2a6f','#3a1d6e','#7a0b0b','#3a1d6e','#0b2a6f']; // blue→purple→red→purple→blue
-  const DURATION = 125; // seconds; change to 25 for testing if desired
-
-  const SOLID_BG_CSS_V11 = `
+  // ---------- SOLID color animation (that worked in v7) ----------
+  const SOLID_BG_CSS = `
     html, body{min-height:100%;}
-    /* Neutralize any legacy background */
-    html, body{ background-image:none !important; background:none !important; }
-
-    /* Primary: animate background-color on both html and body */
-    html, body{
-      background-color:${COLORS[0]} !important;
-      animation: solid-bg-cycle ${DURATION}s linear infinite !important;
-      animation-play-state: running !important;
-      will-change: background-color;
-    }
-
-    /* Fallback layer (behind everything) */
-    #bg-cycle-layer{ position:fixed; inset:0; z-index:-1; pointer-events:none;
-      background-color:${COLORS[0]}; animation: solid-bg-cycle ${DURATION}s linear infinite; }
-
-    /* One-frame pause to force-restart */
-    html.solid-bg-restart, body.solid-bg-restart, #bg-cycle-layer.solid-bg-restart{ animation:none !important; }
-
-    /* Ensure site sections don't overpaint */
+    body{ background-color:#0b2a6f; animation: solid-bg-cycle 125s linear infinite; }
     .hero{ background-color:transparent !important; background-image:none !important; }
-
     @keyframes solid-bg-cycle{
-      0%   { background-color:${COLORS[0]}; }
-      25%  { background-color:${COLORS[1]}; }
-      50%  { background-color:${COLORS[2]}; }
-      75%  { background-color:${COLORS[1]}; }
-      100% { background-color:${COLORS[0]}; }
+      0%   { background-color:#0b2a6f; }
+      25%  { background-color:#3a1d6e; }
+      50%  { background-color:#7a0b0b; }
+      75%  { background-color:#3a1d6e; }
+      100% { background-color:#0b2a6f; }
     }
   `;
 
-  function insertFallbackLayer(){
-    if(document.getElementById('bg-cycle-layer')) return;
-    const layer=el('div',{id:'bg-cycle-layer'});
-    document.body.insertBefore(layer, document.body.firstChild);
-  }
-
-  function forceRestartAnimation(){
-    try{
-      const html=document.documentElement, body=document.body, layer=document.getElementById('bg-cycle-layer');
-      html.classList.add('solid-bg-restart'); body.classList.add('solid-bg-restart'); if(layer) layer.classList.add('solid-bg-restart');
-      // Reflow to ensure pause
-      void html.offsetHeight; // eslint-disable-line no-unused-expressions
-      requestAnimationFrame(()=>{ html.classList.remove('solid-bg-restart'); body.classList.remove('solid-bg-restart'); if(layer) layer.classList.remove('solid-bg-restart'); });
-    }catch(e){}
-  }
-
-  function sanityCheckAnimation(){
-    try{
-      const probe=(node)=> getComputedStyle(node).backgroundColor;
-      const a1=probe(document.body);
-      const l=document.getElementById('bg-cycle-layer');
-      const a1b=l?probe(l):null;
-      setTimeout(()=>{
-        const a2=probe(document.body);
-        const a2b=l?probe(l):null;
-        if(a1===a2 && (!l || a1b===a2b)){
-          forceRestartAnimation();
-        }
-      }, 4000);
-    }catch(e){}
-  }
-
-  // ---------- Platform page CSS ----------
+  // ---------- Platform page CSS: layout & controls ----------
   const PLATFORM_LAYOUT_CSS = `
     .platform-wrap{max-width:var(--container);margin:20px auto;padding:0 16px}
     .slider{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--stroke);background:var(--card)}
@@ -133,6 +72,7 @@
     @media(max-width:780px){.slide{grid-template-columns:1fr}.slide .img img{max-width:520px}}
   `;
 
+  // ---------- Platform page CSS: buttons & quick-link chips ----------
   const PLATFORM_BUTTON_CSS = `
     :root{--btn-bg:#14345c;--btn-bg-hover:#173b6a;--btn-border:#2b4772;--btn-border-hover:#35598a;--btn-fg:#e6f2ff}
     .slide .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;background:var(--btn-bg);
@@ -159,18 +99,13 @@
     const auto=setInterval(()=>go(index+1),7000); document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearInterval(auto); });
     update();
 
+    // Ensure About Erik quick-link exists without editing HTML
     try{ const grid=document.querySelector('.quick-links .grid'); if(grid && !grid.querySelector('a[href$="about-erik.html"]')){ grid.appendChild(el('a',{href:'about-erik.html'},'About Erik')); } }catch(e){}
   }
 
-  function buildHeader(){
-    // Inject/refresh solid background CSS, insert fallback layer, and start animation
-    ensureStyle('solid-bg-css-v11', SOLID_BG_CSS_V11, /*replace*/ true);
-    if(document.body) insertFallbackLayer(); else document.addEventListener('DOMContentLoaded', insertFallbackLayer);
-    // Multiple restart hooks for robustness
-    forceRestartAnimation();
-    sanityCheckAnimation();
-    window.addEventListener('pageshow', ()=>{ forceRestartAnimation(); });
-    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) forceRestartAnimation(); });
+  function build(){
+    // Site-wide background color cycle
+    ensureStyle('solid-bg-css', SOLID_BG_CSS);
 
     // Header mount
     let anchor=document.getElementById('site-header'); if(!anchor){anchor=el('div',{id:'site-header'});document.body.insertBefore(anchor,document.body.firstChild);} 
@@ -191,6 +126,7 @@
       .forEach(([label,href])=> list.appendChild(el('li',{},`<a href="${href}">${label}</a>`)) );
     grp.append(list); menu.append(grp); lang.append(btn,menu);
 
+    // Toggle + preload
     btn.addEventListener('click',()=>{ const open=btn.getAttribute('aria-expanded')==='true'; btn.setAttribute('aria-expanded', String(!open)); menu.setAttribute('aria-hidden', String(open)); if(!open){ loadGoogleTranslate(); } });
     setTimeout(()=>loadGoogleTranslate(),1200);
     document.addEventListener('click',(e)=>{ if(!lang.contains(e.target)){ btn.setAttribute('aria-expanded','false'); menu.setAttribute('aria-hidden','true'); } });
@@ -201,7 +137,6 @@
 
     inner.append(brand,imgs,lang,nav); H.appendChild(inner); anchor.replaceWith(H);
 
-    // Platform-specific injections
     if(isPlatform()){
       ensureStyle('platform-layout-css', PLATFORM_LAYOUT_CSS);
       ensureStyle('platform-button-css', PLATFORM_BUTTON_CSS);
@@ -209,5 +144,5 @@
     }
   }
 
-  onReady(buildHeader);
+  onReady(build);
 })();
