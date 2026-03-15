@@ -1,40 +1,72 @@
+:root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.5rem;--gap:.65rem;--max:1280px;--img-h:48px}
+.site-header{position:relative;z-index:1000;background:var(--header-bg);color:var(--header-fg);border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.site-header__inner{max-width:var(--max);margin:0 auto;padding:var(--pad-y) var(--pad-x);display:grid;grid-template-columns:1fr minmax(96px,120px) auto;grid-template-rows:auto auto;column-gap:.6rem;row-gap:.35rem;align-items:center}
+.site-header__brandline{display:flex;gap:.5rem;align-items:flex-start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-header__brand{font-weight:800;font-size:calc(16px + 2px)}
+.site-header__tagline{font-weight:500;line-height:1;font-size:clamp(12px,1.45vw,16px)}
+.site-header__images{grid-column:2;grid-row:1 / span 2;display:flex;align-items:center;gap:.3rem;max-width:120px}
+.site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
+.site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative}
+.site-header__btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;padding:.3rem .55rem;border-radius:6px;font-weight:600}
+/*Original button, no arrow --*/
+/*.site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
+.site-header__menu[aria-hidden="false"]{display:block} */
 
-/* =============================================
-   /assets/site-header.css — EMERGENCY RESTORE (v3)
-   Two-row header, Languages on row-2, no overlap; body ballot sizing
-   ============================================= */
+/* Anchor the popup to the button (not the viewport) */
+.site-header__lang { position: relative; }  /* ensure an anchor */
+.site-header__menu {
+  position: absolute;              /* was: fixed */
+  top: calc(100% + 8px);           /* 8px gap below the button */
+  right: 0;                        /* align popup’s right edge to button’s right edge */
+  width: min(360px, 92vw);
+  background: #0b1b2b;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding: 12px;
+  display: none;
+  color: #fff;
+  z-index: 2147483647;             /* keep it above everything */
+}
+.site-header__menu[aria-hidden="false"] { display: block; }
 
-/* Basic fallbacks if theme vars are missing */
-:root{ --stroke: rgba(255,255,255,.18); --card: rgba(255,255,255,.04); }
+/* Button layout + down triangle ▾ after a small gap */
+.site-header__btn {
+  display: inline-flex;            /* align text + caret */
+  align-items: center;
+  gap: .35rem;                     /* spaces caret from “Languages” */
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  cursor: pointer;
+  padding: .3rem .55rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
 
-/* Header shell */
-header.site-header{ position:relative; z-index:10; width:100%; }
-header.site-header .container{ max-width:1200px; margin:0 auto; padding:10px 16px; }
+/* Down triangle on the button */
+.site-header__btn::after {
+  content: '▾';                    /* Unicode down triangle */
+  font-size: .9em;
+  line-height: 1;
+}
 
-/* Row 1 — brand | nav | right icons */
-header.site-header .row-1{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px; }
-header.site-header .brand-wrap{ display:flex; align-items:center; min-width:0; }
-header.site-header .brand-wrap a.brand{ font-weight:700; font-size:18px; text-decoration:none; color:#fff; white-space:nowrap; }
+/* (Optional) Show an up triangle when open */
+.site-header__btn[aria-expanded="true"]::after { content: '▴'; }
 
-header.site-header nav.main-nav{ display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-header.site-header nav.main-nav a{ color:#fff; text-decoration:none; opacity:.95 }
-header.site-header nav.main-nav a:hover{ opacity:1 }
+/* Mobile: keep the popup within the viewport */
+@media (max-width: 720px) {
+  .site-header__menu { right: 0; left: auto; width: min(92vw, 360px); }
+}
 
-header.site-header .header-right{ display:flex; align-items:center; gap:8px; }
-header.site-header img.hdr-emtest{ display:block; height:32px; width:auto; border-radius:4px; }
-header.site-header img.hdr-writein{ display:block; max-height:28px; width:auto; flex-shrink:0; }
-
-/* Row 2 — Languages */
-header.site-header .row-2{ display:flex; align-items:center; gap:12px; margin-top:6px; }
-header.site-header #google_translate_element, 
-header.site-header .lang, 
-header.site-header [data-lang-menu]{ display:inline-flex; align-items:center; color:#fff; }
-
-/* ---- Body ballot image (localized landings) ---- */
-.ballot-block{ max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }
-.ballot-block img{ display:block; max-width:100%; height:auto; }
-.ballot-block img[src*="write-in-ballot"]{ margin-bottom:-8px; }
-
-/* Minimal figure fallback when wrapper is absent */
-figure.ballot-figure{ max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }
-figure.ballot-figure img{ display:block; max-width:100%; height:auto; }
+.menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
+.menu-label{font-size:12px;color:#e2e8f0;margin:4px 0 6px}
+.menu-list{list-style:none;margin:0;padding:0}
+.menu-list a{display:block;color:#fff;text-decoration:none;padding:.4rem .45rem;border-radius:6px}
+.menu-list a:hover{background:rgba(255,255,255,.08)}
+.site-header__bottom{grid-column:1 / span 3;grid-row:2;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:flex-end}
+.site-header__nav a{color:#fff;text-decoration:none;font-weight:700;padding:.35rem .5rem;border-radius:8px}
+.site-header__nav a:hover,.site-header__nav a:focus-visible{background:rgba(255,255,255,.08);color:var(--header-accent);outline:none}
+#google_translate_element *{color:#fff !important}
+.goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
+@media(max-width:720px){:root{--img-h:40px}.site-header__images{display:none}}
