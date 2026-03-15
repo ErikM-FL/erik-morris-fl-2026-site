@@ -224,4 +224,47 @@ header.site-header .header-right * {
   position: relative;
   z-index: 1;
 }
-header.site-header { outline: 2px dashed #00ff7f; } /* TEMP: debug */
+/* === Row‑wrap with stable order: icons → nav → (new line) Languages === */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible; /* let the dropdown render above */
+}
+
+/* Icons (.png/.gif) first, then nav */
+header.site-header .header-right { order: 5; }
+header.site-header nav.main-nav   { order: 10; }
+
+/* Force Languages to a NEW visual line (row 2) under the nav */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;     /* forces the line break */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;
+  position: relative;
+  z-index: 5;         /* dropdown above images */
+  float: none !important;
+}
+
+/* Keep images below the dropdown */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fallback (in case the icon container isn't .header-right):
+   if a direct child has emtest or write-in, treat parent as "icons" */
+header.site-header :has(> img[src*="emtest"], > img[src*="write-in"]) {
+  order: 5;
+}
+``
