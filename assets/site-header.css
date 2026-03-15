@@ -1,32 +1,17 @@
 
-:root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.5rem;--gap:.65rem;--max:1280px;--shadow:0 10px 30px rgba(0,0,0,.35);--img-h:52px}
-.site-header{position:relative;z-index:50;background:var(--header-bg);color:var(--header-fg);border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif}
-/* Make image column narrower so Languages always has room */
-.site-header__inner{max-width:var(--max);margin:0 auto;padding:var(--pad-y) var(--pad-x);display:grid;grid-template-columns:1fr minmax(110px,160px) auto;grid-template-rows:auto auto;column-gap:var(--gap);row-gap:.35rem;align-items:center}
-/* Single-row brand+tagline, top aligned */
-.site-header__brandline{grid-column:1;grid-row:1;display:flex;gap:.5rem;align-items:flex-start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.site-header__brand{font-weight:800;font-size:calc(16px + 2px)} /* +2px as requested fallback */
-.site-header__tagline{font-weight:500;line-height:1;font-size:clamp(12px,1.5vw,16px)}
-/* Images span two rows, never overlay menu; keep overflow visible but beneath menu */
-.site-header__images{grid-column:2;grid-row:1 / span 2;align-self:stretch;display:flex;align-items:center;gap:.3rem;max-width:160px;overflow:visible}
-.site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
-/* Languages dropdown (z-index above images & gif) */
-.site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative;z-index:1000}
-.site-header__btn{background:transparent;border:none;color:#fff;cursor:pointer;padding:.3rem .45rem;border-radius:6px;font-weight:600}
-.site-header__btn:after{content:'BE';margin-left:.35rem}
-.site-header__menu{position:absolute;right:0;top:calc(100% + 8px);width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:var(--shadow);padding:12px;display:none;color:#fff;z-index:1001}
-.site-header__menu[aria-hidden="false"]{display:block}
-.menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
-.menu-label{font-size:12px;color:#e2e8f0;margin:4px 0 6px}
-.menu-list{list-style:none;margin:0;padding:0}
-.menu-list a{display:block;color:#fff;text-decoration:none;padding:.4rem .45rem;border-radius:6px}
-.menu-list a:hover{background:rgba(255,255,255,.08)}
-/* Force white text in dropdown & Google gadget */
+/* Header z-index & layout hotfix */
+:root{--img-h:50px}
+.site-header{position:relative;z-index:9999}
+.site-header__inner{display:grid;grid-template-columns:1fr minmax(90px,130px) auto;grid-template-rows:auto auto;align-items:center;column-gap:.6rem}
+.site-header__images{grid-column:2;grid-row:1 / span 2;max-width:130px;display:flex;gap:.3rem;align-items:center}
+.site-header__img{height:var(--img-h);width:auto;object-fit:contain}
+.site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative;z-index:10000}
+.site-header__menu{position:absolute;right:0;top:calc(100% + 8px);z-index:10001;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;color:#fff}
+/* One-line brand/tagline; slight brand bump for alignment */
+.site-header__brandline{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-items:flex-start}
+.site-header__brand{font-weight:800;font-size:calc(16px + 2px)}
+.site-header__tagline{font-weight:500;line-height:1;font-size:clamp(12px,1.45vw,16px)}
+/* Force white inside dropdown & Google gadget */
 .site-header__menu *, #google_translate_element *, #google_translate_element a, #google_translate_element span{color:#fff !important}
 .goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
-/* Bottom row */
-.site-header__bottom{grid-column:1 / span 3;grid-row:2;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:flex-end}
-.site-header__nav a{color:#fff;text-decoration:none;font-weight:700;padding:.35rem .5rem;border-radius:8px}
-.site-header__nav a:hover,.site-header__nav a:focus-visible{background:rgba(255,255,255,.08);color:var(--header-accent);outline:none}
-/* Small screens: protect single-line by hiding images earlier */
-@media(max-width:680px){:root{--img-h:40px}.site-header__images{display:none}}
+@media(max-width:700px){.site-header__images{display:none}}
