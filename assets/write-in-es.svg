@@ -1,15 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="1000" height="360">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0b2a6f"/>
-      <stop offset="1" stop-color="#3a1d6e"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="1000" height="360" fill="url(#g)"/>
-  <rect x="18" y="18" width="964" height="324" rx="14" fill="#0b1530" stroke="#223356"/>
-  <g font-family="Segoe UI, Noto Sans, Arial" fill="#e8f1ff">
-    <text x="50" y="95" font-size="36" opacity="0.95">Voto por Escrito</text>
-    <text x="50" y="205" font-size="64" font-weight="800">ERIK MORRIS</text>
-    <circle cx="34" cy="82" r="8" fill="#e8f1ff"/>
-  </g>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" style="background:#0b132b;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <rect x="0" y="0" width="1600" height="120" fill="#1c2541"/>
+  <text x="800" y="70" fill="#f1f5f9" font-size="48" font-weight="700" text-anchor="middle">INSTRUCCIONES PARA VOTAR POR ESCRITO</text>
+  <text x="800" y="110" fill="#9aa7b2" font-size="28" text-anchor="middle">Gobernador de Florida — 2026</text>
+  <rect x="80" y="180" width="1440" height="520" fill="#111827" stroke="#273043" stroke-width="2" rx="8"/>
+  <text x="112" y="230" fill="#f1f5f9" font-size="32">1) En su boleta, busque la contienda para Gobernador.</text>
+  <text x="112" y="294" fill="#f1f5f9" font-size="32">2) Al final de la lista, ubique la línea para voto por escrito.</text>
+  <text x="112" y="358" fill="#f1f5f9" font-size="32">3) Escriba claramente: ERIK MORRIS.</text>
+  <text x="112" y="422" fill="#f1f5f9" font-size="32">4) Devuelva su boleta siguiendo las instrucciones.</text>
+  <rect x="80" y="730" width="1440" height="120" fill="#3a506b" rx="8"/>
+  <text x="800" y="805" fill="#ffffff" font-size="56" font-weight="700" text-anchor="middle">ESCRIBA: ERIK MORRIS</text>
+  <text x="80" y="860" fill="#9aa7b2" font-size="22">Share this image. Tell 3 friends how to write in.</text>
 </svg>
