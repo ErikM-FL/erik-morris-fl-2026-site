@@ -278,7 +278,7 @@ header.site-header .row-2 {
   overflow: visible;      /* allow dropdown to render above */
 }
 
-/* Ensure the Languages control renders above images and stays white */
+/* /* Ensure the Languages control renders above images and stays white */
 header.site-header .row-2 #google_translate_element,
 header.site-header .row-2 [data-lang-menu],
 header.site-header .row-2 .lang {
@@ -356,4 +356,4 @@ header.site-header :has(> img[src*="emtest"], > img[src*="write-in"]) {
   order: 5;            /* before the nav */
   position: relative;  /* give it a local stacking context below languages */
   z-index: 1;
-}
+} */
