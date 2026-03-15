@@ -147,3 +147,36 @@
 
   onReady(build);
 })();
+/* === OPTION 1B — minimal relocation helper (no placeholders, append-only) === */
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header.site-header');
+  if (!header) return;
+
+  // Find or infer the row container that holds brand/nav/icons
+  const row =
+    header.querySelector('.header-row') ||
+    header.querySelector('.container') ||
+    header;
+
+  // Locate the Languages control (supporting GT + common patterns)
+  const languages =
+    document.getElementById('google_translate_element') ||
+    header.querySelector('[data-lang-menu]') ||
+    header.querySelector('.lang') ||
+    document.querySelector('[data-lang-menu]') ||
+    document.querySelector('.lang');
+
+  // If Languages renders outside the header, adopt it into the row
+  if (languages && !header.contains(languages)) {
+    row.appendChild(languages);
+  }
+
+  // Mark it explicitly so CSS can style it if needed
+  if (languages) languages.classList.add('header-languages');
+
+  // Ensure the icons block sits on the left (before nav) as requested
+  const icons = header.querySelector('.header-right');
+  if (row && icons && icons !== row.firstElementChild) {
+    row.insertBefore(icons, row.firstChild);
+  }
+});
