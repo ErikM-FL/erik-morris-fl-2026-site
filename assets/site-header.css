@@ -183,3 +183,44 @@ header.site-header .header-right * {
 /* Avoid clipping the dropdown in tight containers */
 header.site-header .header-row,
 header.site-header .container { overflow: visible; }
+/* === OPTION 1B — icons left, nav next, Languages on a new (wrapped) row === */
+
+/* Treat common header wrappers as flex and allow wrapping.
+   We include likely wrappers so it works regardless of exact markup.
+   (No harm if some selectors don't exist on a page.) */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible;                 /* avoid clipping the dropdown */
+}
+
+/* Stable ordering: icons (.png/.gif) → nav → (row break) → Languages */
+header.site-header .header-right { order: 5; }         /* icons block */
+header.site-header nav.main-nav   { order: 10; }        /* Home, Platform, Voting & Write-In Candidate, About Erik */
+
+/* Force Languages onto its own wrapped line (row 2) and above icons */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;                      /* force a line break under the row */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;                         /* always white text */
+  position: relative;
+  z-index: 5;                          /* dropdown above icons */
+  float: none !important;              /* neutralize any legacy float */
+}
+
+/* Keep icons visually behind the dropdown if there’s overlap */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
