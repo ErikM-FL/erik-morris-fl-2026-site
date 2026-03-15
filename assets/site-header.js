@@ -115,8 +115,7 @@
     const brand=el('div',{class:'site-header__brandline'}); brand.append(el('span',{class:'site-header__brand'},BRAND_TEXT)); const tg=el('span',{class:'site-header__tagline'}); tg.textContent=TAGLINE; brand.append(tg);
 
     // Images
-     const imgs=el('div',{class:'site-header__images'}); const i1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); //const i2=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'}); 
-    i1.onerror=()=>i1.style.display='none'; // i2.onerror=()=>i2.style.display='none'; 
+     const imgs=el('div',{class:'site-header__images'}); const i1=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); const i2=el('img',{class:'site-header__img',src:'/assets/write-in.gif',alt:'Write-in ballot'}); i1.onerror=()=>i1.style.display='none'; i2.onerror=()=>i2.style.display='none'; 
     imgs.append(i1,i2);
        // const imgs=el('div',{class:'site-header__images'}); const i1=el('img',{class:'site-header__img',src:'/assets/write-in-ballot.gif',alt:'Write-in ballot'}); const i2=el('img',{class:'site-header__img',src:'/assets/EMtest.png',alt:''}); i1.onerror=()=>i1.style.display='none'; i2.onerror=()=>i2.style.display='none'; imgs.append(i1,i2);
 
