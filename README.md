@@ -7,6 +7,7 @@ This folder contains the complete static site, localized write‑in pages/graphi
 - `styles.css`
 - `assets/` — SVG/PNG write‑in graphics
 - `pages/` — Platform & policy pages, How‑To pages (including localized variants)
+- `assets/site-header.js` - contains the timing and settings for the background color
 
 ## Deploy on Vercel (GitHub)
 - Create a GitHub repo
