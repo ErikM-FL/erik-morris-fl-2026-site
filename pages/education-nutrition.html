@@ -18,7 +18,7 @@
 /* Ensure two-column hero on desktop for alignment script */
 @media (min-width: 900px){
   .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: start; }
-  #ballotBanner{ justify-self: end; align-self: start; }
+  #ballotBanner{ justify-self: end; align-self: start; will-change: transform; }
 }
 </style></head>
 <body>
@@ -38,35 +38,31 @@
 
 
 
-<script id="alignBannerToH2-v2">
+<script id="alignBannerToH2-v3">
 (function(){
-  function px(n){ return (n||0)+''; }
   function align(){
-    if(!window.matchMedia('(min-width: 900px)').matches) return;
+    var mq = window.matchMedia('(min-width: 900px)');
     var inner = document.querySelector('.hero .hero-inner');
-    var content = inner && inner.querySelector('.hero-content');
-    var h2 = content && content.querySelector('h2');
-    var banner = inner && inner.querySelector('#ballotBanner');
-    if(!(inner && content && h2 && banner)) return;
-    // current positions
+    var h2 = document.querySelector('.hero .hero-inner .hero-content h2');
+    var banner = document.querySelector('.hero .hero-inner #ballotBanner');
+    if(!(mq.matches && inner && h2 && banner)) { if(banner) banner.style.transform=''; return; }
+    // Clear previous transform so we measure natural positions
+    banner.style.transform = 'translateY(0px)';
     var h2Top = h2.getBoundingClientRect().top + window.scrollY;
     var bTop  = banner.getBoundingClientRect().top + window.scrollY;
-    // current computed margin-top
-    var mt = parseFloat(getComputedStyle(banner).marginTop)||0;
-    // delta needed to align banner top to h2 top (can be negative to move up)
     var delta = Math.round(h2Top - bTop);
-    // apply adjusted margin-top
-    banner.style.marginTop = px(mt + delta) + 'px';
-  }
-  function reset(){
-    if(!window.matchMedia('(min-width: 900px)').matches){
-      var banner = document.querySelector('.hero #ballotBanner');
-      if(banner) banner.style.marginTop='';
-    }
+    // Use transform so we don't fight margins set elsewhere and can move up or down
+    banner.style.transform = 'translateY(' + delta + 'px)';
   }
   function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
-  var rAF; function onResize(){ cancelAnimationFrame(rAF); rAF = requestAnimationFrame(function(){ align(); reset(); }); }
-  ready(function(){ align(); reset(); });
+  function onResize(){ align(); }
+  ready(function(){
+    // Run after fonts load to avoid late reflow shifting the title
+    if(document.fonts && document.fonts.ready) { document.fonts.ready.then(align); }
+    // Also run at DOM ready and window load as fallback
+    align();
+    window.addEventListener('load', align);
+  });
   window.addEventListener('resize', onResize);
 })();
 </script>
