@@ -14,6 +14,30 @@
   #ballotBanner .card{border:none;background:transparent;box-shadow:none;padding:0;margin:0 auto;}
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
+
+/* hearth only: keep CTA below banner (left), keep banner in title row (right), trim top gap */
+@media (min-width: 900px){
+  .hero-content{
+    display:grid !important;
+    grid-template-columns: 1fr minmax(300px, 380px) !important;
+    grid-template-rows: auto auto auto !important;
+    grid-template-areas:
+      "kicker banner"
+      "title  banner"
+      "cta    banner";
+    align-items:start !important; gap:16px 20px !important;
+  }
+  .hero-content .kicker{ grid-area:kicker !important; margin:0 !important; }
+  .hero-content h2{ grid-area:title !important; margin-top:0 !important; }
+  .hero-content .hero-cta{ grid-area:cta !important; justify-self:start !important; }
+  .hero-content #ballotBanner{ grid-area:banner !important; justify-self:end !important; align-self:start !important; margin:0 !important; }
+  .hero-content #ballotBanner .card{
+    margin:0 !important; background:#fff !important; border:1px solid rgba(0,0,0,.22) !important;
+    border-radius:10px !important; padding:4px 8px 8px 8px !important; box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
+  }
+  .hero-content #ballotBanner #ballotCanvas{ display:none !important; }
+  .hero-content #ballotBanner #ballotFallback{ display:block !important; width:100% !important; height:auto !important; max-width:none !important; }
+}
 </style></head>
 <body>
 <div id="site-header"></div>
@@ -24,7 +48,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">HEARTH — Housing &amp; Homestead Reform</p><h2>Housing you can afford.</h2>
-<a href="hearth-details.html" style="display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .9rem;border:1px solid #2A3559;border-radius:10px;background:#334155;color:#dbeafe;text-decoration:none;font-weight:600">Read More… <span aria-hidden="true">→</span></a>
+<a class="hero-cta"href="hearth-details.html" style="display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .9rem;border:1px solid #2A3559;border-radius:10px;background:#334155;color:#dbeafe;text-decoration:none;font-weight:600">Read More… <span aria-hidden="true">→</span></a>
 </div><div id="ballotBanner" aria-label="Write-in demo banner">
   <div class="card">
     <canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas>
@@ -35,5 +59,36 @@
 </div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 
 
+
+<script id="hearthAlignBannerToH2">
+(function(){
+  function relocate(){
+    var inner = document.querySelector('.hero .hero-inner');
+    var content = inner && inner.querySelector('.hero-content');
+    var h2 = content && content.querySelector('h2');
+    var banner = inner && inner.querySelector('#ballotBanner');
+    if(inner && content && h2 && banner && !content.contains(banner)){
+      h2.insertAdjacentElement('afterend', banner);
+    }
+  }
+  function align(){
+    var mq = window.matchMedia('(min-width: 900px)');
+    var inner = document.querySelector('.hero .hero-inner');
+    var content = inner && inner.querySelector('.hero-content');
+    var h2 = content && content.querySelector('h2');
+    var banner = content && content.querySelector('#ballotBanner');
+    if(!(mq.matches && inner && content && h2 && banner)) { if(banner) banner.style.transform=''; return; }
+    banner.style.transform = 'translateY(0px)';
+    var h2Top = h2.getBoundingClientRect().top + window.scrollY;
+    var bTop  = banner.getBoundingClientRect().top + window.scrollY;
+    var delta = Math.round(h2Top - bTop);
+    banner.style.transform = 'translateY(' + delta + 'px)';
+  }
+  function tick(){ relocate(); align(); }
+  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  ready(function(){ tick(); if(document.fonts && document.fonts.ready){ document.fonts.ready.then(tick); } window.addEventListener('load', tick); });
+  window.addEventListener('resize', align);
+})();
+</script>
 
 </body>

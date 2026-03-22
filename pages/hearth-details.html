@@ -60,7 +60,15 @@
     @media (max-width:900px){
       details.hd-toc{float:none; position:static; width:auto; max-height:none; margin:0 0 12px 0}
     }
-  </style>
+  
+/* --- Non-destructive layout fix: keep body text from sliding under the sticky ToC --- */
+@media (min-width: 900px){
+  /* Reserve horizontal space for the ToC (320px width + ~24px gutter) */
+  .hd-main{ margin-right: 344px; }
+}
+/* Ensure wide elements don't escape and accidentally pass under the ToC */
+.hd-main img, .hd-main table, .hd-main pre, .hd-main code { max-width: 100%; box-sizing: border-box; }
+</style>
 </head>
 <body>
   <!-- Global header mounts here -->
