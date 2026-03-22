@@ -1,25 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <title>Volunteer — Get Involved (2026)</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Volunteer — Get Involved (2026)</title>
   <link rel="stylesheet" href="../styles.css?v=12">
   <link rel="stylesheet" href="/assets/site-header.css?v=12">
   <script src="/assets/site-header.js?v=12" defer></script>
   <style>
-    /* Page-scoped styles (desktop & mobile) */
     .form-wrap{max-width:900px;margin:18px auto;padding:0 16px}
     .form-card{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
     .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
-    .form-row{display:grid;gap:6px}
-    .form-row.inline{grid-template-columns:1fr 1fr;gap:12px}
+    .form-row{display:grid;gap:6px;margin-bottom:12px}
+    .inline{grid-template-columns:1fr 1fr;gap:12px}
     label{font-weight:700}
     input[type=text],input[type=email],select,textarea{background:#0a1023;color:#e6edf7;border:1px solid #2b3a51;border-radius:8px;padding:10px}
+    .btn.primary{display:inline-flex;align-items:center;gap:10px;background:#14345c;color:#e6f2ff;text-decoration:none;padding:10px 14px;border-radius:10px;border:1px solid #2b4772;font-weight:700}
+    .status{margin-top:10px;font-size:.95rem}
+    .status.ok{color:#b7ffbf}
+    .status.err{color:#ffb7b7}
+    .optrow{display:flex;align-items:center;gap:10px;margin-top:8px}
     .hint{color:#9fb3d9;font-size:.95rem}
-    .chk-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
-    .btn.primary{display:inline-block;background:#14345c;color:#e6f2ff;text-decoration:none;padding:10px 14px;border-radius:10px;border:1px solid #2b4772;font-weight:700}
-    .req{color:#cbd5e1}
     @media(min-width:900px){.form-grid{grid-template-columns:1.1fr .9fr}}
   </style>
 </head>
@@ -32,16 +33,16 @@
 
   <div class="form-wrap">
     <div class="form-card">
-      <form id="volForm" autocomplete="on">
+      <form id="volForm" autocomplete="on" aria-describedby="volStatus">
         <div class="form-grid">
-          <div class="form-left">
+          <div>
             <div class="form-row inline">
               <div>
-                <label for="vName">Full name <span class="req" aria-hidden="true">*</span></label>
+                <label for="vName">Full name <span aria-hidden="true">*</span></label>
                 <input id="vName" name="name" type="text" required>
               </div>
               <div>
-                <label for="vEmail">Email <span class="req">*</span></label>
+                <label for="vEmail">Email <span aria-hidden="true">*</span></label>
                 <input id="vEmail" name="email" type="email" required>
               </div>
             </div>
@@ -68,21 +69,21 @@
                 <label><input type="checkbox" name="roles" value="Media Development"> Media Development</label>
                 <label><input type="checkbox" name="roles" value="Website Development"> Website Development</label>
                 <label><input type="checkbox" name="roles" value="Community Outreach"> Community Outreach</label>
-                <label><input type="checkbox" name="roles" value="Other"> Other</label>
               </div>
-              <p class="hint">Select as many as apply.</p>
             </div>
           </div>
-          <div class="form-right">
+          <div>
             <div class="form-row">
               <label for="vMsg">Tell us a little about your interests (optional)</label>
               <textarea id="vMsg" name="message" rows="8" placeholder="Share any relevant experience, schedule notes, or ideas."></textarea>
             </div>
           </div>
         </div>
-        <div style="margin-top:10px">
-          <button class="btn primary" type="submit">Send</button>
+        <div class="optrow">
+          <button class="btn primary" type="submit" id="vSend">Send</button>
+          <label><input type="checkbox" id="vSub" name="subscribe"> (Optional) Please add my email address to Erik's mailing list.</label>
         </div>
+        <div id="volStatus" class="status" role="status" aria-live="polite"></div>
         <noscript><p class="hint">JavaScript is required to submit this form.</p></noscript>
       </form>
     </div>
@@ -91,28 +92,28 @@
   <footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 
   <script>
-    // Obfuscate the destination email and send via mailto (avoids exposing the address in the markup)
     (function(){
-      const parts = ['erikmorris4','FLgov','@','gmail','.com'];
-      const to = parts[0]+parts[1]+parts[2]+parts[3]+parts[4];
-      document.getElementById('volForm').addEventListener('submit', function(e){
+      const f = document.getElementById('volForm');
+      const status = document.getElementById('volStatus');
+      f.addEventListener('submit', async (e)=>{
         e.preventDefault();
-        const name = document.getElementById('vName').value.trim();
-        const email = document.getElementById('vEmail').value.trim();
-        const county = document.getElementById('vCounty').value.trim();
-        const avail = document.getElementById('vAvail').value;
-        const roles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(x=>x.value).join(', ');
-        const msg = document.getElementById('vMsg').value.trim();
-        const subject = 'Volunteer interest — '+(name||'');
-        const body = `Name: ${name}
-Email: ${email}
-County: ${county}
-Availability: ${avail}
-Preferred roles: ${roles}
-
-Message:
-${msg}`;
-        window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        status.textContent = 'Sending…'; status.className='status';
+        const roles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(x=>x.value);
+        const payload = {
+          name: document.getElementById('vName').value.trim(),
+          email: document.getElementById('vEmail').value.trim(),
+          county: document.getElementById('vCounty').value.trim(),
+          availability: document.getElementById('vAvail').value,
+          roles,
+          message: document.getElementById('vMsg').value.trim(),
+          subscribe: document.getElementById('vSub').checked
+        };
+        try{
+          const res = await fetch('/api/volunteer', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+          const data = await res.json();
+          if(res.ok){ status.textContent = 'Thanks! Your message has been sent.'; status.className='status ok'; f.reset(); }
+          else { status.textContent = data.error || 'There was an error. Please try again later.'; status.className='status err'; }
+        }catch(err){ status.textContent='Network error. Please try again later.'; status.className='status err'; }
       });
     })();
   </script>
