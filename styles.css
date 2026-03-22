@@ -1,14 +1,22 @@
-:root{--container:1120px;--stroke:#2b3a51;--card:#0c132b;--muted:#a9b3c3}
-*{box-sizing:border-box}
-body{margin:0;background:#0a1023;color:#d9e3ee;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-.hero{background:linear-gradient(180deg,#0a1628 0%,#0d1430 100%);border-bottom:1px solid rgba(255,255,255,.06)}
-.hero-inner{max-width:var(--container);margin:0 auto;padding:28px 16px;display:grid;gap:14px}
-.kicker{color:#9fb3d9;letter-spacing:.2px;margin:0 0 8px}
-.section{max-width:var(--container);margin:20px auto;padding:0 16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
-.card{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:14px}
-.btn{display:inline-block;background:#14345c;color:#e6f2ff;text-decoration:none;padding:8px 12px;border-radius:8px;border:1px solid #2b4772}
-.footer{border-top:1px solid rgba(255,255,255,.08);margin-top:24px}
-.footer-inner{max-width:var(--container);margin:0 auto;padding:18px 16px;color:#9fb3d9}
-.page{max-width:var(--container);margin:20px auto;padding:0 16px}
-.content{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
+
+:root{--bg:#0b132b;--panel:#0f1a38;--text:#e2e8f0;--muted:#94a3b8;--border:#2A3559}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,"Segoe UI",Roboto,Arial,sans-serif}
+.wrapper{max-width:1200px;margin:0 auto;padding:24px}.hero{margin:16px 0 24px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:18px}
+.filmstrip{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+.slide-graphic{display:block;width:100%;height:auto;object-fit:contain;border:1px solid var(--border);border-radius:10px;background:linear-gradient(145deg,#0f1a38,#101a34)}
+.h1{font-size:28px;font-weight:700;margin:0 0 6px}.p{color:var(--muted);margin:0 0 12px}
+.badge{display:inline-block;background:#334155;color:#dbeafe;padding:6px 12px;border-radius:10px;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.grid .card{padding:8px}
+img.thumb{width:100%;height:auto;object-fit:contain;background:var(--panel)}
+.footer{color:var(--muted);font-size:13px;margin-top:24px}
+.footer-inner{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:16px;border-top:1px solid var(--border)}
+.footer-inner a{color:#dbeafe;text-decoration:none}.footer-inner a:hover{text-decoration:underline}
+
+
+/* === Layout enhancement: place ballot demo on the right of the hero on wide screens === */
+@media (min-width: 900px){
+  .hero-inner{ grid-template-columns: 1fr minmax(300px, 380px); align-items: center; }
+  #ballotBanner{ justify-self: end; }
+  #ballotBanner .card{ margin: 0; }
+}
