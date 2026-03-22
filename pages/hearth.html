@@ -15,11 +15,10 @@
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
 
-/* Page-scoped: two-column hero and right-aligned banner on desktop */
+/* Ensure two-column hero on desktop for alignment script */
 @media (min-width: 900px){
   .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: start; }
-  #ballotBanner{ justify-self: end; align-self: start; margin-top: 0; }
-  #ballotBanner .card{ margin: 0; }
+  #ballotBanner{ justify-self: end; align-self: start; }
 }
 </style></head>
 <body>
@@ -43,31 +42,36 @@
 
 
 
-<script id="alignBannerToH2">
+<script id="alignBannerToH2-v2">
 (function(){
+  function px(n){ return (n||0)+''; }
   function align(){
     if(!window.matchMedia('(min-width: 900px)').matches) return;
-    var hero = document.querySelector('.hero');
-    if(!hero) return;
-    var inner = hero.querySelector('.hero-inner');
+    var inner = document.querySelector('.hero .hero-inner');
     var content = inner && inner.querySelector('.hero-content');
     var h2 = content && content.querySelector('h2');
     var banner = inner && inner.querySelector('#ballotBanner');
     if(!(inner && content && h2 && banner)) return;
-    // Compute vertical offset from top of .hero-inner to top of <h2>
-    var innerTop = inner.getBoundingClientRect().top + window.scrollY;
+    // current positions
     var h2Top = h2.getBoundingClientRect().top + window.scrollY;
-    var delta = Math.max(0, Math.round(h2Top - innerTop));
-    // Apply margin-top to banner to align its top to the <h2> top
-    banner.style.marginTop = delta + 'px';
+    var bTop  = banner.getBoundingClientRect().top + window.scrollY;
+    // current computed margin-top
+    var mt = parseFloat(getComputedStyle(banner).marginTop)||0;
+    // delta needed to align banner top to h2 top (can be negative to move up)
+    var delta = Math.round(h2Top - bTop);
+    // apply adjusted margin-top
+    banner.style.marginTop = px(mt + delta) + 'px';
   }
   function reset(){
-    var banner = document.querySelector('.hero #ballotBanner');
-    if(banner && !window.matchMedia('(min-width: 900px)').matches){ banner.style.marginTop=''; }
+    if(!window.matchMedia('(min-width: 900px)').matches){
+      var banner = document.querySelector('.hero #ballotBanner');
+      if(banner) banner.style.marginTop='';
+    }
   }
-  function onReady(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
-  onReady(function(){ align(); reset(); });
-  window.addEventListener('resize', function(){ align(); reset(); });
+  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  var rAF; function onResize(){ cancelAnimationFrame(rAF); rAF = requestAnimationFrame(function(){ align(); reset(); }); }
+  ready(function(){ align(); reset(); });
+  window.addEventListener('resize', onResize);
 })();
 </script>
 
