@@ -9,13 +9,11 @@
   const BRAND_TEXT='Erik Morris 2026';
   const TAGLINE='Write\u2011in \u2022 Floridians First \u2022 For Florida Families & Future \u2022 Fix the Incentives';
   const NAV=[
- {label:'Home',href:'/index.html'},
- {label:'Platform',href:'/pages/platform.html'},
- {label:'Voting a Write-In Candidate',href:'/pages/how-to-write-in.html'},
- {label:'About Erik',href:'/pages/about-erik.html'},
- {label:'Volunteer',href:'/pages/volunteer.html'},
- {label:'AMA',href:'/pages/ama.html'}
-];
+    {label:'Home',href:'/index.html'},
+    {label:'Platform',href:'/pages/platform.html'},
+    {label:'Voting a Write-In Candidate',href:'/pages/how-to-write-in.html'},
+    {label:'About Erik',href:'/pages/about-erik.html'}
+  ];
 
   function el(t,a={},h){const e=document.createElement(t);for(const k in a){k==='class'?e.className=a[k]:e.setAttribute(k,a[k])}if(h!=null)e.innerHTML=h;return e;}
   function ensureStyle(id, css){ if(document.getElementById(id)) return; const s=el('style',{id}); s.textContent=css; (document.head||document.body).appendChild(s); }
@@ -46,7 +44,7 @@
   // ---------- SOLID color animation (that worked in v7) ----------
   const SOLID_BG_CSS = `
     html, body{min-height:100%;}
-    body{ background-color:#0b2a6f; animation: solid-bg-cycle 25s linear infinite; }
+    body{ background-color:#0b2a6f; animation: solid-bg-cycle 125s linear infinite; }
     .hero{ background-color:transparent !important; background-image:none !important; }
     @keyframes solid-bg-cycle{
       0%   { background-color:#0b2a6f; }
