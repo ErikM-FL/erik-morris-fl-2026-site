@@ -15,25 +15,17 @@
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
 
-/* Page-scoped: SAFE enlarge banner column while keeping relocate-runtime vertical behavior */
+/* Page-scoped: relocate-runtime baseline + trim top white gap in banner card */
 @media (min-width: 900px){
-  .hero-content{
-    display:grid !important;
-    /* widen right column: was minmax(300px,380px); now clamp 480→720 with 45vw middle */
-    grid-template-columns: 1fr clamp(480px, 45vw, 720px) !important;
-    align-items:start !important; gap:16px 20px !important;
-  }
+  .hero-content{ display:grid !important; grid-template-columns: 1fr minmax(300px, 380px) !important; align-items:start !important; gap:16px 20px !important; }
   .hero-content .kicker{ grid-column:1 !important; grid-row:1 !important; margin:0 !important; }
   .hero-content h2{ grid-column:1 !important; grid-row:2 !important; margin-top:0 !important; }
+  /* keep CTA where it originally is; we do not force its grid row here */
   .hero-content #ballotBanner{ grid-column:2 !important; grid-row:2 !important; justify-self:end !important; align-self:start !important; margin:0 !important; }
-  .hero-content #ballotBanner .card{
-    margin:0 !important; background:#fff !important; border:1px solid rgba(0,0,0,.22) !important;
-    border-radius:10px !important; padding:4px 8px 8px 8px !important; box-shadow:0 2px 8px rgba(0,0,0,.18) !important;
-  }
-  /* Keep canvas hidden (removes extra top white space) */
+  .hero-content #ballotBanner .card{ margin:0 !important; background:#fff !important; border:1px solid rgba(0,0,0,.22) !important; border-radius:10px !important; padding:4px 8px 8px 8px !important; box-shadow:0 2px 8px rgba(0,0,0,.18) !important; }
+  /* Remove the tall blank area produced by the unused canvas on these interior pages */
   .hero-content #ballotBanner #ballotCanvas{ display:none !important; }
-  /* Let GIF expand fully within the new column */
-  .hero-content #ballotBanner #ballotFallback{ display:block !important; width:100% !important; height:auto !important; max-width:none !important; }
+  .hero-content #ballotBanner #ballotFallback{ display:block !important; width:100% !important; height:auto !important; }
 }
 </style></head>
 <body>
@@ -52,5 +44,22 @@
 </div></div></section><div class="page"><div class="content"><ul><li>Full‑coverage option in each line.</li><li>Rate hikes tied to CPI‑U unless extraordinary losses proven.</li><li>Transparent advertising summary.</li></ul><!-- TODO: Add full policy description below. Use semantic headings (h3/h4) and paragraphs. --><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 
 
+
+<script id="fixBannerLocation">
+(function(){
+  function moveBanner(){
+    var inner = document.querySelector('.hero .hero-inner');
+    var content = inner && inner.querySelector('.hero-content');
+    var h2 = content && content.querySelector('h2');
+    var banner = inner && inner.querySelector('#ballotBanner');
+    if(!(inner && content && h2 && banner)) return;
+    if(!content.contains(banner)){
+      h2.insertAdjacentElement('afterend', banner);
+    }
+  }
+  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  ready(function(){ moveBanner(); if(document.fonts && document.fonts.ready){ document.fonts.ready.then(moveBanner); } window.addEventListener('load', moveBanner); });
+})();
+</script>
 
 </body>
