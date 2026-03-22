@@ -14,9 +14,18 @@
   #ballotBanner .card{border:none;background:transparent;box-shadow:none;padding:0;margin:0 auto;}
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
+
+/* Page-scoped: place ballot demo on the right and align with heading on desktop */
+@media (min-width: 900px){
+  .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: center; }
+  #ballotBanner{ justify-self: end; }
+  #ballotBanner .card{ margin: 0; }
+}
 </style></head>
 <body>
-<div id="site-header"></div><meta name="viewport" content="width=device-width,initial-scale=1">
+<div id="site-header"></div>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Second Amendment Integrity & Public Safety</title>
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
