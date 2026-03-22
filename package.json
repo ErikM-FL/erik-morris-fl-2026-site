@@ -6,7 +6,4 @@
   "dependencies": {
     "nodemailer": "^6.9.11"
   }
-  {  "type": "module",
-  "dependencies": { "nodemailer": "^6.9.11" }
-  }
 }
