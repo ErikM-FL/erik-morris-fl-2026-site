@@ -15,10 +15,9 @@
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
 
-/* Page-scoped: place ballot demo on the right, aligned with the first line (kicker) on desktop */
+/* Page-scoped: two-column hero and right-aligned banner on desktop */
 @media (min-width: 900px){
   .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: start; }
-  /* Put the banner at the top of the hero to line up with the first line of text */
   #ballotBanner{ justify-self: end; align-self: start; margin-top: 0; }
   #ballotBanner .card{ margin: 0; }
 }
@@ -39,5 +38,33 @@
 </div></div></section><div class="page"><div class="content"><ul><li>Full‑coverage option in each line.</li><li>Rate hikes tied to CPI‑U unless extraordinary losses proven.</li><li>Transparent advertising summary.</li></ul><!-- TODO: Add full policy description below. Use semantic headings (h3/h4) and paragraphs. --><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 
 
+
+<script id="alignBannerToH2">
+(function(){
+  function align(){
+    if(!window.matchMedia('(min-width: 900px)').matches) return;
+    var hero = document.querySelector('.hero');
+    if(!hero) return;
+    var inner = hero.querySelector('.hero-inner');
+    var content = inner && inner.querySelector('.hero-content');
+    var h2 = content && content.querySelector('h2');
+    var banner = inner && inner.querySelector('#ballotBanner');
+    if(!(inner && content && h2 && banner)) return;
+    // Compute vertical offset from top of .hero-inner to top of <h2>
+    var innerTop = inner.getBoundingClientRect().top + window.scrollY;
+    var h2Top = h2.getBoundingClientRect().top + window.scrollY;
+    var delta = Math.max(0, Math.round(h2Top - innerTop));
+    // Apply margin-top to banner to align its top to the <h2> top
+    banner.style.marginTop = delta + 'px';
+  }
+  function reset(){
+    var banner = document.querySelector('.hero #ballotBanner');
+    if(banner && !window.matchMedia('(min-width: 900px)').matches){ banner.style.marginTop=''; }
+  }
+  function onReady(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
+  onReady(function(){ align(); reset(); });
+  window.addEventListener('resize', function(){ align(); reset(); });
+})();
+</script>
 
 </body>
