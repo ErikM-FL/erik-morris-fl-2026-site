@@ -300,7 +300,7 @@ header.site-header .container {
   overflow: visible;
 }
 /* ====== FIX 1: Make sure the Languages dropdown sits above the images ====== */
-header.site-header { position: relative; z-index: 0; overflow: visible; }
+header.site-header{ position:sticky; top:0; z-index:1000; width:100%; }
 
 header.site-header #google_translate_element,
 header.site-header [data-lang-menu],
