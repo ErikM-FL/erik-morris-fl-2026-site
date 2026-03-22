@@ -2,6 +2,7 @@
   "name": "erikm-fl-site",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "nodemailer": "^6.9.11"
   }
