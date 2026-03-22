@@ -15,12 +15,12 @@
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
 
-/* Page-scoped: absolute-position banner aligned to the <h2> top on desktop */
+/* Page-scoped: put banner inside the title section and align with the <h2> row on desktop */
 @media (min-width: 900px){
-  .hero-inner{ position: relative; }
-  /* Width constrained; actual top is set via JS for exact title alignment */
-  #ballotBanner{ position: absolute; right: 16px; width: min(380px, 32vw); margin: 0; transform: none; }
-  #ballotBanner .card{ margin: 0; }
+  .hero-content{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); grid-auto-rows: auto; align-items:start; gap:16px; }
+  /* Place banner in column 2, aligned with the <h2> row (row 2 in typical markup) */
+  .hero-content #ballotBanner{ grid-column: 2; grid-row: 2; justify-self:end; align-self:start; margin:0; }
+  .hero-content #ballotBanner .card{ margin:0; }
 }
 </style></head>
 <body>
@@ -31,46 +31,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Safe Harbor Asset Protection</p><h2>Protect victims with due process.</h2></div><div id="ballotBanner" aria-label="Write-in demo banner">
+<section class="hero"><div class="hero-inner"><div class="hero-content"><p class="kicker">Safe Harbor Asset Protection</p><h2>Protect victims with due process.</h2>
+<div id="ballotBanner" aria-label="Write-in demo banner">
   <div class="card">
     <canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas>
     <img id="ballotFallback" src="../assets/write-in-ballot.gif" alt="Write-in ballot animation">
-  </div>
+  </div></div>
 </div></div></section><div class="page"><div class="content"><ul><li>Post‑indictment liquid asset freeze for violent crimes.</li><li>Due process; defense carve‑out; family essentials POA.</li><li>Victims‑first interest waterfall.</li></ul><!-- TODO: Add full policy description below. Use semantic headings (h3/h4) and paragraphs. --><p><a class="btn" href="platform.html">← Back to Platform</a></p></div></div><footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
 
 
-
-<script id="alignBannerToH2-v4">
-(function(){
-  function align(){
-    var mq = window.matchMedia('(min-width: 900px)');
-    var inner = document.querySelector('.hero .hero-inner');
-    var h2 = document.querySelector('.hero .hero-inner .hero-content h2');
-    var banner = document.querySelector('.hero .hero-inner #ballotBanner');
-    if(!(inner && h2 && banner)) return;
-    if(!mq.matches){ banner.style.top=''; banner.style.position=''; inner.style.paddingRight=''; return; }
-    // Ensure absolute positioning on desktop
-    inner.style.position = 'relative';
-    banner.style.position = 'absolute';
-    banner.style.transform = 'none'; // clear previous transforms
-    // Compute top relative to hero-inner
-    var innerTop = inner.getBoundingClientRect().top + window.scrollY;
-    var h2Top    = h2.getBoundingClientRect().top    + window.scrollY;
-    var top = Math.max(0, Math.round(h2Top - innerTop));
-    banner.style.top = top + 'px';
-    // Ensure content doesn't collide: reserve space on the right equal to banner width + gutter
-    var bw = banner.getBoundingClientRect().width || 360;
-    inner.style.paddingRight = Math.ceil(bw + 24) + 'px';
-  }
-  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', fn); else fn(); }
-  ready(function(){
-    var run = function(){ align(); };
-    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(run); }
-    window.addEventListener('load', run);
-    run();
-  });
-  window.addEventListener('resize', align);
-})();
-</script>
 
 </body>
