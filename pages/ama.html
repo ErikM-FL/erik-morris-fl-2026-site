@@ -1,27 +1,21 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>Ask Me Anything (AMA)</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ask Me Anything (AMA)</title>
   <link rel="stylesheet" href="../styles.css?v=12">
   <link rel="stylesheet" href="/assets/site-header.css?v=12">
   <script src="/assets/site-header.js?v=12" defer></script>
   <style>
     .form-wrap{max-width:900px;margin:18px auto;padding:0 16px}
     .form-card{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
-    .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
     .form-row{display:grid;gap:6px;margin-bottom:12px}
     .inline{grid-template-columns:1fr 1fr;gap:12px}
     label{font-weight:700}
-    input[type=text],input[type=email],select,textarea{background:#0a1023;color:#e6edf7;border:1px solid #2b3a51;border-radius:8px;padding:10px}
-    .btn.primary{display:inline-flex;align-items:center;gap:10px;background:#14345c;color:#e6f2ff;text-decoration:none;padding:10px 14px;border-radius:10px;border:1px solid #2b4772;font-weight:700}
-    .status{margin-top:10px;font-size:.95rem}
-    .status.ok{color:#b7ffbf}
-    .status.err{color:#ffb7b7}
-    .optrow{display:flex;align-items:center;gap:10px;margin-top:8px}
+    input[type=text],input[type=email],textarea{background:#0a1023;color:#e6edf7;border:1px solid #2b3a51;border-radius:8px;padding:10px}
+    .btn.primary{display:inline-block;background:#14345c;color:#e6f2ff;text-decoration:none;padding:10px 14px;border-radius:10px;border:1px solid #2b4772;font-weight:700}
     .hint{color:#9fb3d9;font-size:.95rem}
-    @media(min-width:900px){.form-grid{grid-template-columns:1.1fr .9fr}}
   </style>
 </head>
 <body>
@@ -33,7 +27,7 @@
 
   <div class="form-wrap">
     <div class="form-card">
-      <form id="amaForm" autocomplete="on" aria-describedby="amaStatus">
+      <form id="amaForm" autocomplete="on">
         <div class="form-row inline">
           <div>
             <label for="aName">Full name <span aria-hidden="true">*</span></label>
@@ -58,11 +52,9 @@
           <label for="aMsg">Your question</label>
           <textarea id="aMsg" name="message" rows="8" placeholder="Ask your question here."></textarea>
         </div>
-        <div class="optrow">
-          <button class="btn primary" type="submit" id="aSend">Send</button>
-          <label><input type="checkbox" id="aSub" name="subscribe"> (Optional) Please add my email address to Erik's mailing list.</label>
+        <div>
+          <button class="btn primary" type="submit">Send</button>
         </div>
-        <div id="amaStatus" class="status" role="status" aria-live="polite"></div>
         <noscript><p class="hint">JavaScript is required to submit this form.</p></noscript>
       </form>
     </div>
@@ -72,25 +64,24 @@
 
   <script>
     (function(){
-      const f = document.getElementById('amaForm');
-      const status = document.getElementById('amaStatus');
-      f.addEventListener('submit', async (e)=>{
+      const parts = ['erikmorris4','FLgov','@','gmail','.com'];
+      const to = parts[0]+parts[1]+parts[2]+parts[3]+parts[4];
+      document.getElementById('amaForm').addEventListener('submit', function(e){
         e.preventDefault();
-        status.textContent = 'Sending…'; status.className='status';
-        const payload = {
-          name: document.getElementById('aName').value.trim(),
-          email: document.getElementById('aEmail').value.trim(),
-          county: document.getElementById('aCounty').value.trim(),
-          policy: document.getElementById('aPolicy').value.trim(),
-          message: document.getElementById('aMsg').value.trim(),
-          subscribe: document.getElementById('aSub').checked
-        };
-        try{
-          const res = await fetch('/api/ama', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-          const data = await res.json();
-          if(res.ok){ status.textContent = 'Thanks! Your question has been sent.'; status.className='status ok'; f.reset(); }
-          else { status.textContent = data.error || 'There was an error. Please try again later.'; status.className='status err'; }
-        }catch(err){ status.textContent='Network error. Please try again later.'; status.className='status err'; }
+        const name = document.getElementById('aName').value.trim();
+        const email = document.getElementById('aEmail').value.trim();
+        const county = document.getElementById('aCounty').value.trim();
+        const policy = document.getElementById('aPolicy').value.trim();
+        const msg = document.getElementById('aMsg').value.trim();
+        const subject = 'AMA submission — '+(name||'');
+        const body = `Name: ${name}
+Email: ${email}
+County: ${county}
+Policy/topic: ${policy}
+
+Question:
+${msg}`;
+        window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       });
     })();
   </script>
