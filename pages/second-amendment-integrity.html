@@ -15,10 +15,11 @@
   #ballotFallback{display:block;max-width:280px;width:100%;height:auto;margin:0 auto;}
   #ballotCanvas{width:100%;height:auto;max-width:720px;}
 
-/* Page-scoped: place ballot demo on the right and align with heading on desktop */
+/* Page-scoped: place ballot demo on the right, aligned with the first line (kicker) on desktop */
 @media (min-width: 900px){
-  .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: center; }
-  #ballotBanner{ justify-self: end; }
+  .hero-inner{ display:grid; grid-template-columns: 1fr minmax(300px, 380px); align-items: start; }
+  /* Put the banner at the top of the hero to line up with the first line of text */
+  #ballotBanner{ justify-self: end; align-self: start; margin-top: 0; }
   #ballotBanner .card{ margin: 0; }
 }
 </style></head>
