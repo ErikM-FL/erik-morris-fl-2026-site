@@ -1,4 +1,4 @@
-// Inject a "Read More…" button into FIFA overview page
+// Insert a "Read More…" button on /pages/fifa.html under the hero h2, matching hearth
 (function(){
   function add(){
     if(!/\/pages\/fifa\.html(\?|$)/.test(location.pathname)) return;
