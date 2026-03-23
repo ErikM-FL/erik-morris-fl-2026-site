@@ -1,0 +1,24 @@
+
+/* Site‑wide animated background, uniform across the whole viewport. */
+html, body{min-height:100%;}
+body{
+  /* Multi-stop diagonal gradient; background pans smoothly to cross-fade colors */
+  background-image: linear-gradient(135deg,
+    #0b2a6f 0%,      /* blue */
+    #3a1d6e 35%,     /* purple */
+    #7a0b0b 50%,     /* darker GOP-like red */
+    #3a1d6e 65%,     /* purple */
+    #0b2a6f 100%     /* blue */
+  );
+  background-size: 400% 400%;
+  background-attachment: fixed;        /* keeps motion uniform on scroll */
+  animation: bg-pan-cycle 125s ease-in-out infinite; /* slowed by 2.5x */
+}
+/* Let gradient show through the hero bar even if an old page set a solid bg */
+.hero{ background-color:transparent !important; background-image:none !important; }
+
+@keyframes bg-pan-cycle{
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}

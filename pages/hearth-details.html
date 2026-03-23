@@ -1,285 +1,335 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</title>
-<link rel="stylesheet" href="../styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
-<style>
-/* Scoped helpers for hearth-details only */
-:root{ --border:#2A3559; --muted:#94a3b8; --ink:#0b132b; }
-.hd-wrap{max-width:1200px;margin:0 auto;padding:24px}
-.hd-header{display:flex;align-items:center;gap:16px;margin:8px 0 12px}
-.hd-title{font-size:28px;font-weight:700;margin:0}
-.hd-back{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .8rem;border:1px solid var(--border);border-radius:10px;background:#334155;color:#dbeafe;text-decoration:none;font-weight:600}
-.hd-layout{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
-.hd-main{position:relative}
-.hd-main h2{margin-top:1.4rem}
-.hd-main h3{margin-top:1.1rem}
-.hd-main h4{margin-top:.9rem}
-.hd-writein{position:absolute;right:0;top:0;max-width:260px;width:26vw;height:auto}
-.hd-toc{position:sticky;top:16px;border:1px solid var(--border);border-radius:12px;padding:14px;background:#fff;color:var(--ink)}
-.hd-toc h3{margin:0 0 8px;font-size:16px;color:var(--ink)}
-.toc-list{list-style:none;margin:0;padding-left:0}
-.toc-list>li{margin:.35rem 0}
-.toc-l1{margin-left:0}
-.toc-l2{margin-left:16px}
-.toc-l3{margin-left:32px}
-.hd-toc a{color:#0b3aa4;text-decoration:none}
-.hd-toc a:hover{text-decoration:underline}
-@media (max-width:900px){
-  .hd-layout{grid-template-columns:1fr}
-  .hd-toc{position:relative}
-  .hd-writein{position:static;max-width:220px;margin:8px 0 0 auto;display:block}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</title>
+
+  <!-- Keep DEV header/background wiring -->
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../assets/site-header.css?v=3">
+  <script src="../assets/site-header.js?v=3" defer></script>
+
+  <!-- Optional fonts (kept from live) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap"
+    rel="stylesheet">
+
+  <!-- Critical fallback: ensure dark bg on first paint -->
+  <style id="critical-fallback">
+    html,body{margin:0}
+    body{background:#0a1023;color:#d9e3ee;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    #site-header{min-height:48px}
+  </style>
+
+  <!-- Page-scoped helpers + sticky/collapsible ToC -->
+  <style>
+    :root{ --border:#2A3559; --muted:#94a3b8; --ink:#0b132b; }
+    .hd-wrap{max-width:1200px;margin:0 auto;padding:24px}
+    .hd-header{display:flex;align-items:center;gap:16px;margin:8px 0 12px}
+    .hd-title{font-size:28px;font-weight:700;margin:0}
+    .hd-back{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem .8rem;border:1px solid var(--border);border-radius:10px;background:#334155;color:#dbeafe;text-decoration:none;font-weight:600}
+
+    /* Sticky ToC on desktop: float right so reading order stays top-down */
+    details.hd-toc{
+      float:right; width:320px; margin:0 0 16px 24px;
+      background:#fff; color:var(--ink);
+      border:1px solid var(--border); border-radius:12px;
+      padding:12px 14px;
+      position:sticky; top:16px; max-height:calc(100vh - 32px); overflow:auto;
+    }
+    details.hd-toc summary{
+      font-weight:700; list-style:none; cursor:pointer; outline:none;
+    }
+    details.hd-toc[open] summary{ margin-bottom:8px; }
+    .toc-list{list-style:none;margin:0;padding-left:0}
+    .toc-list > li{margin:.35rem 0}
+    .toc-l1{margin-left:0}
+    .toc-l2{margin-left:16px}
+    .toc-l3{margin-left:32px}
+    .hd-toc a{color:#0b3aa4;text-decoration:none}
+    .hd-toc a:hover{text-decoration:underline}
+
+    /* Ensure main content wraps properly around the floated ToC */
+    .hd-main{overflow:visible}
+
+    /* Mobile: remove float/sticky; ToC becomes collapsible block above content */
+    @media (max-width:900px){
+      details.hd-toc{float:none; position:static; width:auto; max-height:none; margin:0 0 12px 0}
+    }
+  
+/* --- Non-destructive layout fix: keep body text from sliding under the sticky ToC --- */
+@media (min-width: 900px){
+  /* Reserve horizontal space for the ToC (320px width + ~24px gutter) */
+  .hd-main{ margin-right: 344px; }
 }
+/* Ensure wide elements don't escape and accidentally pass under the ToC */
+.hd-main img, .hd-main table, .hd-main pre, .hd-main code { max-width: 100%; box-sizing: border-box; }
 </style>
-<header class="header"><nav class="nav"><div class="brand"><h1>Erik Morris 2026</h1><span class="tag">Write‑in • People‑first • Fix the incentives</span></div><div class="menu"><a href="../index.html">Home</a><a href="platform.html">Platform</a><a href="how-to-write-in.html">Voting a Write-In Candidate</a><div class="dropdown" aria-expanded="false">
-  <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
-  <div class="dd-menu" role="menu" aria-label="Language options">
-    <div class="dd-group">
-      <div class="dd-label">Visit localized landing</div>
-      <a role="menuitem" href="../index-es.html">Español</a>
-      <a role="menuitem" href="../index-ht.html">Kreyòl Ayisyen</a>
-      <a role="menuitem" href="../index-zh.html">中文（简体）</a>
-      <a role="menuitem" href="../index-vi.html">Tiếng Việt</a>
-      <a role="menuitem" href="../index-ko.html">한국어</a>
-      <a role="menuitem" href="../index-pt.html">Português</a>
-    </div>
-    <div class="dd-group">
-      <div class="dd-label">Translate this page</div>
-      <div id="google_translate_element"></div>
-    </div>
-  </div>
-</div></div></nav></header>
-<div class="page">
-  <div class="hd-wrap">
-    <div class="hd-header">
-      <h1 class="hd-title">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h1>
-    </div>
-<h2 id="florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h2>
-<h4 id="short-title">Short Title</h4>
-<p>This act shall be cited as the “Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026).”</p>
-<h3 id="section-1-legislative-findings-and-intent">Section 1. Legislative Findings and Intent</h3>
-<p>The Legislature finds that access to affordable housing is essential for economic prosperity and social stability in Florida. Owners of multiple residential properties contribute significantly to housing scarcity and price escalation. This act aims to:</p>
-<p>Adjust property tax obligations on entities holding significant residential real estate assets to promote housing availability.</p>
-<p>Increase homestead tax exemptions for eligible Florida first‑time homebuyers and primary residences to enhance affordability.</p>
-<p>Amend state tax law to implement graduated tax rates for residential property holdings.</p>
-<h3 id="section-2-definitions">Section 2. Definitions</h3>
-<p>For purposes of this Act:</p>
-<p>“Residential Property” means any parcel, unit, or structure used or intended for dwelling use, excluding commercial property (see Fla. Stat. § 196.031 definitions of homestead).(Florida.Public.Law)</p>
-<p>“Owner” includes individuals, corporations, limited liability companies, trusts, partnerships, and all business entities.</p>
-<p>“Primary Residence” means a property qualifying for homestead exemption under Florida law (Fla. Stat. § 196.031).(Florida.Public.Law)</p>
-<p>“First‑Time Homebuyer” means an individual who has not owned residential property in Florida or elsewhere within the preceding three years.</p>
-<h3 id="section-3-additional-ad-valorem-tax-on-multiple-residential-property-ownership">Section 3. Additional Ad Valorem Tax on Multiple Residential Property Ownership</h3>
-<p>(a) Effective January 1, 2027, any person, company, or organization that owns more than four (4) residential properties in Florida shall pay an annual Multiple Residential Ownership Surcharge (“MROS”) equal to 2% of the assessed value of all residential properties beyond the fourth in the owner’s Florida portfolio.</p>
-<p>(b) This surcharge is in addition to ordinary ad valorem taxes.</p>
-<p>(c) Owners may not aggregate property holdings across separate legal entities to circumvent this provision; beneficial ownership standards shall apply.</p>
-<p>(d) Exemptions: None. Homestead exemptions (Fla. Stat. § 196.031) continue to apply only to qualifying primary residences.(Florida.Public.Law)</p>
-<h3 id="section-4-expanded-homestead-exemption-for-eligible-owners">Section 4. Expanded Homestead Exemption for Eligible Owners</h3>
-<p>A. First Time Homebuyer Homestead Bonus</p>
-<p>Any Florida resident who qualifies as a First‑Time Homebuyer shall be eligible for an additional homestead exemption up to $100,000 on assessed value for their primary residence, for the first 5 tax years following acquisition.</p>
-<p>B. Permanent Resident Homestead Increase</p>
-<p>Any qualified homestead property shall receive an additional $50,000 annual exemption on assessed value beyond existing amounts allowed under Fla. Stat. § 196.031, irrespective of age or income requirements.(Florida.Public.Law)</p>
-<p>C. First Investment Property Exemption</p>
-<p>A Florida resident who purchases their first investment residential property (distinct from primary residence) may receive a $25,000 exemption on that property’s assessed value, provided it is rented under terms compliant with local law and remains in good standing with property tax obligations.</p>
-<h3 id="section-5-compliance-enforcement-and-reporting">Section 5. Compliance, Enforcement, and Reporting</h3>
-<p>(a) The Department of Revenue shall promulgate rules to enforce compliance with the MROS and expanded exemptions.</p>
-<p>(b) Property appraisers shall report annually the number of properties subject to surcharge and use of exemptions.</p>
-<p>(c) Misrepresentation for exemption eligibility shall trigger penalties equal to the surcharge amount not paid plus interest and administrative penalties.</p>
-<h2 id="amendments-to-existing-florida-law">Amendments to Existing Florida Law</h2>
-<h4 id="amendment-to-fla-stat-196031-homestead-exemption">Amendment to Fla. Stat. § 196.031 (Homestead Exemption)</h4>
-<p>Insert after current exemptions:
-“Notwithstanding any provision to the contrary, this section shall be supplemented by expanded homestead exemptions under the Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026).”</p>
-<p>Clarify definition of primary residence to exclude tax exemption when an owner uses legal entity structures to claim multiple primary homestead benefits.</p>
-<h2 id="costbenefit-analysis">Cost–Benefit Analysis</h2>
-<h4 id="impact-on-florida-homeowners">Impact on Florida Homeowners</h4>
-<p>Benefits</p>
-<p>Lower Taxes for First‑Time Buyers
-First‑time homebuyers receive additional exemption ($100,000 for 5 years), meaning significantly lower property tax bills early in homeownership.</p>
-<p>Greater Equity Retention
-Expanded primary residence exemptions reduce effective tax burden, aiding affordability and financial security for homeowner families.</p>
-<p>Encourages Entry
-Increased incentives may stimulate homeownership entry among younger and mobile populations.</p>
-<p>Costs</p>
-<p>Higher Costs for Large Owners
-Real estate investment firms, REITs, and large landlords holding &gt;4 residential properties face higher tax liabilities through surcharge.</p>
-<p>Possible Rent Increases
-Larger property owners may seek to pass added tax costs to tenants via rent, depending on market elasticity.</p>
-<h4 id="impact-on-florida-budget-and-local-governments">Impact on Florida Budget and Local Governments</h4>
-<p>Revenue Increases</p>
-<p>The MROS is expected to generate new revenue from large property holders, potentially in the hundreds of millions annually (dependent on assessments and holdings).</p>
-<p>Revenue Reductions</p>
-<p>Expanded homestead exemptions reduce ad valorem receipts statewide. Local governments that rely on property tax revenue (counties, cities, school districts) could experience revenue shortfalls.</p>
-<p>Florida ballot considerations already review constitutional homestead exemption changes that could reduce revenue by tens to hundreds of millions statewide.(Axios)</p>
-<p>Net Budget Impact</p>
-<p>The net effect depends on:</p>
-<p>Number of large owners subject to the surcharge.</p>
-<p>Take‑up rate of expanded homestead benefits.</p>
-<p>Local budget adjustments.</p>
-<p>A balanced approach could yield modest revenue growth while supporting housing affordability.</p>
-<h2 id="legal-challenges-and-defenses">Legal Challenges and Defenses</h2>
-<h3 id="1-florida-constitution-homestead-protections">1. Florida Constitution – Homestead Protections</h3>
-<p>Challenge:
-Article VII, Section 6 of the Florida Constitution sets homestead tax exemptions and arguably restricts additional special exemptions tailored by statute.</p>
-<p>Defense:</p>
-<p>The Act supplements existing statutory exemptions without reducing existing homestead protections.</p>
-<p>Florida courts have upheld supplemental exemptions when provided by statute, provided they do not contravene constitutional mandates.</p>
-<p>Precedent:</p>
-<p>City of Jacksonville v. Florida League of Cities (hypothetical type)—statutes can augment but not diminish homestead benefits.</p>
-<h3 id="2-equal-protection-and-uniformity-clause">2. Equal Protection and Uniformity Clause</h3>
-<p>Challenge:
-Owners may argue that surtax on holders of &gt;4 properties violates the state constitutional requirement for uniform ad valorem tax assessments.</p>
-<p>Defense:</p>
-<p>The surcharge is a regulatory tax with a rational basis: it targets speculative ownership contributing to housing scarcity and revenue generation. The classification is reasonable and justified.</p>
-<p>Precedent:</p>
-<p>Florida courts defer to legislative classifications if rational and not arbitrary.</p>
-<h3 id="3-takings-and-due-process-claims">3. Takings and Due Process Claims</h3>
-<p>Challenge:
-Large owners may assert that increased rates or exemption limitations constitute a “taking without compensation.”</p>
-<p>Defense:</p>
-<p>Tax adjustments that do not deprive all economically viable use of property are generally permissible.</p>
-<p>The Legislature routinely sets tax rates and exemptions without constituting Takings. (See Murr v. Wisconsin analogues).</p>
-<h3 id="4-contract-clause">4. Contract Clause</h3>
-<p>Challenge:
-Owners with existing property investments may contend retroactive tax burdens violate contract rights.</p>
-<p>Defense:</p>
-<p>The Act applies prospectively from 2027. Retroactivity is limited, thereby complying with contract clause jurisprudence.</p>
-<p>Absolutely! Here’s a clean, fully formatted version of the HEARTH Act 10-year analysis ready for copying into Google Docs. I’ve removed all coding or web references and formatted headings, tables, and bullets for easy reading.</p>
-<h2 id="florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026-2">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h2>
-<p>10-Year Fiscal Impact Projection (2027–2036)</p>
-<h3 id="key-assumptions">Key Assumptions</h3>
-<p>Homestead + Exemption Landscape</p>
-<p>Approximately 5.1 million homesteaded properties in Florida (primary residences).</p>
-<p>~36% of property tax revenue comes from homestead (primary residence) properties.</p>
-<p>Investment / Multiple Property Owners</p>
-<p>~140,000 owners hold more than four residential properties and are subject to the Multiple Residential Ownership Surcharge (MROS).</p>
-<p>Current Property Tax Context</p>
-<p>Annual statewide property tax revenue is approximately $50 billion (all property classes combined).</p>
-<p>Homestead Exemptions Under HEARTH</p>
-<p>First-Time Homebuyer Bonus – additional $100,000 assessed value exemption for the first five years.</p>
-<p>Permanent Residence Increase – additional $50,000 assessed value exemption.</p>
-<p>First Investment Property Exemption – $25,000 exemption for qualifying Florida residents.</p>
-<p>MROS Surcharge</p>
-<p>2% surcharge on assessed value beyond the 4th property.</p>
-<h3 id="1-impact-on-florida-homeowners">1. Impact on Florida Homeowners</h3>
-<h4 id="primary-homeowners-homestead-tax-savings">Primary Homeowners — Homestead Tax Savings</h4>
-<p>Additional $50,000 exemption benefits up to 5.1 million homesteads.</p>
-<p>At an average 1.2% millage, homeowners save estimated $600 per household in 2027.</p>
-<p>Estimated Total Homestead Savings Over 10 Years: ~$31 billion</p>
-<p>First-Time Homebuyer Break Impact</p>
-<p>Assuming 10% of annual home purchases are by first-time buyers (~100,000–150,000/year) each receiving $100,000 exemption for 5 years:</p>
-<p>Projected 10-Year Savings: ~$6–$9 billion cumulatively</p>
-<h3 id="2-impact-on-florida-state-and-local-budgets">2. Impact on Florida State and Local Budgets</h3>
-<h4 id="a-homestead-exemptiondriven-revenue-reduction">A. Homestead Exemption–Driven Revenue Reduction</h4>
-<p>10-Year Cumulative Homestead Revenue Loss: ~$24.5 billion</p>
-<h4 id="b-revenue-gains-from-mros-surcharge">B. Revenue Gains from MROS Surcharge</h4>
-<p>Large residential owners (&gt;4 properties) paying 2% surcharge.</p>
-<p>Estimated annual MROS revenue: $5 billion/year</p>
-<p>10-Year Total: ~$45 billion</p>
-<h4 id="c-net-revenue-impact-over-10-years">C. Net Revenue Impact Over 10 Years</h4>
-<p>Note: Local impacts vary by county and municipality depending on property ownership distribution.</p>
-<h3 id="3-additional-considerations">3. Additional Considerations</h3>
-<p>Distributional Effects</p>
-<p>Primary homeowners benefit directly through lower property tax bills.</p>
-<p>First-time buyers benefit early in homeownership.</p>
-<p>Large investors/corporate owners bear higher tax burden, which could influence rent and investment strategies.</p>
-<p>Impact on Local Governments &amp; Schools</p>
-<p>Local governments in areas with fewer large multi-unit owners may see net revenue losses.</p>
-<p>Municipalities with significant investor holdings could see net gains.</p>
-<h3 id="4-summary">4. Summary</h3>
-<h2 id="florida-homestead-exemption-act-hearth-2026-10-year-fiscal-projection">Florida Homestead Exemption Act (HEARTH 2026) – 10-Year Fiscal Projection</h2>
-<p>10-Year Totals</p>
-<p>Homeowner Savings: approximately $41.5B</p>
-<p>Homestead Revenue Loss: approximately -$24.5B</p>
-<p>MROS Revenue Gain: approximately $45B</p>
-<p>Net Revenue Impact (Statewide): approximately $20.5B</p>
-<h4 id="notes">Notes:</h4>
-<p>Homeowner Savings includes both primary homestead tax reduction and first-time buyer exemptions.</p>
-<p>Homestead Revenue Loss represents reduced ad valorem revenue to counties, municipalities, and school districts due to expanded exemptions.</p>
-<p>MROS Revenue Gain represents 2% surcharge on assessed value of all residential properties owned beyond the fourth by individual or corporate owners.</p>
-<p>Net Revenue Impact is the statewide surplus after accounting for homestead revenue loss and MROS surcharge revenue gain.</p>
-<p>Homeowner Benefits</p>
-<p>~$31 billion cumulative property tax savings for homestead owners.</p>
-<p>~$6–$9 billion additional savings for first-time homebuyers.</p>
-<p>Government Budget Effects</p>
-<p>~$24.5 billion cumulative revenue loss to local governments from expanded homestead exemptions.</p>
-<p>~$45 billion cumulative revenue gained from MROS surcharge.</p>
-<p>Net fiscal surplus statewide over 10 years: ~$20.5 billion</p>
-<p>Key Takeaways</p>
-<p>Homeowners pay less tax overall.</p>
-<p>First-time buyers get significant targeted relief.</p>
-<p>Large residential property owners subsidize more revenue.</p>
-<p>Local governments could gain net revenue, but distribution varies.</p>
-<p>Service funding and millage rates may adjust locally.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>The HEARTH (2026) Act creates a targeted surcharge on large residential property portfolios while expanding homestead tax relief for first‑time buyers and primary residences. It modifies existing statutory frameworks (e.g., Fla. Stat. § 196.031) and introduces measures designed to balance revenue needs with housing affordability.</p>
-<p>Potential challenges under uniformity, homestead protections, and due process can be robustly defended given legislative authority over tax classifications and exemptions, provided the Act is carefully implemented.</p>
+</head>
+<body>
+  <!-- Global header mounts here -->
+  <div id="site-header"></div>
+
+  <div class="page">
+    <div class="hd-wrap">
+      <div class="hd-header">
+        <h1 class="hd-title">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h1>
+      </div>
+
+      <!-- ToC first in DOM (floated to the right on desktop; collapsible on mobile) -->
+      <details class="hd-toc" id="page-toc" open>
+        <summary>Table of contents</summary>
+        <ol class="toc-list">
+          <li class="toc-l1"><a href="#florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</a></li>
+          <li class="toc-l3"><a href="#short-title">Short Title</a></li>
+          <li class="toc-l2"><a href="#section-1-legislative-findings-and-intent">Section 1. Legislative Findings and Intent</a></li>
+          <li class="toc-l2"><a href="#section-2-definitions">Section 2. Definitions</a></li>
+          <li class="toc-l2"><a href="#section-3-additional-ad-valorem-tax-on-multiple-residential-property-ownership">Section 3. Additional Ad Valorem Tax on Multiple Residential Property Ownership</a></li>
+          <li class="toc-l2"><a href="#section-4-expanded-homestead-exemption-for-eligible-owners">Section 4. Expanded Homestead Exemption for Eligible Owners</a></li>
+          <li class="toc-l2"><a href="#section-5-compliance-enforcement-and-reporting">Section 5. Compliance, Enforcement, and Reporting</a></li>
+          <li class="toc-l1"><a href="#amendments-to-existing-florida-law">Amendments to Existing Florida Law</a></li>
+          <li class="toc-l3"><a href="#amendment-to-fla-stat-196031-homestead-exemption">Amendment to Fla. Stat. § 196.031 (Homestead Exemption)</a></li>
+          <li class="toc-l1"><a href="#costbenefit-analysis">Cost–Benefit Analysis</a></li>
+          <li class="toc-l3"><a href="#impact-on-florida-homeowners">Impact on Florida Homeowners</a></li>
+          <li class="toc-l3"><a href="#impact-on-florida-budget-and-local-governments">Impact on Florida Budget and Local Governments</a></li>
+          <li class="toc-l1"><a href="#legal-challenges-and-defenses">Legal Challenges and Defenses</a></li>
+          <li class="toc-l2"><a href="#1-florida-constitution-homestead-protections">1. Florida Constitution – Homestead Protections</a></li>
+          <li class="toc-l2"><a href="#2-equal-protection-and-uniformity-clause">2. Equal Protection and Uniformity Clause</a></li>
+          <li class="toc-l2"><a href="#3-takings-and-due-process-claims">3. Takings and Due Process Claims</a></li>
+          <li class="toc-l2"><a href="#4-contract-clause">4. Contract Clause</a></li>
+          <li class="toc-l1"><a href="#florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026-2">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</a></li>
+          <li class="toc-l2"><a href="#key-assumptions">Key Assumptions</a></li>
+          <li class="toc-l2"><a href="#1-impact-on-florida-homeowners">1. Impact on Florida Homeowners</a></li>
+          <li class="toc-l3"><a href="#primary-homeowners-homestead-tax-savings">Primary Homeowners — Homestead Tax Savings</a></li>
+          <li class="toc-l2"><a href="#2-impact-on-florida-state-and-local-budgets">2. Impact on Florida State and Local Budgets</a></li>
+          <li class="toc-l3"><a href="#a-homestead-exemptiondriven-revenue-reduction">A. Homestead Exemption–Driven Revenue Reduction</a></li>
+          <li class="toc-l3"><a href="#b-revenue-gains-from-mros-surcharge">B. Revenue Gains from MROS Surcharge</a></li>
+          <li class="toc-l3"><a href="#c-net-revenue-impact-over-10-years">C. Net Revenue Impact Over 10 Years</a></li>
+          <li class="toc-l2"><a href="#3-additional-considerations">3. Additional Considerations</a></li>
+          <li class="toc-l2"><a href="#4-summary">4. Summary</a></li>
+          <li class="toc-l1"><a href="#florida-homestead-exemption-act-hearth-2026-10-year-fiscal-projection">Florida Homestead Exemption Act (HEARTH 2026) – 10-Year Fiscal Projection</a></li>
+          <li class="toc-l3"><a href="#notes">Notes:</a></li>
+          <li class="toc-l1"><a href="#conclusion">Conclusion</a></li>
+        </ol>
+      </details>
+
+      <!-- Main article (flows around the floated ToC on desktop) -->
+      <main class="hd-main" id="main-content">
+        <h2 id="florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h2>
+
+        <h4 id="short-title">Short Title</h4>
+        <p>This act shall be cited as the “Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026).”</p>
+
+        <h3 id="section-1-legislative-findings-and-intent">Section 1. Legislative Findings and Intent</h3>
+        <p>The Legislature finds that access to affordable housing is essential for economic prosperity and social stability in Florida. Owners of multiple residential properties contribute significantly to housing scarcity and price escalation. This act aims to:</p>
+        <p>Adjust property tax obligations on entities holding significant residential real estate assets to promote housing availability.</p>
+        <p>Increase homestead tax exemptions for eligible Florida first‑time homebuyers and primary residences to enhance affordability.</p>
+        <p>Amend state tax law to implement graduated tax rates for residential property holdings.</p>
+
+        <h3 id="section-2-definitions">Section 2. Definitions</h3>
+        <p>For purposes of this Act:</p>
+        <p>“Residential Property” means any parcel, unit, or structure used or intended for dwelling use, excluding commercial property (see Fla. Stat. § 196.031 definitions of homestead).(Florida.Public.Law)</p>
+        <p>“Owner” includes individuals, corporations, limited liability companies, trusts, partnerships, and all business entities.</p>
+        <p>“Primary Residence” means a property qualifying for homestead exemption under Florida law (Fla. Stat. § 196.031).(Florida.Public.Law)</p>
+        <p>“First‑Time Homebuyer” means an individual who has not owned residential property in Florida or elsewhere within the preceding three years.</p>
+
+        <h3 id="section-3-additional-ad-valorem-tax-on-multiple-residential-property-ownership">Section 3. Additional Ad Valorem Tax on Multiple Residential Property Ownership</h3>
+        <p>(a) Effective January 1, 2027, any person, company, or organization that owns more than four (4) residential properties in Florida shall pay an annual Multiple Residential Ownership Surcharge (“MROS”) equal to 2% of the assessed value of all residential properties beyond the fourth in the owner’s Florida portfolio.</p>
+        <p>(b) This surcharge is in addition to ordinary ad valorem taxes.</p>
+        <p>(c) Owners may not aggregate property holdings across separate legal entities to circumvent this provision; beneficial ownership standards shall apply.</p>
+        <p>(d) Exemptions: None. Homestead exemptions (Fla. Stat. § 196.031) continue to apply only to qualifying primary residences.(Florida.Public.Law)</p>
+
+        <h3 id="section-4-expanded-homestead-exemption-for-eligible-owners">Section 4. Expanded Homestead Exemption for Eligible Owners</h3>
+        <p>A. First Time Homebuyer Homestead Bonus</p>
+        <p>Any Florida resident who qualifies as a First‑Time Homebuyer shall be eligible for an additional homestead exemption up to $100,000 on assessed value for their primary residence, for the first 5 tax years following acquisition.</p>
+        <p>B. Permanent Resident Homestead Increase</p>
+        <p>Any qualified homestead property shall receive an additional $50,000 annual exemption on assessed value beyond existing amounts allowed under Fla. Stat. § 196.031, irrespective of age or income requirements.(Florida.Public.Law)</p>
+        <p>C. First Investment Property Exemption</p>
+        <p>A Florida resident who purchases their first investment residential property (distinct from primary residence) may receive a $25,000 exemption on that property’s assessed value, provided it is rented under terms compliant with local law and remains in good standing with property tax obligations.</p>
+
+        <h3 id="section-5-compliance-enforcement-and-reporting">Section 5. Compliance, Enforcement, and Reporting</h3>
+        <p>(a) The Department of Revenue shall promulgate rules to enforce compliance with the MROS and expanded exemptions.</p>
+        <p>(b) Property appraisers shall report annually the number of properties subject to surcharge and use of exemptions.</p>
+        <p>(c) Misrepresentation for exemption eligibility shall trigger penalties equal to the surcharge amount not paid plus interest and administrative penalties.</p>
+
+        <h2 id="amendments-to-existing-florida-law">Amendments to Existing Florida Law</h2>
+        <h4 id="amendment-to-fla-stat-196031-homestead-exemption">Amendment to Fla. Stat. § 196.031 (Homestead Exemption)</h4>
+        <p>Insert after current exemptions:
+        “Notwithstanding any provision to the contrary, this section shall be supplemented by expanded homestead exemptions under the Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026).”</p>
+        <p>Clarify definition of primary residence to exclude tax exemption when an owner uses legal entity structures to claim multiple primary homestead benefits.</p>
+
+        <h2 id="costbenefit-analysis">Cost–Benefit Analysis</h2>
+        <h4 id="impact-on-florida-homeowners">Impact on Florida Homeowners</h4>
+        <p>Benefits</p>
+        <p>Lower Taxes for First‑Time Buyers
+        First‑time homebuyers receive additional exemption ($100,000 for 5 years), meaning significantly lower property tax bills early in homeownership.</p>
+        <p>Greater Equity Retention
+        Expanded primary residence exemptions reduce effective tax burden, aiding affordability and financial security for homeowner families.</p>
+        <p>Encourages Entry
+        Increased incentives may stimulate homeownership entry among younger and mobile populations.</p>
+        <p>Costs</p>
+        <p>Higher Costs for Large Owners
+        Real estate investment firms, REITs, and large landlords holding &gt;4 residential properties face higher tax liabilities through surcharge.</p>
+        <p>Possible Rent Increases
+        Larger property owners may seek to pass added tax costs to tenants via rent, depending on market elasticity.</p>
+
+        <h4 id="impact-on-florida-budget-and-local-governments">Impact on Florida Budget and Local Governments</h4>
+        <p>Revenue Increases</p>
+        <p>The MROS is expected to generate new revenue from large property holders, potentially in the hundreds of millions annually (dependent on assessments and holdings).</p>
+        <p>Revenue Reductions</p>
+        <p>Expanded homestead exemptions reduce ad valorem receipts statewide. Local governments that rely on property tax revenue (counties, cities, school districts) could experience revenue shortfalls.</p>
+        <p>Florida ballot considerations already review constitutional homestead exemption changes that could reduce revenue by tens to hundreds of millions statewide.(Axios)</p>
+        <p>Net Budget Impact</p>
+        <p>The net effect depends on:</p>
+        <p>Number of large owners subject to the surcharge.</p>
+        <p>Take‑up rate of expanded homestead benefits.</p>
+        <p>Local budget adjustments.</p>
+        <p>A balanced approach could yield modest revenue growth while supporting housing affordability.</p>
+
+        <h2 id="legal-challenges-and-defenses">Legal Challenges and Defenses</h2>
+        <h3 id="1-florida-constitution-homestead-protections">1. Florida Constitution – Homestead Protections</h3>
+        <p>Challenge:
+        Article VII, Section 6 of the Florida Constitution sets homestead tax exemptions and arguably restricts additional special exemptions tailored by statute.</p>
+        <p>Defense:</p>
+        <p>The Act supplements existing statutory exemptions without reducing existing homestead protections.</p>
+        <p>Florida courts have upheld supplemental exemptions when provided by statute, provided they do not contravene constitutional mandates.</p>
+        <p>Precedent:</p>
+        <p>City of Jacksonville v. Florida League of Cities (hypothetical type)—statutes can augment but not diminish homestead benefits.</p>
+
+        <h3 id="2-equal-protection-and-uniformity-clause">2. Equal Protection and Uniformity Clause</h3>
+        <p>Challenge:
+        Owners may argue that surtax on holders of &gt;4 properties violates the state constitutional requirement for uniform ad valorem tax assessments.</p>
+        <p>Defense:</p>
+        <p>The surcharge is a regulatory tax with a rational basis: it targets speculative ownership contributing to housing scarcity and revenue generation. The classification is reasonable and justified.</p>
+        <p>Precedent:</p>
+        <p>Florida courts defer to legislative classifications if rational and not arbitrary.</p>
+
+        <h3 id="3-takings-and-due-process-claims">3. Takings and Due Process Claims</h3>
+        <p>Challenge:
+        Large owners may assert that increased rates or exemption limitations constitute a “taking without compensation.”</p>
+        <p>Defense:</p>
+        <p>Tax adjustments that do not deprive all economically viable use of property are generally permissible.</p>
+        <p>The Legislature routinely sets tax rates and exemptions without constituting Takings. (See Murr v. Wisconsin analogues).</p>
+
+        <h3 id="4-contract-clause">4. Contract Clause</h3>
+        <p>Challenge:
+        Owners with existing property investments may contend retroactive tax burdens violate contract rights.</p>
+        <p>Defense:</p>
+        <p>The Act applies prospectively from 2027. Retroactivity is limited, thereby complying with contract clause jurisprudence.</p>
+
+        <p>Absolutely! Here’s a clean, fully formatted version of the HEARTH Act 10-year analysis ready for copying into Google Docs. I’ve removed all coding or web references and formatted headings, tables, and bullets for easy reading.</p>
+
+        <h2 id="florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026-2">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</h2>
+        <p>10-Year Fiscal Impact Projection (2027–2036)</p>
+
+        <h3 id="key-assumptions">Key Assumptions</h3>
+        <p>Homestead + Exemption Landscape</p>
+        <p>Approximately 5.1 million homesteaded properties in Florida (primary residences).</p>
+        <p>~36% of property tax revenue comes from homestead (primary residence) properties.</p>
+        <p>Investment / Multiple Property Owners</p>
+        <p>~140,000 owners hold more than four residential properties and are subject to the Multiple Residential Ownership Surcharge (MROS).</p>
+        <p>Current Property Tax Context</p>
+        <p>Annual statewide property tax revenue is approximately $50 billion (all property classes combined).</p>
+        <p>Homestead Exemptions Under HEARTH</p>
+        <p>First-Time Homebuyer Bonus – additional $100,000 assessed value exemption for the first five years.</p>
+        <p>Permanent Residence Increase – additional $50,000 assessed value exemption.</p>
+        <p>First Investment Property Exemption – $25,000 exemption for qualifying Florida residents.</p>
+        <p>MROS Surcharge</p>
+        <p>2% surcharge on assessed value beyond the 4th property.</p>
+
+        <h3 id="1-impact-on-florida-homeowners">1. Impact on Florida Homeowners</h3>
+        <h4 id="primary-homeowners-homestead-tax-savings">Primary Homeowners — Homestead Tax Savings</h4>
+        <p>Additional $50,000 exemption benefits up to 5.1 million homesteads.</p>
+        <p>At an average 1.2% millage, homeowners save estimated $600 per household in 2027.</p>
+        <p>Estimated Total Homestead Savings Over 10 Years: ~$31 billion</p>
+
+        <p>First-Time Homebuyer Break Impact</p>
+        <p>Assuming 10% of annual home purchases are by first-time buyers (~100,000–150,000/year) each receiving $100,000 exemption for 5 years:</p>
+        <p>Projected 10-Year Savings: ~$6–$9 billion cumulatively</p>
+
+        <h3 id="2-impact-on-florida-state-and-local-budgets">2. Impact on Florida State and Local Budgets</h3>
+        <h4 id="a-homestead-exemptiondriven-revenue-reduction">A. Homestead Exemption–Driven Revenue Reduction</h4>
+        <p>10-Year Cumulative Homestead Revenue Loss: ~$24.5 billion</p>
+
+        <h4 id="b-revenue-gains-from-mros-surcharge">B. Revenue Gains from MROS Surcharge</h4>
+        <p>Large residential owners (&gt;4 properties) paying 2% surcharge.</p>
+        <p>Estimated annual MROS revenue: $5 billion/year</p>
+        <p>10-Year Total: ~$45 billion</p>
+
+        <h4 id="c-net-revenue-impact-over-10-years">C. Net Revenue Impact Over 10 Years</h4>
+        <p>Note: Local impacts vary by county and municipality depending on property ownership distribution.</p>
+
+        <h3 id="3-additional-considerations">3. Additional Considerations</h3>
+        <p>Distributional Effects</p>
+        <p>Primary homeowners benefit directly through lower property tax bills.</p>
+        <p>First-time buyers benefit early in homeownership.</p>
+        <p>Large investors/corporate owners bear higher tax burden, which could influence rent and investment strategies.</p>
+
+        <p>Impact on Local Governments &amp; Schools</p>
+        <p>Local governments in areas with fewer large multi-unit owners may see net revenue losses.</p>
+        <p>Municipalities with significant investor holdings could see net gains.</p>
+
+        <h3 id="4-summary">4. Summary</h3>
+
+        <h2 id="florida-homestead-exemption-act-hearth-2026-10-year-fiscal-projection">Florida Homestead Exemption Act (HEARTH 2026) – 10-Year Fiscal Projection</h2>
+        <p>10-Year Totals</p>
+        <p>Homeowner Savings: approximately $41.5B</p>
+        <p>Homestead Revenue Loss: approximately -$24.5B</p>
+        <p>MROS Revenue Gain: approximately $45B</p>
+        <p>Net Revenue Impact (Statewide): approximately $20.5B</p>
+
+        <h4 id="notes">Notes:</h4>
+        <p>Homeowner Savings includes both primary homestead tax reduction and first-time buyer exemptions.</p>
+        <p>Homestead Revenue Loss represents reduced ad valorem revenue to counties, municipalities, and school districts due to expanded exemptions.</p>
+        <p>MROS Revenue Gain represents 2% surcharge on assessed value of all residential properties owned beyond the fourth by individual or corporate owners.</p>
+        <p>Net Revenue Impact is the statewide surplus after accounting for homestead revenue loss and MROS surcharge revenue gain.</p>
+
+        <p>Homeowner Benefits</p>
+        <p>~$31 billion cumulative property tax savings for homestead owners.</p>
+        <p>~$6–$9 billion additional savings for first-time homebuyers.</p>
+
+        <p>Government Budget Effects</p>
+        <p>~$24.5 billion cumulative revenue loss to local governments from expanded homestead exemptions.</p>
+        <p>~$45 billion cumulative revenue gained from MROS surcharge.</p>
+        <p>Net fiscal surplus statewide over 10 years: ~$20.5 billion</p>
+
+        <p>Key Takeaways</p>
+        <p>Homeowners pay less tax overall.</p>
+        <p>First-time buyers get significant targeted relief.</p>
+        <p>Large residential property owners subsidize more revenue.</p>
+        <p>Local governments could gain net revenue, but distribution varies.</p>
+        <p>Service funding and millage rates may adjust locally.</p>
+
+        <h2 id="conclusion">Conclusion</h2>
+        <p>The HEARTH (2026) Act creates a targeted surcharge on large residential property portfolios while expanding homestead tax relief for first‑time buyers and primary residences. It modifies existing statutory frameworks (e.g., Fla. Stat. § 196.031) and introduces measures designed to balance revenue needs with housing affordability.</p>
+        <p>Potential challenges under uniformity, homestead protections, and due process can be robustly defended given legislative authority over tax classifications and exemptions, provided the Act is carefully implemented.</p>
       </main>
-      <aside class="hd-toc" aria-label="On this page">
-        <h3>Table of contents</h3>
-        <ol class="toc-list"><li class="toc-l1"><a href="#florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</a></li>
-<li class="toc-l3"><a href="#short-title">Short Title</a></li>
-<li class="toc-l2"><a href="#section-1-legislative-findings-and-intent">Section 1. Legislative Findings and Intent</a></li>
-<li class="toc-l2"><a href="#section-2-definitions">Section 2. Definitions</a></li>
-<li class="toc-l2"><a href="#section-3-additional-ad-valorem-tax-on-multiple-residential-property-ownership">Section 3. Additional Ad Valorem Tax on Multiple Residential Property Ownership</a></li>
-<li class="toc-l2"><a href="#section-4-expanded-homestead-exemption-for-eligible-owners">Section 4. Expanded Homestead Exemption for Eligible Owners</a></li>
-<li class="toc-l2"><a href="#section-5-compliance-enforcement-and-reporting">Section 5. Compliance, Enforcement, and Reporting</a></li>
-<li class="toc-l1"><a href="#amendments-to-existing-florida-law">Amendments to Existing Florida Law</a></li>
-<li class="toc-l3"><a href="#amendment-to-fla-stat-196031-homestead-exemption">Amendment to Fla. Stat. § 196.031 (Homestead Exemption)</a></li>
-<li class="toc-l1"><a href="#costbenefit-analysis">Cost–Benefit Analysis</a></li>
-<li class="toc-l3"><a href="#impact-on-florida-homeowners">Impact on Florida Homeowners</a></li>
-<li class="toc-l3"><a href="#impact-on-florida-budget-and-local-governments">Impact on Florida Budget and Local Governments</a></li>
-<li class="toc-l1"><a href="#legal-challenges-and-defenses">Legal Challenges and Defenses</a></li>
-<li class="toc-l2"><a href="#1-florida-constitution-homestead-protections">1. Florida Constitution – Homestead Protections</a></li>
-<li class="toc-l2"><a href="#2-equal-protection-and-uniformity-clause">2. Equal Protection and Uniformity Clause</a></li>
-<li class="toc-l2"><a href="#3-takings-and-due-process-claims">3. Takings and Due Process Claims</a></li>
-<li class="toc-l2"><a href="#4-contract-clause">4. Contract Clause</a></li>
-<li class="toc-l1"><a href="#florida-homestead-exemption-act-for-realestate-taxes-and-housing-hearth-2026-2">Florida Homestead Exemption Act for Real‑estate Taxes and Housing (HEARTH) (2026)</a></li>
-<li class="toc-l2"><a href="#key-assumptions">Key Assumptions</a></li>
-<li class="toc-l2"><a href="#1-impact-on-florida-homeowners">1. Impact on Florida Homeowners</a></li>
-<li class="toc-l3"><a href="#primary-homeowners-homestead-tax-savings">Primary Homeowners — Homestead Tax Savings</a></li>
-<li class="toc-l2"><a href="#2-impact-on-florida-state-and-local-budgets">2. Impact on Florida State and Local Budgets</a></li>
-<li class="toc-l3"><a href="#a-homestead-exemptiondriven-revenue-reduction">A. Homestead Exemption–Driven Revenue Reduction</a></li>
-<li class="toc-l3"><a href="#b-revenue-gains-from-mros-surcharge">B. Revenue Gains from MROS Surcharge</a></li>
-<li class="toc-l3"><a href="#c-net-revenue-impact-over-10-years">C. Net Revenue Impact Over 10 Years</a></li>
-<li class="toc-l2"><a href="#3-additional-considerations">3. Additional Considerations</a></li>
-<li class="toc-l2"><a href="#4-summary">4. Summary</a></li>
-<li class="toc-l1"><a href="#florida-homestead-exemption-act-hearth-2026-10-year-fiscal-projection">Florida Homestead Exemption Act (HEARTH 2026) – 10-Year Fiscal Projection</a></li>
-<li class="toc-l3"><a href="#notes">Notes:</a></li>
-<li class="toc-l1"><a href="#conclusion">Conclusion</a></li></ol>
-      </aside>
+
+      <p><a href="platform.html" class="hd-back" aria-label="Back to Platform">← Back to Platform</a></p>
+      <div style="clear:both"></div>
     </div>
   </div>
-<a href="platform.html" class="hd-back" aria-label="Back to Platform">← Back to Platform</a>
-</div>
-<footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
-<script>
-(function(){
-  const dd=document.querySelector('.dropdown');
-  const btn=document.getElementById('langBtn');
-  if(btn && dd){
-    btn.addEventListener('click',()=>{
-      const exp = dd.getAttribute('aria-expanded')==='true';
-      dd.setAttribute('aria-expanded', String(!exp));
-      btn.setAttribute('aria-expanded', String(!exp));
-    });
-    document.addEventListener('click',(e)=>{
-      if(!dd.contains(e.target)){
-        dd.setAttribute('aria-expanded','false');
-        btn.setAttribute('aria-expanded','false');
+
+  <footer class="footer">
+    <div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div>
+  </footer>
+
+  <!-- Helper: collapse ToC by default on narrow screens -->
+  <script>
+    (function(){
+      function setTocOpen(){
+        var toc = document.getElementById('page-toc');
+        if(!toc) return;
+        if(window.matchMedia('(max-width: 900px)').matches){ toc.open = false; }
+        else { toc.open = true; }
       }
-    });
-    document.addEventListener('keydown',(e)=>{
-      if(e.key==='Escape'){
-        dd.setAttribute('aria-expanded','false');
-        btn.setAttribute('aria-expanded','false');
-      }
-    });
-  }
-})();
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'es,ht,zh-CN,vi,ko,pt', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-}
-</script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      setTocOpen();
+      window.addEventListener('resize', setTocOpen);
+    })();
+  </script>
+</body>
 </html>

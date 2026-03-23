@@ -1,0 +1,40 @@
+
+/* =============================================
+   /assets/site-header.css  — FULL REPLACEMENT (stable)
+   Two-row header with a dedicated Languages row; compact, non-overlapping.
+   ============================================= */
+
+:root{
+  /* Fallbacks if not already defined in your theme */
+  --stroke: rgba(255,255,255,.18);
+  --card: rgba(255,255,255,.04);
+}
+
+header.site-header{ position:relative; z-index:10; width:100%; }
+header.site-header .container{ max-width:1200px; margin:0 auto; padding:10px 16px; }
+
+/* Row 1 — brand | nav | right icons */
+header.site-header .row-1{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px; }
+header.site-header .brand-wrap{ display:flex; align-items:center; min-width:0; }
+header.site-header .brand-wrap a.brand{ font-weight:700; font-size:18px; text-decoration:none; color:#fff; white-space:nowrap; }
+
+header.site-header nav.main-nav{ display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+header.site-header nav.main-nav a{ color:#fff; text-decoration:none; opacity:.95; }
+header.site-header nav.main-nav a:hover{ opacity:1; }
+
+header.site-header .header-right{ display:flex; align-items:center; gap:8px; }
+header.site-header img.hdr-emtest{ display:block; height:32px; width:auto; border-radius:4px; }
+header.site-header img.hdr-writein{ display:block; max-height:28px; width:auto; flex-shrink:0; }
+
+/* Row 2 — Languages (Google Translate) */
+header.site-header .row-2{ display:flex; align-items:center; gap:12px; margin-top:6px; }
+header.site-header #google_translate_element{ display:inline-flex; align-items:center; color:#fff; }
+header.site-header .lang, header.site-header [data-lang-menu]{ color:#fff; }
+
+/* ===== Body ballot image sizing (localized landings) ===== */
+.ballot-block{ max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }
+.ballot-block img{ display:block; max-width:100%; height:auto; }
+.ballot-block img[src*="write-in-ballot"]{ margin-bottom:-8px; }
+
+figure img[src*="write-in-ballot"]{ display:block; max-width:100%; height:auto; }
+figure:has(> img[src*="write-in-ballot"]) { max-width:740px; margin:14px auto; padding:6px; border:1px solid var(--stroke); border-radius:6px; background:var(--card); box-shadow:0 1px 8px rgba(0,0,0,.16); overflow:hidden; }

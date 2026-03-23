@@ -1,17 +1,12 @@
 
-/* Platform page button fix (scoped to platform page only) */
+/* Restores GH Pages button look on platform page without touching other pages */
 :root{--btn-bg:#14345c;--btn-bg-hover:#173b6a;--btn-border:#2b4772;--btn-border-hover:#35598a;--btn-fg:#e6f2ff}
-/* Primary buttons inside slides */
+/* Primary CTA in slides */
 .slide .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;background:var(--btn-bg);
   color:var(--btn-fg);text-decoration:none;border:1px solid var(--btn-border);font-weight:700;box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
 .slide .btn:hover,.slide .btn:focus-visible{background:var(--btn-bg-hover);color:#fff;border-color:var(--btn-border-hover);outline:none}
-
-/* Quick-links styled as buttons even if .btn class is missing */
-.quick-links .grid a{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:10px;
-  background:#0f1a38;color:#e2e8f0;text-decoration:none;border:1px solid var(--btn-border)}
-.quick-links .grid a:hover,.quick-links .grid a:focus-visible{background:#132042;color:#fff;outline:none}
-
-/* Small spacing refinements to match GH Pages appearance */
 .platform-wrap .slide .txt .btn{margin-top:10px}
-.quick-links{margin-top:8px}
+/* Quick-links as rounded chips */
 .quick-links .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.quick-links .grid a{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:10px;background:#0f1a38;color:#e2e8f0;text-decoration:none;border:1px solid var(--btn-border);font-weight:700}
+.quick-links .grid a:hover,.quick-links .grid a:focus-visible{background:#132042;color:#fff;outline:none}

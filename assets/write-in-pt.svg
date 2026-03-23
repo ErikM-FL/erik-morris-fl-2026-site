@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="1000" height="360">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b2a6f"/>
+      <stop offset="1" stop-color="#3a1d6e"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="1000" height="360" fill="url(#g)"/>
+  <rect x="18" y="18" width="964" height="324" rx="14" fill="#0b1530" stroke="#223356"/>
+  <g font-family="Segoe UI, Noto Sans, Arial" fill="#e8f1ff">
+    <text x="50" y="95" font-size="36" opacity="0.95">Voto por Escrito</text>
+    <text x="50" y="205" font-size="64" font-weight="800">ERIK MORRIS</text>
+    <circle cx="34" cy="82" r="8" fill="#e8f1ff"/>
+  </g>
+</svg>

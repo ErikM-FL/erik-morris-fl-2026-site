@@ -1,149 +1,116 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>Erik Morris para Gobernador de Florida — 2026 (candidato por escrito)</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles.css" />
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Noto+Sans+SC:wght@700&family=Noto+Sans+KR:wght@700&family=Patrick+Hand&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- Header / Nav -->
-    <header class="header">
-      <nav class="nav">
-        <div class="brand">
-          <h1>Erik Morris 2026</h1>
-          <span class="tag">Write‑in • People‑first • Fix the incentives</span>
-        </div>
-        <div class="menu">
-          <a href="pages/platform.html">Platform</a>
-          <a href="pages/how-to-write-in.html">Voting a Write-In Candidate</a>
+<!doctype html><html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="/styles.css?v=12">
+<link rel="stylesheet" href="/assets/site-header.css?v=12">
+<script src="/assets/site-header.js?v=12" defer></script>
 
-          <!-- Languages dropdown — Translate FIRST, then localized links -->
-          <div class="dropdown" aria-expanded="false">
-            <button class="dd-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">Languages ▾</button>
-            <div class="dd-menu" role="menu" aria-label="Language options">
-              <div class="dd-group">
-                <div class="dd-label">Translate this page</div>
-                <div id="google_translate_element"></div>
-              </div>
-              <div class="dd-group">
-                <div class="dd-label">Visit localized landing</div>
-                <a role="menuitem" href="index-es.html">Español</a>
-                <a role="menuitem" href="index-ht.html">Kreyòl Ayisyen</a>
-                <a role="menuitem" href="index-zh.html">中文（简体）</a>
-                <a role="menuitem" href="index-vi.html">Tiếng Việt</a>
-                <a role="menuitem" href="index-ko.html">한국어</a>
-                <a role="menuitem" href="index-pt.html">Português</a>
-              </div>
-            </div>
-          </div>
-          <!-- /Languages dropdown -->
-        </div>
-      </nav>
-    </header>
+<title>Loading…</title>
+</head>
+<body>
+<div id="site-header"></div>
+<!-- Placeholder hero so layout doesn't jump while fetching -->
+<section class="hero"><div class="hero-inner"><div class="hero-content">
+  <figure style="margin:16px 0"><img src="/assets/write-in-es.svg" alt="write-in es" style="max-width:680px;width:100%;height:auto;border-radius:10px;border:1px solid var(--stroke);box-shadow:0 4px 16px rgba(0,0,0,.25)"></figure>
+</div></div></section>
+<script>
+(function(){
+  const RAW_URL = 'https://raw.githubusercontent.com/ErikM-FL/erik-morris-fl-2026-site/refs/heads/backup/index-es.html';
+  const LANG = 'es';
+  const MAX_WAIT = 2000; // ms to wait for header injection
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-content">
-          <p class="kicker">Erik Morris para Gobernador de Florida — 2026 (candidato por escrito)</p>
-          <h2>Campaña austera. Personas primero. Arreglemos los incentivos.</h2>
-          <p style="color:#9aa7b2">El contenido detallado de la plataforma está disponible en inglés.</p>
-        </div>
+  function q(sel, root=document){ return root.querySelector(sel); }
+  function qa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
 
-        <!-- Write-in banner (canvas + centered GIF fallback) -->
-        <div id="ballotBanner" aria-label="Write-in demo banner">
-          <div class="card">
-            <canvas id="ballotCanvas" width="700" height="240" aria-hidden="true"></canvas>
-            <img id="ballotFallback" src="assets/write-in-ballot.gif" alt="Write-in ballot animation" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Language notice just below the hero -->
-    <div class="section" style="max-width:1120px;margin:0 auto;padding:0 16px;">
-      <p style="margin-top:1rem; color:#cbd5e1;">
-        Puede ver el resto del sitio en su idioma usando el menú <strong>Languages</strong> que aparece en la parte superior de todas las demás páginas.
-      </p>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-inner">
-        Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.
-      </div>
-    </footer>
-
-    <!-- Banner animation (canvas) -->
-    <script>
-      (function(){
-        const el=document.getElementById("ballotCanvas"); const fb=document.getElementById("ballotFallback");
-        if(!el||!el.getContext) return; const ctx=el.getContext("2d"); if(!ctx) return; if(fb) fb.style.display="none";
-        const W=el.width,H=el.height,BG="#ffffff",FG="#000000",namePx=40;
-        const labelFont=`700 ${namePx}px Noto Sans SC,Noto Sans KR,Noto Sans,system-ui,Arial`;
-        const namePrint=`700 ${namePx}px Noto Sans,system-ui,Arial`;
-        const nameCursive=`700 ${namePx}px Patrick Hand,Noto Sans,system-ui,Arial`;
-        const languages=[{label:"Write-In"},{label:"Voto por escrito"},{label:"Ekri non"},{label:"手写填写"},{label:"Ghi tên"},{label:"한국어"},{label:"Português"}];
-        const nameFull=["E","R","I","K"," ","M","O","R","R","I","S"]; const modes=["print","cursive"];
-        const margin=14,bubbleR=12,bubbleC={x:margin+22,y:margin+64},labelX=bubbleC.x+30,baseline=bubbleC.y+6,gap=18,nameString=nameFull.join("");
-        function draw(st){
-          ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
-          ctx.strokeStyle=FG;ctx.lineWidth=2;ctx.strokeRect(1,1,W-2,H-2);
-          ctx.beginPath();ctx.arc(bubbleC.x,bubbleC.y,bubbleR,0,Math.PI*2);ctx.stroke();
-          ctx.fillStyle=FG;ctx.textBaseline="alphabetic";ctx.font=labelFont;const label=languages[st.li].label;ctx.fillText(label,labelX,baseline);
-          const lw=ctx.measureText(label).width;ctx.font=(st.mode==="print"?namePrint:nameCursive);const nameX=labelX+lw+gap;const fullW=ctx.measureText(nameString).width;
-          ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(nameX,baseline+6);ctx.lineTo(nameX+fullW,baseline+6);ctx.stroke();
-          const typed=nameFull.slice(0,Math.floor(st.letters)).join("");ctx.fillText(typed,nameX,baseline);
-          if(st.filled){ctx.fillStyle=FG;ctx.beginPath();ctx.arc(bubbleC.x,bubbleC.y,bubbleR-4,0,Math.PI*2);ctx.fill();}
-        }
-        let modeIndex=0,li=0,letters=0,filled=false,phase="typing",holdUntil=0,last=0;
-        function reset(){letters=0;filled=false;phase="typing";}
-        function tick(ts){if(!last)last=ts;const dt=ts-last;last=ts;draw({mode:modes[modeIndex],li,letters,filled});
-          if(phase==="typing"){if(letters<nameFull.length){letters+=dt/110;if(letters>nameFull.length)letters=nameFull.length;}else{filled=true;phase="hold";holdUntil=ts+8000;}}
-          else if(phase==="hold"){if(ts>=holdUntil){li++;if(li>=languages.length){li=0;modeIndex=(modeIndex+1)%modes.length;}reset();}}
-          requestAnimationFrame(tick);}
-        reset();requestAnimationFrame(tick);
+  function waitForHeader(){
+    return new Promise(resolve=>{
+      const t0 = performance.now();
+      (function tick(){
+        const hasInjected = !!q('header.site-header');
+        const hasAnchor = !!q('#site-header');
+        if(hasInjected || hasAnchor) return resolve();
+        if(performance.now()-t0 > MAX_WAIT) return resolve();
+        requestAnimationFrame(tick);
       })();
-    </script>
+    });
+  }
 
-    <!-- Dropdown behavior + Google Translate + white-text enforcer -->
-    <script>
-      (function(){
-        const dd=document.querySelector(".dropdown"), btn=document.getElementById("langBtn");
-        if(btn && dd){
-          btn.addEventListener("click",()=>{const exp=dd.getAttribute("aria-expanded")==="true"; dd.setAttribute("aria-expanded", String(!exp)); btn.setAttribute("aria-expanded", String(!exp));});
-          document.addEventListener("click",(e)=>{ if(!dd.contains(e.target)){ dd.setAttribute("aria-expanded","false"); btn.setAttribute("aria-expanded","false"); }});
-          document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ dd.setAttribute("aria-expanded","false"); btn.setAttribute("aria-expanded","false"); }});
+  async function syncFromReference(){
+    try{
+      await waitForHeader();
+
+      const res = await fetch(RAW_URL, {cache:'no-store', credentials:'omit'});
+      if(!res.ok){ console.warn('Sync: fetch failed', res.status); return; }
+      const text = await res.text();
+      const parser = new DOMParser();
+      const refDoc = parser.parseFromString(text, 'text/html');
+
+      // Build a clean fragment starting at the first hero section
+      const frag = document.createDocumentFragment();
+      const refHero = q('section.hero', refDoc);
+      if(refHero){
+        let node = refHero;
+        while(node){
+          if(!(node.nodeType===1 && node.tagName==='SCRIPT')){
+            frag.appendChild(node.cloneNode(true));
+          }
+          node = node.nextSibling;
         }
-      })();
-      function googleTranslateElementInit(){
-        new google.translate.TranslateElement(
-          {pageLanguage:"en", includedLanguages:"es,ht,zh-CN,vi,ko,pt", layout: google.translate.TranslateElement.InlineLayout.SIMPLE},
-          "google_translate_element"
-        );
+      } else {
+        qa('script', refDoc.body).forEach(s=>s.remove());
+        frag.appendChild(refDoc.body.cloneNode(true));
       }
-    </script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
-      (function(){
-        function forceGTWhite(){
-          var root=document.querySelector("#google_translate_element .goog-te-gadget-simple"); if(!root) return;
-          root.style.setProperty("color","#fff","important");
-          root.querySelectorAll("a, span, *").forEach(function(n){ n.style.setProperty("color","#fff","important"); });
-        }
-        var host=document.getElementById("google_translate_element");
-        if(host){ try{ new MutationObserver(forceGTWhite).observe(host,{childList:true,subtree:true}); }catch(e){} }
-        forceGTWhite(); window.addEventListener("load", forceGTWhite);
-      })();
-    </script>
-  </body>
+
+      // Clear everything after header
+      const injectedHeader = q('header.site-header');
+      const headerAnchor = q('#site-header');
+      const startNode = injectedHeader || headerAnchor || document.body.firstChild;
+      let n = startNode ? startNode.nextSibling : document.body.firstChild;
+      while(n){ const next = n.nextSibling; n.remove(); n = next; }
+
+      // Inject reference content under the header
+      document.body.appendChild(frag);
+
+      // Normalize hero figure image to local improved SVG (header logo untouched)
+      const heroImg = q('section.hero figure img');
+      if(heroImg){ heroImg.src = '/assets/write-in-'+LANG+'.svg'; heroImg.alt = 'write-in '+LANG; }
+
+      // --- NEW: Ensure write-in-ballot.gif exists like on reference ---
+      // If ref has it, mirror it; if not present in our DOM, insert after hero
+      const refBallotImg = q('img[src*="write-in-ballot.gif"]', refDoc);
+      const curBallotImg = q('img[src*="write-in-ballot.gif"]');
+      if(refBallotImg && !curBallotImg){
+        // Prefer cloning the parent figure/section if available for styling parity
+        let insertNode = refBallotImg.closest('figure, section, div') || refBallotImg;
+        let clone = insertNode.cloneNode(true);
+        // Force src to local asset path
+        clone.querySelectorAll('img').forEach(img=>{
+          if(img.src.includes('write-in-ballot.gif')){ img.src = '/assets/write-in-ballot.gif'; img.alt = img.alt || 'write-in ballot'; }
+        });
+        const hero = q('section.hero');
+        if(hero && hero.parentNode){ hero.parentNode.insertBefore(clone, hero.nextSibling); }
+        else { document.body.appendChild(clone); }
+      }
+
+      // Fix root-relative links
+      qa('a[href^="pages/\"]').forEach(a=>{ a.href = '/'+a.getAttribute('href'); });
+
+      const refTitle = q('title', refDoc); if(refTitle) document.title = refTitle.textContent;
+
+      // Optional bake
+      if(new URL(location.href).searchParams.get('bake')==='1'){
+        const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = document.location.pathname.split('/').pop() || ('index-'+LANG+'.html');
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+    }catch(e){ console.warn('Sync error', e); }
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', syncFromReference);
+  else syncFromReference();
+})();
+</script>
+</body>
 </html>

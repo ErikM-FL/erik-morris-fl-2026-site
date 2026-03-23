@@ -1,0 +1,359 @@
+:root{--header-bg:#0b1b2b;--header-fg:#fff;--header-accent:#94c6ff;--pad-x:1rem;--pad-y:.5rem;--gap:.65rem;--max:1280px;--img-h:48px}
+.site-header{position:relative;z-index:1000;background:var(--header-bg);color:var(--header-fg);border-bottom:1px solid rgba(255,255,255,.08);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.site-header__inner{max-width:var(--max);margin:0 auto;padding:var(--pad-y) var(--pad-x);display:grid;grid-template-columns:1fr minmax(96px,120px) auto;grid-template-rows:auto auto;column-gap:.6rem;row-gap:.35rem;align-items:center}
+.site-header__brandline{display:flex;gap:.5rem;align-items:flex-start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-header__brand{font-weight:800;font-size:calc(16px + 2px)}
+.site-header__tagline{font-weight:500;line-height:1;font-size:clamp(12px,1.45vw,16px)}
+.site-header__images{grid-column:2;grid-row:1 / span 2;display:flex;align-items:center;gap:.3rem;max-width:120px}
+.site-header__img{height:var(--img-h);width:auto;object-fit:contain;border-radius:2px}
+.site-header__lang{grid-column:3;grid-row:1;justify-self:end;align-self:start;position:relative}
+.site-header__btn{background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;cursor:pointer;padding:.3rem .55rem;border-radius:6px;font-weight:600}
+/*Original button, no arrow --*/
+/*.site-header__menu{position:fixed;right:clamp(8px,3vw,24px);top:64px;width:min(360px,92vw);background:#0b1b2b;border:1px solid rgba(255,255,255,.12);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:12px;display:none;color:#fff;z-index:2147483647}
+.site-header__menu[aria-hidden="false"]{display:block} */
+
+/* Anchor the popup to the button (not the viewport) */
+.site-header__lang { position: relative; }  /* ensure an anchor */
+.site-header__menu {
+  position: absolute;              /* was: fixed */
+  top: calc(100% + 8px);           /* 8px gap below the button */
+  right: 0;                        /* align popup’s right edge to button’s right edge */
+  width: min(360px, 92vw);
+  background: #0b1b2b;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding: 12px;
+  display: none;
+  color: #fff;
+  z-index: 2147483647;             /* keep it above everything */
+}
+.site-header__menu[aria-hidden="false"] { display: block; }
+
+/* Button layout + down triangle ▾ after a small gap */
+.site-header__btn {
+  display: inline-flex;            /* align text + caret */
+  align-items: center;
+  gap: .35rem;                     /* spaces caret from “Languages” */
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  cursor: pointer;
+  padding: .3rem .55rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* Down triangle on the button */
+.site-header__btn::after {
+  content: '▾';                    /* Unicode down triangle */
+  font-size: .9em;
+  line-height: 1;
+}
+
+/* (Optional) Show an up triangle when open */
+.site-header__btn[aria-expanded="true"]::after { content: '▴'; }
+
+/* Mobile: keep the popup within the viewport */
+@media (max-width: 720px) {
+  .site-header__menu { right: 0; left: auto; width: min(92vw, 360px); }
+}
+
+.menu-group{border-top:1px solid rgba(255,255,255,.12);padding-top:10px;margin-top:10px}
+.menu-label{font-size:12px;color:#e2e8f0;margin:4px 0 6px}
+.menu-list{list-style:none;margin:0;padding:0}
+.menu-list a{display:block;color:#fff;text-decoration:none;padding:.4rem .45rem;border-radius:6px}
+.menu-list a:hover{background:rgba(255,255,255,.08)}
+.site-header__bottom{grid-column:1 / span 3;grid-row:2;display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:flex-end}
+.site-header__nav a{color:#fff;text-decoration:none;font-weight:700;padding:.35rem .5rem;border-radius:8px}
+.site-header__nav a:hover,.site-header__nav a:focus-visible{background:rgba(255,255,255,.08);color:var(--header-accent);outline:none}
+#google_translate_element *{color:#fff !important}
+.goog-te-gadget-simple{background:#0f243a !important;border:1px solid #3a516b !important;padding:6px 8px !important;border-radius:6px !important}
+@media(max-width:720px){:root{--img-h:40px}.site-header__images{display:none}}
+
+/* --- Row-2 Languages (non-destructive add-on) --- */
+header.site-header .header-row {
+  display: flex;
+  flex-wrap: wrap;            /* allow a second row */
+}
+
+/* Keep nav before Languages */
+header.site-header .main-nav { order: 10; }
+
+/* Push Languages block to a new line after the nav */
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header #google_translate_element {
+  order: 11;
+  flex-basis: 100%;           /* forces a line break = second row */
+  margin-top: 6px;
+  color: #fff;                /* always white text */
+  position: relative;
+  z-index: 2;                 /* sits above header icons if they overlap */
+}
+/* ===== Languages → dedicated second row; robust targeting ===== */
+
+/* Make the common header row containers flex + wrap.
+   We include several likely wrappers so it works regardless of exact markup.
+   (No harm if some selectors don't exist on a page.) */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .row-1,
+header.site-header .topbar,
+header.site-header .inner {
+  display: flex;
+  flex-wrap: wrap;       /* allow a second visual row */
+  align-items: center;
+}
+
+/* Keep brand/nav before languages (low order value) */
+header.site-header .brand-wrap,
+header.site-header .brand,
+header.site-header nav.main-nav {
+  order: 10;
+}
+
+/* Right-side icons (png/gif) come after nav but before languages */
+header.site-header .header-right {
+  order: 20;
+}
+
+/* Move the Languages control to its own forced line (row 2). 
+   We target all variants we've seen: Google Translate, data attributes, or .lang. */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  order: 99;             /* after nav + icons */
+  flex: 1 0 100%;        /* NEW LINE: forces a wrap to row 2 */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;           /* keep text white */
+  position: relative;    /* create stacking context */
+  z-index: 5;            /* ensure the dropdown sits above images */
+  float: none !important;/* neutralize any legacy float if present */
+}
+
+/* Lower the stacking priority of the header images so they don't overlay the menu */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* If any container accidentally clips the dropdown, let it overflow visibly. */
+header.site-header .header-row,
+header.site-header .container {
+  overflow: visible;
+}
+/* === move icons left, Languages on row 2 === */
+
+/* Treat common header wrappers as flex and allow wrapping */
+header.site-header .header-row,
+header.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Stable ordering: icons → nav → (row break) → Languages */
+header.site-header .header-right { order: 5; }        /* .png/.gif block */
+header.site-header nav.main-nav   { order: 10; }       /* Home, Platform, Voting & Write-In Candidate, About Erik */
+
+/* Force Languages onto its own line (row 2) and above icons in z-order */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  order: 99;
+  flex: 1 0 100%;     /* NEW line under the row (wrap) */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;
+  position: relative;
+  z-index: 5;         /* dropdown above images */
+}
+
+/* Keep icons visually behind the dropdown if they overlap */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Avoid clipping the dropdown in tight containers */
+header.site-header .header-row,
+header.site-header .container { overflow: visible; }
+/* === OPTION 1B — icons left, nav next, Languages on a new (wrapped) row === */
+
+/* Treat common header wrappers as flex and allow wrapping.
+   We include likely wrappers so it works regardless of exact markup.
+   (No harm if some selectors don't exist on a page.) */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible;                 /* avoid clipping the dropdown */
+}
+
+/* Stable ordering: icons (.png/.gif) → nav → (row break) → Languages */
+header.site-header .header-right { order: 5; }         /* icons block */
+header.site-header nav.main-nav   { order: 10; }        /* Home, Platform, Voting & Write-In Candidate, About Erik */
+
+/* Force Languages onto its own wrapped line (row 2) and above icons */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;                      /* force a line break under the row */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;                         /* always white text */
+  position: relative;
+  z-index: 5;                          /* dropdown above icons */
+  float: none !important;              /* neutralize any legacy float */
+}
+
+/* Keep icons visually behind the dropdown if there’s overlap */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+/* === Row‑wrap with stable order: icons → nav → (new line) Languages === */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible; /* let the dropdown render above */
+}
+
+/* Icons (.png/.gif) first, then nav */
+header.site-header .header-right { order: 5; }
+header.site-header nav.main-nav   { order: 10; }
+
+/* Force Languages to a NEW visual line (row 2) under the nav */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;     /* forces the line break */
+  width: 100%;
+  margin-top: 8px;
+  color: #fff;
+  position: relative;
+  z-index: 5;         /* dropdown above images */
+  float: none !important;
+}
+
+/* Keep images below the dropdown */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fallback (in case the icon container isn't .header-right):
+   if a direct child has emtest or write-in, treat parent as "icons" */
+header.site-header :has(> img[src*="emtest"], > img[src*="write-in"]) {
+  order: 5;
+}
+``
+/* === ROW‑2 holder directly under the first header row (append-only) === */
+header.site-header .row-2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  overflow: visible;      /* allow dropdown to render above */
+}
+
+/* /* Ensure the Languages control renders above images and stays white */
+header.site-header .row-2 #google_translate_element,
+header.site-header .row-2 [data-lang-menu],
+header.site-header .row-2 .lang {
+  color: #fff;
+  position: relative;
+  z-index: 5;
+}
+
+/* Keep any header images underneath the dropdown */
+header.site-header .header-right,
+header.site-header .header-right * {
+  position: relative;
+  z-index: 1;
+}
+
+/* (Optional) If the first row is flex/grid and has tight overflow, don't clip */
+header.site-header .header-row,
+header.site-header .container {
+  overflow: visible;
+}
+/* ====== FIX 1: Make sure the Languages dropdown sits above the images ====== */
+header.site-header{ position:sticky; top:0; z-index:1000; width:100%; }
+
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang {
+  position: relative;
+  z-index: 1000;       /* above header icons */
+  color: #fff;
+}
+
+/* Google Translate injects a menu iframe into <body>. Put it on top. */
+html body .goog-te-menu-frame,
+html body .goog-te-balloon-frame {
+  z-index: 2147483647 !important; /* max practical z for safety */
+}
+
+/* Keep header images behind the dropdown */
+header.site-header img[src*="emtest"],
+header.site-header img[src*="write-in"] {
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== FIX 2: Robust fallback ordering without relying on specific wrappers ====== */
+/* Treat common containers as flexible rows that can wrap */
+header.site-header .header-row,
+header.site-header .container,
+header.site-header .inner,
+header.site-header .topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  overflow: visible;
+}
+
+/* Nav should follow icons */
+header.site-header nav.main-nav { order: 10; }
+
+/* Force Languages to a new line under the row */
+header.site-header #google_translate_element,
+header.site-header [data-lang-menu],
+header.site-header .lang,
+header.site-header .header-languages {
+  order: 99;
+  flex: 1 0 100%;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* If we can’t identify the icon wrapper by class, treat any element that
+   directly contains the emtest or write-in image as the “icons” block */
+header.site-header :has(> img[src*="emtest"], > img[src*="write-in"]) {
+  order: 5;            /* before the nav */
+  position: relative;  /* give it a local stacking context below languages */
+  z-index: 1;
+} */

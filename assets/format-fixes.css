@@ -1,0 +1,31 @@
+/* === format-fixes.css (rev 3) ===
+   - Put animated gradient on html element (not body) to match site look.
+   - Ensure page/hero backgrounds are transparent so gradient is visible.
+   - Right-size ballot fallback GIF smaller across all pages.
+   - Remove dark card chrome.
+*/
+:root{
+  --grad-blue:#1e3a8a; /* blue 800 */
+  --grad-purple:#7c3aed; /* purple 600 */
+  --grad-red:#ef4444; /* red 500 */
+  J5s;
+}
+html{
+  min-height:100%;
+  background:linear-gradient(270deg,var(--grad-blue),var(--grad-purple),var(--grad-red),var(--grad-purple),var(--grad-blue));
+  background-size:1000% 100%;
+  animation:brandGradient var(--grad-speed) ease-in-out infinite;
+}
+@keyframes brandGradient{0%{background-position:0% 50%}25%{background-position:50% 50%}50%{background-position:100% 50%}75%{background-position:50% 50%}100%{background-position:0% 50%}}
+
+/* Ensure the page areas don't paint over the gradient */
+body, .page, .hero, .hero-inner, .content{background:transparent;}
+
+/* Ballot banner tweaks */
+#ballotBanner{display:block}
+#ballotBanner .card{border:none;background:transparent;box-shadow:none;padding:0;margin:0 auto;max-width:720px;width:100%}
+#ballotFallback{display:block;max-width:300px;width:100%;height:auto;margin:0 auto}
+#ballotCanvas{width:100%;height:auto;max-width:720px}
+
+/* Optional small top/bottom spacing when placed inside .content */
+.content #ballotBanner{margin-block:0.75rem 1rem}
