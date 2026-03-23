@@ -14,7 +14,14 @@
 @media (max-width:980px){.details-grid{grid-template-columns:1fr}.toc{position:static;max-height:none}}
 .card{background:#0f1a38;border:1px solid var(--stroke,#2b3a51);border-radius:12px;padding:18px}
 /* TOC styles aligned to "good" look */
-.toc{position:sticky;top:12px}
+.toc
+{
+  position: sticky;      /* make sticky */
+  top: 12px;             /* this is fine */
+  max-height: calc(100vh - 24px); /* viewport height minus top offset/margins */
+  overflow: auto;        /* show scrollbar when content exceeds height */
+  overscroll-behavior: contain; /* prevent scroll chaining to page */
+}
 .toc-inner{position:relative}
 .toc-title{font-weight:700;margin:2px 0 8px 0;color:#cfe1ff;font-size: 0.95rem}
 .toc-list,.toc-sub{list-style:none;margin:0;padding:0}
