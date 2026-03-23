@@ -79,3 +79,9 @@
     observeForLateLanguages();
   });
 })();
+(function () {
+  var s = document.createElement('script');
+  s.src = '/_vercel/insights/script.js';
+  s.defer = true;
+  (document.head || document.documentElement).appendChild(s);
+})();
