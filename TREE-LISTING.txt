@@ -13,6 +13,7 @@ erik-morris-fl-2026-site/
     write-in-ballot.gif
     platform/
   pages/
+    ama.html
     donate.html
     education-nutrition.html
     fair-pricing.html
@@ -27,3 +28,4 @@ erik-morris-fl-2026-site/
     second-amendment-integrity.html
     social.html
     veterans-care.html
+    volunteer.html

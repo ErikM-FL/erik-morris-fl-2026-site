@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Volunteer — Get Involved (2026)</title>
+  <link rel="stylesheet" href="../styles.css?v=12">
+  <link rel="stylesheet" href="/assets/site-header.css?v=12">
+  <script src="/assets/site-header.js?v=12" defer></script>
+  <style>
+    /* Page-scoped styles (desktop & mobile) */
+    .form-wrap{max-width:900px;margin:18px auto;padding:0 16px}
+    .form-card{background:#0f1a38;border:1px solid var(--stroke);border-radius:12px;padding:16px}
+    .form-grid{display:grid;grid-template-columns:1fr;gap:12px}
+    .form-row{display:grid;gap:6px}
+    .form-row.inline{grid-template-columns:1fr 1fr;gap:12px}
+    label{font-weight:700}
+    input[type=text],input[type=email],select,textarea{background:#0a1023;color:#e6edf7;border:1px solid #2b3a51;border-radius:8px;padding:10px}
+    .hint{color:#9fb3d9;font-size:.95rem}
+    .chk-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+    .btn.primary{display:inline-block;background:#14345c;color:#e6f2ff;text-decoration:none;padding:10px 14px;border-radius:10px;border:1px solid #2b4772;font-weight:700}
+    .req{color:#cbd5e1}
+    @media(min-width:900px){.form-grid{grid-template-columns:1.1fr .9fr}}
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+  <section class="hero"><div class="hero-inner"><div class="hero-content">
+    <p class="kicker">Volunteer — 2026</p>
+    <h2>Pitch in where it helps the most.</h2>
+  </div></div></section>
+
+  <div class="form-wrap">
+    <div class="form-card">
+      <form id="volForm" autocomplete="on">
+        <div class="form-grid">
+          <div class="form-left">
+            <div class="form-row inline">
+              <div>
+                <label for="vName">Full name <span class="req" aria-hidden="true">*</span></label>
+                <input id="vName" name="name" type="text" required>
+              </div>
+              <div>
+                <label for="vEmail">Email <span class="req">*</span></label>
+                <input id="vEmail" name="email" type="email" required>
+              </div>
+            </div>
+            <div class="form-row inline">
+              <div>
+                <label for="vCounty">County</label>
+                <input id="vCounty" name="county" type="text" placeholder="e.g., Leon, Miami-Dade">
+              </div>
+              <div>
+                <label for="vAvail">Availability</label>
+                <select id="vAvail" name="availability">
+                  <option value="Weekdays">Weekdays</option>
+                  <option value="Evenings">Evenings</option>
+                  <option value="Weekends">Weekends</option>
+                  <option value="Flexible">Flexible</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <label>Preferred Role(s)</label>
+              <div class="chk-group" role="group" aria-label="Preferred roles">
+                <label><input type="checkbox" name="roles" value="Campaign Management"> Campaign Management</label>
+                <label><input type="checkbox" name="roles" value="Outreach and Canvasing"> Outreach and Canvasing</label>
+                <label><input type="checkbox" name="roles" value="Media Development"> Media Development</label>
+                <label><input type="checkbox" name="roles" value="Website Development"> Website Development</label>
+                <label><input type="checkbox" name="roles" value="Community Outreach"> Community Outreach</label>
+                <label><input type="checkbox" name="roles" value="Other"> Other (Please Describe)</label>
+              </div>
+              <p class="hint">Select as many as apply.</p>
+            </div>
+          </div>
+          <div class="form-right">
+            <div class="form-row">
+              <label for="vMsg">Tell us a little about your interests (optional)</label>
+              <textarea id="vMsg" name="message" rows="8" placeholder="Share any relevant experience, schedule notes, or ideas."></textarea>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <button class="btn primary" type="submit">Send</button>
+        </div>
+        <noscript><p class="hint">JavaScript is required to submit this form.</p></noscript>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="footer-inner">Paid for by Erik Morris, Write‑In Candidate for Florida Governor (2026). Excess funds are reinvested into Florida communities.</div></footer>
+
+  <script>
+    // Obfuscate the destination email and send via mailto (avoids exposing the address in the markup)
+    (function(){
+      const parts = ['erikmorris4','FLgov','@','gmail','.com'];
+      const to = parts[0]+parts[1]+parts[2]+parts[3]+parts[4];
+      document.getElementById('volForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const name = document.getElementById('vName').value.trim();
+        const email = document.getElementById('vEmail').value.trim();
+        const county = document.getElementById('vCounty').value.trim();
+        const avail = document.getElementById('vAvail').value;
+        const roles = Array.from(document.querySelectorAll('input[name="roles"]:checked')).map(x=>x.value).join(', ');
+        const msg = document.getElementById('vMsg').value.trim();
+        const subject = 'Volunteer interest — '+(name||'');
+        const body = `Name: ${name}
+Email: ${email}
+County: ${county}
+Availability: ${avail}
+Preferred roles: ${roles}
+
+Message:
+${msg}`;
+        window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    })();
+  </script>
+</body>
+</html>
